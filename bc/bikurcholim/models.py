@@ -13,7 +13,14 @@ class Vehicles(models.Model):
 		verbose_name_plural = "Vehicles"
 	def __str__(self):
 		return self.vehicle
-		
+
+class VolunteerOptionValues(models.Model):
+	option = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Volunteer Option Values"
+	def __str__(self):
+		return self.option
+
 class Volunteers(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
@@ -35,14 +42,14 @@ class Volunteers(models.Model):
 		return self.first_name + ' ' + self.last_name
 
 class VolunteerOptions(models.Model):
-	volunteers = models.ManyToManyField(Volunteers)
-	option = models.CharField(max_length=50)
+	volunteers = models.ForeignKey(Volunteers)
+	option = models.ForeignKey(VolunteerOptionValues)
 	choice = models.NullBooleanField()
 	notes = models.CharField(max_length=200)
 	class Meta:
 		verbose_name_plural = "Volunteer Options"
 	def __str__(self):
-		return self.option
+		return  self.option.option + '-' + self.volunteers.first_name + ' ' + self.volunteers.last_name
 	
 class ClientStatus(models.Model):
 	status = models.CharField(max_length=50)

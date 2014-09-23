@@ -141,12 +141,22 @@ class Migration(migrations.Migration):
             name='VolunteerOptions',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('option', models.CharField(max_length=50)),
                 ('choice', models.NullBooleanField()),
                 ('notes', models.CharField(max_length=200)),
             ],
             options={
                 'verbose_name_plural': 'Volunteer Options',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='VolunteerOptionValues',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('option', models.CharField(max_length=50)),
+            ],
+            options={
+                'verbose_name_plural': 'Volunteer Option Values',
             },
             bases=(models.Model,),
         ),
@@ -176,8 +186,14 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='volunteeroptions',
+            name='option',
+            field=models.ForeignKey(to='bikurcholim.VolunteerOptionValues'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='volunteeroptions',
             name='volunteers',
-            field=models.ManyToManyField(to='bikurcholim.Volunteers'),
+            field=models.ForeignKey(to='bikurcholim.Volunteers'),
             preserve_default=True,
         ),
         migrations.AddField(
