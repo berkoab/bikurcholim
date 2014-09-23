@@ -49,9 +49,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'BikurCholim.urls'
+ROOT_URLCONF = 'bc.urls'
 
-WSGI_APPLICATION = 'BikurCholim.wsgi.application'
+WSGI_APPLICATION = 'bc.wsgi.application'
 
 
 # Database

@@ -2,11 +2,15 @@ from django.db import models
 
 class Neighborhoods(models.Model):
 	neighborhood = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Neighborhoods"
 	def __str__(self):
 		return self.neighborhood
 		
 class Vehicles(models.Model):
 	vehicle = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Vehicles"
 	def __str__(self):
 		return self.vehicle
 		
@@ -25,36 +29,48 @@ class Volunteers(models.Model):
 	vehicle = models.ForeignKey(Vehicles, blank=True, null=True)
 	other_languages = models.CharField(max_length=200, null=True)
 	other_specialties = models.CharField(max_length=200, null = True)
+	class Meta:
+		verbose_name_plural = "Volunteers"
 	def __str__(self):
 		return self.first_name + ' ' + self.last_name
-	
+
 class VolunteerOptions(models.Model):
-	volunteer = models.ForeignKey(Volunteers)
+	volunteers = models.ManyToManyField(Volunteers)
 	option = models.CharField(max_length=50)
 	choice = models.NullBooleanField()
 	notes = models.CharField(max_length=200)
+	class Meta:
+		verbose_name_plural = "Volunteer Options"
 	def __str__(self):
 		return self.option
 	
 class ClientStatus(models.Model):
 	status = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Client Statuses"
 	def __str__(self):
 		return self.status
 		
 class Cities(models.Model):
 	city = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Cities"
 	def __str__(self):
 		return self.city
 		
 class Hospitals(models.Model):
 	name = models.CharField(max_length=100)
 	address = models.CharField(max_length=200)
+	class Meta:
+		verbose_name_plural = "Hospitals"
 	def __str__(self):
 		return self.name
 	
 class TikvahHouses(models.Model):
 	name = models.CharField(max_length=50)
 	address = models.CharField(max_length=200)
+	class Meta:
+		verbose_name_plural = "Tikvah Houses"
 	def __str__(self):
 		return self.name
 		
@@ -87,11 +103,15 @@ class Clients(models.Model):
 	transportation = models.CharField(max_length=200)
 	visitor_comments = models.CharField(max_length=500)
 	medical_equipment = models.CharField(max_length=200)
+	class Meta:
+		verbose_name_plural = "Clients"
 	def __str__(self):
 		return self.first_name + ' ' + self.last_name
 		
 class CaseStatus(models.Model):
 	status = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Case Statuses"
 	def __str__(self):
 		return self.status
 		
@@ -103,10 +123,8 @@ class Cases(models.Model):
 	close_date = models.DateTimeField('close date')
 	description = models.CharField(max_length=200)
 	volunteer = models.ForeignKey(Volunteers, null=True)
+	class Meta:
+		verbose_name_plural = "Cases"
 	def __str__(self):
 		return self.client.name
 		
-#class Choice(models.Model):
-#    question = models.ForeignKey(Question)
-#    choice_text = models.CharField(max_length=200)
-#    votes = models.IntegerField(default=0)	
