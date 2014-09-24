@@ -7,6 +7,13 @@ class Neighborhoods(models.Model):
 	def __str__(self):
 		return self.neighborhood
 		
+class Cities(models.Model):
+	city = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Cities"
+	def __str__(self):
+		return self.city
+		
 class Vehicles(models.Model):
 	vehicle = models.CharField(max_length=50)
 	class Meta:
@@ -20,19 +27,20 @@ class VolunteerOptionValues(models.Model):
 		verbose_name_plural = "Volunteer Option Values"
 	def __str__(self):
 		return self.option
-
+		
 class Volunteers(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
-	street_number = models.IntegerField()
-	street = models.CharField(max_length=50, null=True)
+	address = models.CharField(max_length=100, null=True)
+	city = models.ForeignKey(Cities, null = True)
 	neighborhood = models.ForeignKey(Neighborhoods, null=True)
 	work_place = models.TextField(max_length=100)
 	medical_training = models.TextField(max_length=100)
 	home_phone = models.CharField(max_length=50)
 	cell_phone = models.CharField(max_length=50)
 	email_address = models.EmailField(null=True)
-	days_times_available = models.TextField(max_length=200, null=True)
+	start_time_available = models.TimeField(default=None)
+	end_time_availalable = models.TimeField(default=None)
 	vehicle = models.ForeignKey(Vehicles, blank=True, null=True)
 	other_languages = models.TextField(max_length=200, null=True)
 	other_specialties = models.TextField(max_length=200, null = True)
@@ -41,10 +49,22 @@ class Volunteers(models.Model):
 	def __str__(self):
 		return self.first_name + ' ' + self.last_name
 
+class VolunteerDaysAvailable(models.Model):
+	volunteers = models.ForeignKey(Volunteers)
+	sunday = models.BooleanField(default=None)
+	monday = models.BooleanField(default=None)
+	tuesday = models.BooleanField(default=None)
+	wednesday = models.BooleanField(default=None)
+	thursday = models.BooleanField(default=None)
+	friday = models.BooleanField(default=None)
+	shabbos = models.BooleanField(default=None)
+	class Meta:
+		verbose_name_plural = "Days Available"
+		
 class VolunteerOptions(models.Model):
 	volunteers = models.ForeignKey(Volunteers)
 	option = models.ForeignKey(VolunteerOptionValues)
-	choice = models.NullBooleanField()
+	has_option = models.BooleanField(default=None)
 	notes = models.CharField(max_length=200)
 	class Meta:
 		verbose_name_plural = "Volunteer Options"
@@ -57,13 +77,6 @@ class ClientStatus(models.Model):
 		verbose_name_plural = "Client Statuses"
 	def __str__(self):
 		return self.status
-		
-class Cities(models.Model):
-	city = models.CharField(max_length=50)
-	class Meta:
-		verbose_name_plural = "Cities"
-	def __str__(self):
-		return self.city
 		
 class Hospitals(models.Model):
 	name = models.CharField(max_length=100)
@@ -83,9 +96,9 @@ class TikvahHouses(models.Model):
 		
 class Clients(models.Model):
 	client_status = models.ForeignKey(ClientStatus, null = True)
-	start_date = models.DateTimeField('start date')
-	expected_end_date = models.DateTimeField('expected end date')
-	end_date = models.DateTimeField('end date')
+	start_date = models.DateField('start date')
+	expected_end_date = models.DateField('expected end date')
+	end_date = models.DateField('end date')
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
 	street_number = models.IntegerField()

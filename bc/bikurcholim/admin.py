@@ -11,14 +11,23 @@ from bikurcholim.models import Clients
 from bikurcholim.models import CaseStatus
 from bikurcholim.models import Cases
 from bikurcholim.models import VolunteerOptionValues
+from bikurcholim.models import VolunteerDaysAvailable
 
 class VolunteerOptionsInline(admin.TabularInline):
     model = VolunteerOptions
     extra = 3
 
+class VolunteerDaysAvailableInline(admin.TabularInline):
+	model = VolunteerDaysAvailable
+	extra = 1
 
+class VolunteerDaysAvailable(admin.ModelAdmin):
+    class Media:
+        # edit this path to wherever
+        css = { 'all' : ('css/no-addanother-button.css',) }
+		
 class VolunteersAdmin(admin.ModelAdmin):
-	inlines = [VolunteerOptionsInline]
+	inlines = [VolunteerDaysAvailableInline, VolunteerOptionsInline]
 	list_display = ('last_name', 'first_name')
 	list_filter = ['neighborhood']
 	search_fields = ['last_name', 'first_name', 'street']
