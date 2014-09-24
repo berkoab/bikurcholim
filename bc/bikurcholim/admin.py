@@ -18,8 +18,10 @@ class VolunteerOptionsInline(admin.TabularInline):
 
 
 class VolunteersAdmin(admin.ModelAdmin):
-    inlines = [VolunteerOptionsInline]
-
+	inlines = [VolunteerOptionsInline]
+	list_display = ('last_name', 'first_name')
+	list_filter = ['neighborhood']
+	search_fields = ['last_name', 'first_name', 'street']
 admin.site.register(Neighborhoods)
 admin.site.register(Vehicles)
 admin.site.register(Volunteers, VolunteersAdmin)
@@ -33,3 +35,4 @@ admin.site.register(CaseStatus)
 admin.site.register(Cases)
 admin.site.register(VolunteerOptionValues)
 
+admin.AdminSite.site_header="Bikur Cholim Database Administration"
