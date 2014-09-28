@@ -11,26 +11,24 @@ from bikurcholim.models import Clients
 from bikurcholim.models import CaseStatus
 from bikurcholim.models import Cases
 from bikurcholim.models import VolunteerOptionValues
-from bikurcholim.models import VolunteerDaysAvailable
 
 class VolunteerOptionsInline(admin.TabularInline):
     model = VolunteerOptions
     extra = 3
-
-class VolunteerDaysAvailableInline(admin.TabularInline):
-	model = VolunteerDaysAvailable
-	extra = 1
-
-class VolunteerDaysAvailable(admin.ModelAdmin):
-    class Media:
-        # edit this path to wherever
-        css = { 'all' : ('css/no-addanother-button.css',) }
 		
 class VolunteersAdmin(admin.ModelAdmin):
-	inlines = [VolunteerDaysAvailableInline, VolunteerOptionsInline]
+	inlines = [VolunteerOptionsInline]
 	list_display = ('last_name', 'first_name')
 	list_filter = ['neighborhood']
 	search_fields = ['last_name', 'first_name', 'street']
+	fieldsets = [
+		(None, {'fields': ['first_name', 'last_name', 'address', 'city', 'neighborhood', 'work_place', 'medical_training', 'home_phone', 
+		'cell_phone', 'email_address', 'vehicle', 'other_languages', 'other_specialties']}),
+		('Times Available', {'fields': ['start_time_available', 'end_time_availalable']}),
+		('Days Available', {'fields': [('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'shabbos')]}),
+		(None, {'fields': ['days_and_times_available_notes']})
+	]
+
 admin.site.register(Neighborhoods)
 admin.site.register(Vehicles)
 admin.site.register(Volunteers, VolunteersAdmin)

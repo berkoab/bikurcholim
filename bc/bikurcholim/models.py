@@ -39,18 +39,12 @@ class Volunteers(models.Model):
 	home_phone = models.CharField(max_length=50)
 	cell_phone = models.CharField(max_length=50)
 	email_address = models.EmailField(null=True)
-	start_time_available = models.TimeField(default=None)
-	end_time_availalable = models.TimeField(default=None)
 	vehicle = models.ForeignKey(Vehicles, blank=True, null=True)
 	other_languages = models.TextField(max_length=200, null=True)
 	other_specialties = models.TextField(max_length=200, null = True)
-	class Meta:
-		verbose_name_plural = "Volunteers"
-	def __str__(self):
-		return self.first_name + ' ' + self.last_name
-
-class VolunteerDaysAvailable(models.Model):
-	volunteers = models.ForeignKey(Volunteers)
+	days_and_times_available_notes = models.TextField(max_length=200, null = True)
+	start_time_available = models.TimeField(default=None)
+	end_time_availalable = models.TimeField(default=None)
 	sunday = models.BooleanField(default=None)
 	monday = models.BooleanField(default=None)
 	tuesday = models.BooleanField(default=None)
@@ -58,8 +52,11 @@ class VolunteerDaysAvailable(models.Model):
 	thursday = models.BooleanField(default=None)
 	friday = models.BooleanField(default=None)
 	shabbos = models.BooleanField(default=None)
+
 	class Meta:
-		verbose_name_plural = "Days Available"
+		verbose_name_plural = "Volunteers"
+	def __str__(self):
+		return self.first_name + ' ' + self.last_name
 		
 class VolunteerOptions(models.Model):
 	volunteers = models.ForeignKey(Volunteers)
