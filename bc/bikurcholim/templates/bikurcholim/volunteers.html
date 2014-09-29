@@ -21,7 +21,7 @@
 <h2>WATable</h2>
 <p><a href="http://wootapa-watable.appspot.com/">http://wootapa-watable.appspot.com/</a></p>
 <div id="div1" style="width:auto"></div>
-
+{{ volunteers }}
 <script type="text/javascript">
     $(document).ready( function() {
 
@@ -102,6 +102,7 @@
 
         //Generate some data
         var data = getData();
+		alert("asdf");
         waTable.setData(data);  //Sets the data.
         //waTable.setData(data, true); //Sets the data but prevents any previously set columns from being overwritten
         //waTable.setData(data, false, false); //Sets the data and prevents any previously checked rows from being reset
@@ -134,7 +135,9 @@
 
     });
 	function getData() {
-		return {{ volunteers }}
+		var j = {{ volunteers }};
+		//j=j.replace(/\"/g, "");
+		return j;
 	}
     //Generates some data. This step is of course normally done by your web server.
     function getData2() {

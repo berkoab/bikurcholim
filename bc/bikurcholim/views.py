@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from bikurcholim.models import Volunteers
 from bikurcholim.models import Clients
+from django.core import serializers
+import re
+import json
 
 def index(request):
     return HttpResponse("Hello, world. You're at the bikurcholim index.")
@@ -26,17 +29,26 @@ def volunteers(request):
 		'placeHolder': "abc123" #Overrides default placeholder and placeholder specified in data types(row 34).
 	}
 	
+	rows=[]
 	
-	data = Volunteers.objects.all()
+	#data = Volunteers.objects.all()
+	#data = Volunteers.objects.all().values_list()
+	#for item in data:
+	#	re.sub(r'(datetime.time\()(\d+)(,)(\d+)(, )(\d+)(\))', r'\2\\4\\6', item)
+	data = serializers.serialize("json", Volunteers.objects.all())		
+	j = json.loads(data)
+	for item in j:
+		rows.append(item['fields'])
+	
 	
 	r = {}
 	r['cols'] = cols
-	r['rows'] = data
+	r['rows'] = rows
 	
-	context = {'volunteers': r}
+	context = {'volunteers': json.dumps(r)}
 	return render(request, 'bikurcholim/volunteers.html', context)
 
 def clients(request):
 	data = Clients.objects.all()
-	context = {'clients': data}
+	context = {'clients': data[0]['fields']}
 	return render(request, 'bikurcholim/clients.html', context)
