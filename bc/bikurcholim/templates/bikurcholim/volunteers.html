@@ -21,21 +21,21 @@
 <h2>WATable</h2>
 <p><a href="http://wootapa-watable.appspot.com/">http://wootapa-watable.appspot.com/</a></p>
 <div id="div1" style="width:auto"></div>
-{{ volunteers }}
+
 <script type="text/javascript">
     $(document).ready( function() {
 
         //An example with all options.
          var waTable = $('#div1').WATable({
             debug:true,                 //Prints some debug info to console
-            pageSize: 8,                //Initial pagesize
+            pageSize: 10,                //Initial pagesize
             //transition: 'slide',       //Type of transition when paging (bounce, fade, flip, rotate, scroll, slide).Requires https://github.com/daneden/animate.css.
             //transitionDuration: 0.2,    //Duration of transition in seconds.
             filter: true,               //Show filter fields
             sorting: true,              //Enable sorting
             sortEmptyLast:true,         //Empty values will be shown last
             columnPicker: true,         //Show the columnPicker button
-            pageSizes: [1,5,8,12,200],  //Set custom pageSizes. Leave empty array to hide button.
+            pageSizes: [5,10,50,100,200],  //Set custom pageSizes. Leave empty array to hide button.
             hidePagerOnEmpty: true,     //Removes the pager if data is empty.
             checkboxes: true,           //Make rows checkable. (Note. You need a column with the 'unique' property)
             checkAllToggle:true,        //Show the check-all toggle
@@ -49,7 +49,7 @@
                     //placeHolder: "Type here..."    //What to say in placeholder filter fields. Set false for empty.
                 },
                 number: {
-                    decimals: 1   //Sets decimal precision for float types
+                    decimals: 2   //Sets decimal precision for float types
                 },
                 bool: {
                     //filterTooltip: false
