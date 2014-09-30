@@ -102,7 +102,7 @@
 
         //Generate some data
         var data = getData();
-		alert("asdf");
+		
         waTable.setData(data);  //Sets the data.
         //waTable.setData(data, true); //Sets the data but prevents any previously set columns from being overwritten
         //waTable.setData(data, false, false); //Sets the data and prevents any previously checked rows from being reset
@@ -135,9 +135,17 @@
 
     });
 	function getData() {
-		var j = {{ volunteers }};
-		//j=j.replace(/\"/g, "");
-		return j;
+		var json = "{{ volunteers }}";
+		json=json.replace(/&quot;/g, '"');
+		json=json.replace(/&lt;/g, '<');
+		json=json.replace(/&gt;/g, '>');
+		json=json.replace(/&#39;/g, "'");
+		obj = JSON.parse(json);
+		var data = {
+            cols: obj.cols,
+            rows: obj.rows,
+        };
+		return data;
 	}
     //Generates some data. This step is of course normally done by your web server.
     function getData2() {
