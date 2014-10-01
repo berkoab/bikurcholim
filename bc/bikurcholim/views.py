@@ -4,6 +4,8 @@ from bikurcholim.models import Volunteers
 from bikurcholim.models import VolunteerOptions
 from bikurcholim.models import Clients
 from django.core import serializers
+from django.views import generic
+from django.utils import timezone
 import re
 import json
 import collections
@@ -210,7 +212,17 @@ def volunteers(request):
 	context = {'volunteers': json.dumps(r)}
 	return render(request, 'bikurcholim/volunteers.html', context)
 
+class VolunteersDetailView(generic.DetailView):
+
+	model = Volunteers
+
+	def get_context_data(self, **kwargs):
+		context = super(VolunteersDetailView, self).get_context_data(**kwargs)
+		context['now'] = timezone.now()
+		return context
+
 def clients(request):
 	data = Clients.objects.all()
 	context = {'clients': data[0]['fields']}
 	return render(request, 'bikurcholim/clients.html', context)
+

@@ -1,0 +1,31 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/base.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
+
+<div id="content" class="colM">
+	<h1>Volunteer - {{ object.first_name }} {{ object.last_name }}</h1>
+	<div id="content-main">
+		<div>
+			<fieldset class="module aligned ">
+				<div class="form-row">                     
+					<div>
+						<label class="required">First name:</label>
+							{{ object.first_name }}			
+					</div>
+				</div>
+				<div class="form-row">                     
+					<div>
+						<label class="required">Last name:</label>
+							{{ object.last_name }}			
+					</div>
+				</div>
+				<div class="form-row">                     
+					<div>
+						<label class="required">Address:</label>
+							{{ object.address }}			
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+</div>
