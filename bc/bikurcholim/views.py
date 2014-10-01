@@ -196,9 +196,11 @@ def volunteers(request):
 		columns['thursday']=volunteer.thursday
 		columns['friday']=volunteer.friday
 		columns['shabbos']=volunteer.shabbos
-		voptions = o.filter(volunteers=volunteer.id) 
+		voptions = o.filter(volunteers=volunteer.id)
+		
 		meal_prep = voptions.filter(option__option='Meal Preparation')
-		columns['meal_preparation']=meal_prep[0].has_option
+		if(len(meal_prep)>0):
+			columns['meal_preparation']=meal_prep[0].has_option
 		rows.append(columns)
 		r = collections.OrderedDict()
 		r['cols'] = cols
