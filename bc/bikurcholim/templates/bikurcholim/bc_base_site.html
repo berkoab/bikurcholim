@@ -19,15 +19,20 @@
         <div id="branding">
         {% block branding %}<h1 id="site-name"><a href="{% url 'index' %}">Bikur Cholim Database</a></h1>{% endblock %}
         </div>
-
-        <div id="user-tools">
+		{% block user-tools %}
+		<div id="user-tools">
             {% block welcome-msg %}
-                
+                Welcome
+                <strong>{% firstof user.get_short_name user.get_username %}.</strong>
             {% endblock %}
             {% block userlinks %}
-
+                {% if user.has_usable_password %}
+                <a href="{% url 'admin:password_change' %}">Change password</a> /
+                {% endif %}
+                <a href="{% url 'admin:logout' %}">Log out</a>
             {% endblock %}
         </div>
+		{% endblock %}
         {% block nav-global %}{% endblock %}
     </div>
     <!-- END Header -->

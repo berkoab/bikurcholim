@@ -60,7 +60,7 @@
                 columnPicker: true,   //if true, the columnPicker can be toggled visible and hidden.
                 custom: [             //Add any other elements here. Here is a refresh and export example.
                   $('<a href="#" class="refresh"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Refresh</a>'),
-                  $('<a href="#" class="export_all"><span class="glyphicon glyphicon-share"></span>&nbsp;Export all rows</a>'),
+                  $('<a href="/bikurcholim/export_xls" class="export_all"><span class="glyphicon glyphicon-share"></span>&nbsp;Export all rows</a>'),
                   $('<a href="#" class="export_checked"><span class="glyphicon glyphicon-share"></span>&nbsp;Export checked rows</a>'),
                   $('<a href="#" class="export_filtered"><span class="glyphicon glyphicon-share"></span>&nbsp;Export filtered rows</a>')
                 ]
@@ -75,10 +75,6 @@
                                               //data.column holds the underlying column you supplied.
                                               //data.checked is true if row is checked.
                                               //'this' keyword holds the clicked element.
-                if ( $(this).hasClass('userId') ) {
-                  data.event.preventDefault();
-                  alert('You clicked userId: ' + data.row.userId);
-                }
             },
             columnClicked: function(data) {    //Fires when a column is clicked
               console.log('column clicked');  //data.event holds the original jQuery event
@@ -120,13 +116,28 @@
             e.preventDefault();
             var elem = $(e.target);
             var data;
-            if (elem.hasClass('export_all')) data = waTable.getData(false);
+            if (elem.hasClass('export_all')) {
+				data = waTable.getData(false, true);
+				
+			}
             else if (elem.hasClass('export_checked')) data = waTable.getData(true);
             else if (elem.hasClass('export_filtered')) data = waTable.getData(false, true);
             console.log(data.rows.length + ' rows returned');
             console.log(data);
-            alert(data.rows.length + ' rows returned.\nSee console for details.');
+            
         });
+		
+		var downloadURL = function downloadURL(url) {
+			var hiddenIFrameID = 'hiddenDownloader',
+				iframe = document.getElementById(hiddenIFrameID);
+			if (iframe === null) {
+				iframe = document.createElement('iframe');
+				iframe.id = hiddenIFrameID;
+				iframe.style.display = 'none';
+				document.body.appendChild(iframe);
+			}
+			iframe.src = url;
+		};
 
     });
 	function getData() {
@@ -151,7 +162,7 @@
                 index: 1, //The order this column should appear in the table
                 type: "number", //The type. Possible are string, number, bool, date(in milliseconds).
                 friendly: "<span class='glyphicon glyphicon-user'></span>",  //Name that will be used in header. Can also be any html as shown here.
-                format: "<a href='#' class='userId' target='_blank'>{0}</a>",  //Used to format the data anything you want. Use {0} as placeholder for the actual data.
+                format: "<a href='/volunteers/{0}' class='userId' target='_blank'>{0}</a>",  //Used to format the data anything you want. Use {0} as placeholder for the actual data.
                 unique: true,  //This is required if you want checkable rows, or to use the rowClicked callback. Be certain the values are really unique or weird things will happen.
                 sortOrder: "asc", //Data will initially be sorted by this column. Possible are "asc" or "desc"
                 tooltip: "This column has an initial filter", //Show some additional info about column

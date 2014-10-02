@@ -1,31 +1,23 @@
 {% extends "bikurcholim/bc_base_site.html" %}
 {% block title %}Bikur Cholim User Login{% endblock %}
 {% block bodyclass %}<body class=" login">{% endblock %}
+{% block user-tools %}{% endblock %}
 {% block content %}
-{% if form.errors and not form.non_field_errors %}
-<p class="errornote">
-{% if form.errors.items|length == 1 %}Please correct the error below{% else %}Please correct the errors below.{% endif %}
-</p>
-{% endif %}
 
-{% if form.non_field_errors %}
-{% for error in form.non_field_errors %}
+{% if error %}
 <p class="errornote">
     {{ error }}
 </p>
-{% endfor %}
 {% endif %}
 
 <div id="content-main">
 <form action="{% url 'login' %}" method="post" id="login-form">
 	{% csrf_token %}
   <div class="form-row">
-	{{ form.username.errors }}
     <label for="id_username" class="required">Username:</label>
 	<input id="id_username" maxlength="254" name="username" type="text" />
   </div>
   <div class="form-row">
-	{{ form.password.errors }}
     <label for="id_password" class="required">Password:</label>
 	<input id="id_password" name="password" type="password" />
     <input type="hidden" name="next" value="{{ next }}" />

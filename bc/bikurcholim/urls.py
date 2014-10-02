@@ -9,4 +9,5 @@ urlpatterns = patterns('',
 	url(r'^clients/$', views.clients, name='clients'),
 	url(r'^volunteers/(?P<pk>\d+)/$', VolunteersDetailView.as_view(), name='article-detail'),
 	url(r'^login/$', views.user_login, name='login'),
+	url(r'^export_xls/$', views.export_xls, name='export_xls'),
 )

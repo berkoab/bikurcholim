@@ -14,6 +14,7 @@ import re
 import json
 import collections
 import datetime
+import xlwt
 
 def index(request):
     return HttpResponse("Hello, world. You're at the bikurcholim index.")
@@ -24,7 +25,7 @@ def volunteers(request):
 	cols['id']={
 		'index': 1, #The order this column should appear in the table
 		'type': "number", #The type. Possible are string, number, bool, date(in milliseconds).
-		'friendly': "Id",  #Name that will be used in header. Can also be any html as shown here.
+		'friendly': "<span class='glyphicon glyphicon-user'></span>",  #Name that will be used in header. Can also be any html as shown here.
 		'format': "<a href='/bikurcholim/volunteers/{0}' class='userId' target='_blank'>{0}</a>",  #Used to format the data anything you want. Use {0} as placeholder for the actual data.
 		'unique': 'true',  #This is required if you want checkable rows, or to use the rowClicked callback. Be certain the values are really unique or weird things will happen.
 		'sortOrder': "asc", #Data will initially be sorted by this column. Possible are "asc" or "desc"
@@ -264,16 +265,46 @@ def user_login(request):
 				return HttpResponse("Your Bikur Cholim account is disabled.")
 		else:
 			# Bad login details were provided. So we can't log the user in.
-			print "Invalid login details: {0}, {1}".format(username, password)
-			return HttpResponse("Invalid login details supplied.")
+			#print "Invalid login details: {0}, {1}".format(username, password)
+			context = {
+				'next': nextpost,
+				'error': "Invalid login details supplied."
+			}
+			return render(request, 'bikurcholim/login.html', context)
+			#return HttpResponse("Invalid login details supplied.")
 
 	# The request is not a HTTP POST, so display the login form.
 	# This scenario would most likely be a HTTP GET.
 	else:
-		# No context variables to pass to the template system, hence the
-		# blank dictionary object...
 		next = request.GET.get('next')
 		context = {
 			'next': next,
 		}
 		return render(request, 'bikurcholim/login.html', context)
+
+def export_xls(request, queryset):
+	book = xlwt.Workbook(encoding='utf8')
+	sheet = book.add_sheet('untitled')
+
+	default_style = xlwt.Style.default_style
+	datetime_style = xlwt.easyxf(num_format_str='dd/mm/yyyy hh:mm')
+	date_style = xlwt.easyxf(num_format_str='dd/mm/yyyy')
+
+	values_list = queryset
+
+	for row, rowdata in enumerate(values_list):
+		for col, val in enumerate(rowdata):
+			if isinstance(val, datetime):
+				style = datetime_style
+			elif isinstance(val, date):
+				style = date_style
+			else:
+				style = default_style
+
+			sheet.write(row, col, val, style=style)
+
+	response = HttpResponse(mimetype='application/vnd.ms-excel')
+	response['Content-Disposition'] = 'attachment; filename=example.xls'
+	book.save(response)
+	return response
+    
