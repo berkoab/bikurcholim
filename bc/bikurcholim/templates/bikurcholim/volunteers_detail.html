@@ -1,9 +1,17 @@
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static "admin/css/base.css" %}" />
-<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
+{% extends "bikurcholim/bc_base_site.html" %}
 
-<div id="content" class="colM">
+{% block title %}Volunteer - {{ object.first_name }} {{ object.last_name }}{% endblock %}
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; <a href="{% url 'volunteers' %}">Volunteers</a>
+	&rsaquo; {{ object.first_name }} {{ object.last_name }}
+	</div>
+{% endblock %}
+
+{% block content %}
 	<h1>Volunteer - {{ object.first_name }} {{ object.last_name }}</h1>
+
 	<div id="content-main">
 		<div>
 			<fieldset class="module aligned ">
@@ -28,4 +36,4 @@
 			</fieldset>
 		</div>
 	</div>
-</div>
+{% endblock %}

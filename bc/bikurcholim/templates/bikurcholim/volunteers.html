@@ -276,15 +276,5 @@
     }
 </script>
 
-{% if volunteers %}
-    <ul>
-    {% for volunteer in volunteers %}
-        <li><a href="/polls/{{ question.id }}/">{{ volunteer.last_name }}, {{ volunteer.first_name }} </a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No volunteers are available.</p>
-{% endif %}
-
 </body>
 </html>

@@ -6,6 +6,7 @@ from bikurcholim.models import Clients
 from django.core import serializers
 from django.views import generic
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 import re
 import json
 import collections
@@ -14,13 +15,14 @@ import datetime
 def index(request):
     return HttpResponse("Hello, world. You're at the bikurcholim index.")
 
+@login_required(login_url='/admin/login/')
 def volunteers(request):
 	cols = {}
 	cols['id']={
 		'index': 1, #The order this column should appear in the table
 		'type': "number", #The type. Possible are string, number, bool, date(in milliseconds).
 		'friendly': "Id",  #Name that will be used in header. Can also be any html as shown here.
-		'format': "<a href='#' class='userId' target='_blank'>{0}</a>",  #Used to format the data anything you want. Use {0} as placeholder for the actual data.
+		'format': "<a href='/bikurcholim/volunteers/{0}' class='userId' target='_blank'>{0}</a>",  #Used to format the data anything you want. Use {0} as placeholder for the actual data.
 		'unique': 'true',  #This is required if you want checkable rows, or to use the rowClicked callback. Be certain the values are really unique or weird things will happen.
 		'sortOrder': "asc", #Data will initially be sorted by this column. Possible are "asc" or "desc"
 		'tooltip': "This column has an initial filter", #Show some additional info about column
