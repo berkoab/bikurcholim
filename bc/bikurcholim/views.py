@@ -15,13 +15,14 @@ import json
 import collections
 import datetime
 import xlwt
+ezxf = xlwt.easyxf
 
 def index(request):
     return HttpResponse("Hello, world. You're at the bikurcholim index.")
 
 @login_required(login_url='/bikurcholim/login/')
 def volunteers(request):
-	cols = {}
+	cols = collections.OrderedDict()
 	cols['id']={
 		'index': 1, #The order this column should appear in the table
 		'type': "number", #The type. Possible are string, number, bool, date(in milliseconds).
@@ -183,7 +184,7 @@ def volunteers(request):
 	o = VolunteerOptions.objects.all()
 	
 	for volunteer in d:
-		columns = {}
+		columns = collections.OrderedDict()
 		columns['id']=volunteer.id
 		columns['name']=volunteer.last_name + ', ' + volunteer.first_name
 		columns['address']=volunteer.address
@@ -216,6 +217,7 @@ def volunteers(request):
 		
 	
 	context = {'volunteers': json.dumps(r)}
+
 	return render(request, 'bikurcholim/volunteers.html', context)
 
 class VolunteersDetailView(generic.DetailView):
@@ -282,28 +284,46 @@ def user_login(request):
 		}
 		return render(request, 'bikurcholim/login.html', context)
 
-def export_xls(request, queryset):
+def export_xls(request):
 	book = xlwt.Workbook(encoding='utf8')
 	sheet = book.add_sheet('untitled')
 
 	default_style = xlwt.Style.default_style
 	datetime_style = xlwt.easyxf(num_format_str='dd/mm/yyyy hh:mm')
 	date_style = xlwt.easyxf(num_format_str='dd/mm/yyyy')
-
-	values_list = queryset
-
-	for row, rowdata in enumerate(values_list):
-		for col, val in enumerate(rowdata):
-			if isinstance(val, datetime):
+	
+	values_list = request.POST['data']
+	json_object = json.JSONDecoder(object_pairs_hook=collections.OrderedDict).decode(values_list)
+	
+	heading_xf = ezxf('font: bold on; align: horiz center')
+	cols=json_object['cols']
+	colx=0
+	for col in cols:
+		if(colx==0):
+			sheet.write(0, colx, 'Id', heading_xf)
+		else:
+			sheet.write(0, colx, cols[col]['friendly'], heading_xf)
+		colx+=1
+	rowx = 1
+	for row in json_object['rows']:
+		colx=0
+		for key in row:
+			value=row[key]
+			
+			if isinstance(value, datetime.datetime):
 				style = datetime_style
-			elif isinstance(val, date):
+			elif isinstance(value, datetime.date):
 				style = date_style
 			else:
 				style = default_style
+			if(value==True):
+				sheet.write(rowx, colx, 'True', style=style)
+			else:
+				sheet.write(rowx, colx, value, style=style)
+			colx+=1
+		rowx+=1	
 
-			sheet.write(row, col, val, style=style)
-
-	response = HttpResponse(mimetype='application/vnd.ms-excel')
+	response = HttpResponse(content_type='application/vnd.ms-excel')
 	response['Content-Disposition'] = 'attachment; filename=example.xls'
 	book.save(response)
 	return response

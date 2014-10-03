@@ -96,8 +96,10 @@ $(document).ready( function() {
             var elem = $(e.target);
             var data;
             if (elem.hasClass('export_all')) {
-				data = waTable.getData(false, true);
 				
+				data = waTable.getData(false, true);
+				download(JSON.stringify(data))
+
 			}
             else if (elem.hasClass('export_checked')) data = waTable.getData(true);
             else if (elem.hasClass('export_filtered')) data = waTable.getData(false, true);
@@ -106,17 +108,33 @@ $(document).ready( function() {
             
         });
 		
-		var downloadURL = function downloadURL(url) {
-			var hiddenIFrameID = 'hiddenDownloader',
-				iframe = document.getElementById(hiddenIFrameID);
-			if (iframe === null) {
-				iframe = document.createElement('iframe');
-				iframe.id = hiddenIFrameID;
-				iframe.style.display = 'none';
-				document.body.appendChild(iframe);
-			}
-			iframe.src = url;
+
+		function download(data){
+			// Build a form
+			var form = $('<form></form>').attr('action', '/bikurcholim/export_xls/').attr('method', 'post');
+			form.append($('<input></input>').attr('type', 'hidden').attr('name', 'csrfmiddlewaretoken').attr('value', csrftoken));
+			// Add the one key/value
+			form.append($("<input></input>").attr('type', 'hidden').attr('name', 'data').attr('value', data));
+			//send request
+			form.appendTo('body').submit().remove();
 		};
+		
+		function getCookie(name) {
+			var cookieValue = null;
+			if (document.cookie && document.cookie != '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = jQuery.trim(cookies[i]);
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+		var csrftoken = getCookie('csrftoken');
 
     });
 	function getData() {
