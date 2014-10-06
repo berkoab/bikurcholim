@@ -9,7 +9,7 @@ $(document).ready( function() {
             sorting: true,              //Enable sorting
             sortEmptyLast:true,         //Empty values will be shown last
             columnPicker: true,         //Show the columnPicker button
-            pageSizes: [5,10,50,100,200],  //Set custom pageSizes. Leave empty array to hide button.
+            pageSizes: [5,10,50,100,'All'],  //Set custom pageSizes. Leave empty array to hide button.
             hidePagerOnEmpty: true,     //Removes the pager if data is empty.
             checkboxes: true,           //Make rows checkable. (Note. You need a column with the 'unique' property)
             checkAllToggle:true,        //Show the check-all toggle
@@ -39,7 +39,7 @@ $(document).ready( function() {
                 columnPicker: true,   //if true, the columnPicker can be toggled visible and hidden.
                 custom: [             //Add any other elements here. Here is a refresh and export example.
                   $('<a href="#" class="refresh"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Refresh</a>'),
-                  $('<a href="/bikurcholim/export_xls" class="export_all"><span class="glyphicon glyphicon-share"></span>&nbsp;Export all rows</a>'),
+                  $('<a href="#" class="export_all"><span class="glyphicon glyphicon-share"></span>&nbsp;Export all rows</a>'),
                   $('<a href="#" class="export_checked"><span class="glyphicon glyphicon-share"></span>&nbsp;Export checked rows</a>'),
                   $('<a href="#" class="export_filtered"><span class="glyphicon glyphicon-share"></span>&nbsp;Export filtered rows</a>')
                 ]
@@ -96,9 +96,8 @@ $(document).ready( function() {
             var elem = $(e.target);
             var data;
             if (elem.hasClass('export_all')) {
-				
 				data = waTable.getData(false, true);
-				download(JSON.stringify(data))
+				download(JSON.stringify(data), waTable.getCheckedCols())
 
 			}
             else if (elem.hasClass('export_checked')) data = waTable.getData(true);
@@ -109,12 +108,13 @@ $(document).ready( function() {
         });
 		
 
-		function download(data){
+		function download(data, checkedCols){
 			// Build a form
 			var form = $('<form></form>').attr('action', '/bikurcholim/export_xls/').attr('method', 'post');
 			form.append($('<input></input>').attr('type', 'hidden').attr('name', 'csrfmiddlewaretoken').attr('value', csrftoken));
 			// Add the one key/value
 			form.append($("<input></input>").attr('type', 'hidden').attr('name', 'data').attr('value', data));
+			form.append($("<input></input>").attr('type', 'hidden').attr('name', 'checkedCols').attr('value', checkedCols));
 			//send request
 			form.appendTo('body').submit().remove();
 		};

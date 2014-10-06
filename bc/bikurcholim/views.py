@@ -293,36 +293,45 @@ def export_xls(request):
 	date_style = xlwt.easyxf(num_format_str='dd/mm/yyyy')
 	
 	values_list = request.POST['data']
+	checkedCols = request.POST['checkedCols']
 	json_object = json.JSONDecoder(object_pairs_hook=collections.OrderedDict).decode(values_list)
 	
 	heading_xf = ezxf('font: bold on; align: horiz center')
 	cols=json_object['cols']
 	colx=0
+	cc = []
 	for col in cols:
-		if(colx==0):
-			sheet.write(0, colx, 'Id', heading_xf)
+		if(col in checkedCols):
+			cc.append(True)
+			if(colx==0):
+				sheet.write(0, colx, 'Id', heading_xf)
+			else:
+				sheet.write(0, colx, cols[col]['friendly'], heading_xf)
+			colx+=1
 		else:
-			sheet.write(0, colx, cols[col]['friendly'], heading_xf)
-		colx+=1
+			cc.append(False)
 	rowx = 1
+	
 	for row in json_object['rows']:
 		colx=0
+		ccx=0
 		for key in row:
-			value=row[key]
-			
-			if isinstance(value, datetime.datetime):
-				style = datetime_style
-			elif isinstance(value, datetime.date):
-				style = date_style
-			else:
-				style = default_style
-			if(value==True):
-				sheet.write(rowx, colx, 'True', style=style)
-			else:
+			if(cc[ccx]):
+				value=row[key]
+				
+				if isinstance(value, datetime.datetime):
+					style = datetime_style
+				elif isinstance(value, datetime.date):
+					style = date_style
+				else:
+					style = default_style
+#				if(value==True):
+#					sheet.write(rowx, colx, 'True', style=style)
+#				else:
 				sheet.write(rowx, colx, value, style=style)
-			colx+=1
+				colx+=1
+			ccx+=1
 		rowx+=1	
-
 	response = HttpResponse(content_type='application/vnd.ms-excel')
 	response['Content-Disposition'] = 'attachment; filename=example.xls'
 	book.save(response)

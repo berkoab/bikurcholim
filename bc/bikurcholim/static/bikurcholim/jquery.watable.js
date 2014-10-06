@@ -81,7 +81,8 @@
         var _uniqueCol; //reference to column with the unique property
         var _uniqueCols = {}; //array with checked rows
         var _checkToggleChecked = false; //check-all toggle state
-
+		var _checkedCols = [];
+		
         var _vendors = ["webkit", "moz", "Moz", "ms", "o", "O"]; //vendors prefixes. used for not yet officially supported features.
         var _transition = {
             supported: undefined, //true if browser supports transitions
@@ -234,6 +235,9 @@
                     var props = _data.cols[column];
 
                     if (!props.hidden) {
+						if (column!="dummy") {
+							_checkedCols[_checkedCols.length]=column
+						}
                         var headCell = $('<th></th>').appendTo(_headSort);
                         var link;
                         if(priv.options.sorting && props.sorting !== false) {
@@ -1365,7 +1369,10 @@
             }
             return data;
         };
-
+		
+		publ.getCheckedCols = function () {
+			return _checkedCols;
+		};
         publ.setData = function (data, skipCols, resetChecked) {
             priv.log('publ.setData called');
             priv.setData(data, skipCols, resetChecked);
