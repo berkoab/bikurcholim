@@ -143,5 +143,5 @@ class Cases(models.Model):
 	class Meta:
 		verbose_name_plural = "Cases"
 	def __str__(self):
-		return self.client.name
+		return str(self.id)
 		

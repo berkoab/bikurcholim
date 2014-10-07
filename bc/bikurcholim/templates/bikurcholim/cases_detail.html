@@ -1,0 +1,39 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+
+{% block title %}Case: #{{ object.id }}{% endblock %}
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; <a href="{% url 'clients' %}">Clients</a>
+	&rsaquo; {{ object.id }}
+	</div>
+{% endblock %}
+
+{% block content %}
+	<h1>Case: #{{ object.id }}</h1>
+
+	<div id="content-main">
+		<div>
+			<fieldset class="module aligned ">
+				<div class="form-row">                     
+					<div>
+						<label class="required">Id:</label>
+							{{ object.id }}			
+					</div>
+				</div>
+				<div class="form-row">                     
+					<div>
+						<label class="required">Client:</label>
+							{{ object.client.last_name }}			
+					</div>
+				</div>
+				<div class="form-row">                     
+					<div>
+						<label class="required">Volunteer:</label>
+							{{ object.volunteer.last_name }}			
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+
+{% block title %}Client - {{ object.first_name }} {{ object.last_name }}{% endblock %}
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; <a href="{% url 'clients' %}">Clients</a>
+	&rsaquo; {{ object.first_name }} {{ object.last_name }}
+	</div>
+{% endblock %}
+
+{% block content %}
+	<h1>Client - {{ object.first_name }} {{ object.last_name }}</h1>
+
+	<div id="content-main">
+		<div>
+			<fieldset class="module aligned ">
+				<div class="form-row">                     
+					<div>
+						<label class="required">First name:</label>
+							{{ object.first_name }}			
+					</div>
+				</div>
+				<div class="form-row">                     
+					<div>
+						<label class="required">Last name:</label>
+							{{ object.last_name }}			
+					</div>
+				</div>
+				<div class="form-row">                     
+					<div>
+						<label class="required">Address:</label>
+							{{ object.address }}			
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+{% endblock %}

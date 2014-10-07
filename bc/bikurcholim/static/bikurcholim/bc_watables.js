@@ -138,7 +138,7 @@ $(document).ready( function() {
 
     });
 	function getData() {
-		var json = volunteers;
+		var json = json_data;
 		json=json.replace(/&quot;/g, '"');
 		json=json.replace(/&lt;/g, '<');
 		json=json.replace(/&gt;/g, '>');

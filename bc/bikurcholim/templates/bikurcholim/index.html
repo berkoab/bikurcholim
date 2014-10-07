@@ -1,0 +1,47 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+{% load static %}
+{% block title %}Cases{% endblock %}
+{% block extrahead %}
+{{ block.super }}
+
+<link rel="stylesheet" type="text/css" href="{% static "bikurcholim/bikurcholim.css" %}" />
+
+<!-- END Header -->
+{% endblock %}
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; 
+	</div>
+{% endblock %}
+{% block content %}
+<div id="content-main" align="center">
+<table>
+	<tr align="center" >
+		<td colspan="3">
+			<a href="{% url 'index' %}">
+			<span id="id_0" class="button_example" style="cursor:pointer;">Administration</span>
+			</a>
+		</td>
+	</tr>
+	<tr height="50"></tr>
+	<tr align="center">
+		<td>
+			<a href="{% url 'volunteers' %}">
+			<span id="id_0" class="button_example" style="cursor:pointer;">  Volunteers  </span>
+			</a>
+		</td>
+		<td>
+			<a href="{% url 'clients' %}">
+			<span id="id_0" class="button_example" style="cursor:pointer;">   Clients    </span>
+			</a>
+		</td>
+		<td>
+			<a href="{% url 'cases' %}">
+			<span id="id_0" class="button_example" style="cursor:pointer;">     Cases    </span>
+			</a>
+		</td>
+	</tr>
+</table>
+</div>
+{% endblock %}

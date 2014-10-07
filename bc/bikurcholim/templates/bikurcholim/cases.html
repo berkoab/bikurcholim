@@ -1,24 +1,24 @@
 {% extends "bikurcholim/bc_base_site.html" %}
 {% load static %}
-{% block title %}Clients{% endblock %}
+{% block title %}Cases{% endblock %}
 {% block extrahead %}
 {{ block.super }}
+
 <script type="text/javascript">
-	var json_data="{{ clients }}"
+	var json_data="{{ cases }}"
 </script>
 <script type="text/javascript" src="{% static "bikurcholim/bc_watables.js" %}"></script>
-
 <!-- END Header -->
 {% endblock %}
 {% block breadcrumbs %}
 	<div class="breadcrumbs">
 	<a href="{% url 'index' %}">Home</a>
-	&rsaquo; <a href="{% url 'clients' %}">Clients</a>
+	&rsaquo; <a href="{% url 'cases' %}">Cases</a>
 	&rsaquo;
 	</div>
 {% endblock %}
 {% block content %}
-<h1>Clients</h1>
+<h1>Cases</h1>
 
 	<div id="content-main">
 		<div id="div1" style="width:auto"></div>

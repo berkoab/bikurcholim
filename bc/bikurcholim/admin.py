@@ -29,6 +29,11 @@ class VolunteersAdmin(admin.ModelAdmin):
 		(None, {'fields': ['days_and_times_available_notes']})
 	]
 
+class CasesAdmin(admin.ModelAdmin):
+	list_display = ('id', 'client', 'volunteer')
+	list_filter = ['status__status']
+	search_fields = ['client__first_name', 'client__last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
+	
 admin.site.register(Neighborhoods)
 admin.site.register(Vehicles)
 admin.site.register(Volunteers, VolunteersAdmin)
@@ -39,7 +44,7 @@ admin.site.register(Hospitals)
 admin.site.register(TikvahHouses)
 admin.site.register(Clients)
 admin.site.register(CaseStatus)
-admin.site.register(Cases)
+admin.site.register(Cases, CasesAdmin)
 admin.site.register(VolunteerOptionValues)
 
 admin.AdminSite.site_header="Bikur Cholim Database Administration"
