@@ -7,6 +7,7 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.utils import timezone
 from django.views import generic
+from django.core.urlresolvers import reverse
 import volunteer_view, client_view, case_view
 import collections
 import datetime
@@ -31,37 +32,13 @@ def volunteers(request):
 	r['rows'] = rows
 		
 	
-	context = {'volunteers': json.dumps(r)}
+	context = {'data': json.dumps(r),
+			'bigName': 'Volunteers',
+			'smallName': 'volunteers',
+			'add': 'admin:bikurcholim_volunteers_add'}
 
-	return render(request, 'bikurcholim/volunteers.html', context)
+	return render(request, 'bikurcholim/table_base.html', context)
 
-class VolunteersDetailView(generic.DetailView):
-
-	model = Volunteers
-
-	def get_context_data(self, **kwargs):
-		context = super(VolunteersDetailView, self).get_context_data(**kwargs)
-		context['now'] = timezone.now()
-		return context
-
-class ClientsDetailView(generic.DetailView):
-
-	model = Clients
-
-	def get_context_data(self, **kwargs):
-		context = super(ClientsDetailView, self).get_context_data(**kwargs)
-		context['now'] = timezone.now()
-		return context
-	
-class CasesDetailView(generic.DetailView):
-
-	model = Cases
-
-	def get_context_data(self, **kwargs):
-		context = super(CasesDetailView, self).get_context_data(**kwargs)
-		context['now'] = timezone.now()
-		return context
-	
 @login_required(login_url='/bikurcholim/login/')
 def clients(request):
 	cols = client_view.getCols()
@@ -71,9 +48,12 @@ def clients(request):
 	r['rows'] = rows
 		
 	
-	context = {'clients': json.dumps(r)}
+	context = {'data': json.dumps(r),
+			'bigName': 'Clients',
+			'smallName': 'clients',
+			'add': 'admin:bikurcholim_clients_add'}
 
-	return render(request, 'bikurcholim/clients.html', context)
+	return render(request, 'bikurcholim/table_base.html', context)
 
 @login_required(login_url='/bikurcholim/login/')
 def cases(request):
@@ -84,9 +64,45 @@ def cases(request):
 	r['rows'] = rows
 		
 	
-	context = {'cases': json.dumps(r)}
+	context = {'data': json.dumps(r),
+			'bigName': 'Cases',
+			'smallName': 'cases',
+			'add': 'admin:bikurcholim_cases_add'}
 
-	return render(request, 'bikurcholim/cases.html', context)
+	return render(request, 'bikurcholim/table_base.html', context)
+
+class VolunteersDetailView(generic.DetailView):
+
+	model = Volunteers
+
+	def get_context_data(self, **kwargs):
+		context = super(VolunteersDetailView, self).get_context_data(**kwargs)
+		context['now'] = timezone.now()
+		url = 'admin:bikurcholim_volunteers_change'
+		context['change'] = url
+		return context
+
+class ClientsDetailView(generic.DetailView):
+
+	model = Clients
+
+	def get_context_data(self, **kwargs):
+		context = super(ClientsDetailView, self).get_context_data(**kwargs)
+		context['now'] = timezone.now()
+		url = 'admin:bikurcholim_clients_change'
+		context['change'] = url
+		return context
+	
+class CasesDetailView(generic.DetailView):
+
+	model = Cases
+
+	def get_context_data(self, **kwargs):
+		context = super(CasesDetailView, self).get_context_data(**kwargs)
+		context['now'] = timezone.now()
+		url = 'admin:bikurcholim_cases_change'
+		context['change'] = url
+		return context
 
 def user_login(request):
 	# Like before, obtain the context for the user's request.

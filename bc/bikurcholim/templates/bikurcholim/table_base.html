@@ -1,0 +1,36 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+{% load static %}
+{% load i18n admin_urls admin_static admin_list %}
+{% load url from future %}
+{% block title %}{{ bigName }}{% endblock %}
+{% block extrahead %}
+{{ block.super }}
+
+<script type="text/javascript">
+	var json_data="{{ data }}"
+</script>
+<script type="text/javascript" src="{% static "bikurcholim/bc_watables.js" %}"></script>
+<!-- END Header -->
+{% endblock %}
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; <a href="{% url smallName %}">{{ bigName }}</a>
+	&rsaquo;
+	</div>
+{% endblock %}
+{% block content %}
+<h1>{{ bigName }}</h1>
+
+	<div id="content-main">
+        <ul class="object-tools">
+            <li>
+            	<a href={% url add %} class="addlink">			
+                Add {{ bigName }}
+                </a>
+              </a>
+            </li>
+        </ul>
+		<div id="div1" style="width:auto"></div>
+	</div>
+{% endblock %}

@@ -10,8 +10,15 @@
 {% endblock %}
 
 {% block content %}
-	<h1>Case: #{{ object.id }}</h1>
-
+	<h1>Case #: {{ object.id }}</h1>
+	<ul class="object-tools">
+	    <li>
+	    	<a href={% url change object.id %} class="addlink">			
+	        Change Case #{{ object.id }}
+	        </a>
+	      </a>
+	    </li>
+    </ul>
 	<div id="content-main">
 		<div>
 			<fieldset class="module aligned ">

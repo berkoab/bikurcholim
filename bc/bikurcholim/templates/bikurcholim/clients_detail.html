@@ -11,7 +11,14 @@
 
 {% block content %}
 	<h1>Client - {{ object.first_name }} {{ object.last_name }}</h1>
-
+	<ul class="object-tools">
+	    <li>
+	    	<a href={% url change object.id %} class="addlink">			
+	        Change {{ object.first_name }} {{ object.last_name }}
+	        </a>
+	      </a>
+	    </li>
+    </ul>
 	<div id="content-main">
 		<div>
 			<fieldset class="module aligned ">
