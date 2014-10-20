@@ -20,14 +20,7 @@ class Vehicles(models.Model):
 		verbose_name_plural = "Vehicles"
 	def __str__(self):
 		return self.vehicle
-
-class VolunteerOptionValues(models.Model):
-	option = models.CharField(max_length=50)
-	class Meta:
-		verbose_name_plural = "Volunteer Option Values"
-	def __str__(self):
-		return self.option
-		
+	
 class Volunteers(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
@@ -52,26 +45,46 @@ class Volunteers(models.Model):
 	thursday = models.BooleanField(default=None)
 	friday = models.BooleanField(default=None)
 	shabbos = models.BooleanField(default=None)
-
+	wants_alerts = models.BooleanField(default=None)
+	wants_alerts_notes = models.CharField(max_length=100, null=True, blank=True)
+	meal_preparation = models.BooleanField(default=None)
+	meal_preparation_notes = models.CharField(max_length=100, null=True, blank=True)
+	meal_delivery = models.BooleanField(default=None)
+	meal_delivery_notes = models.CharField(max_length=100, null=True, blank=True)
+	hospital_visitation = models.BooleanField(default=None)
+	hospital_visitation_notes = models.CharField(max_length=100, null=True, blank=True)
+	transportation_to_appointments = models.BooleanField(default=None)
+	transportation_to_appointments_notes = models.CharField(max_length=100, null=True, blank=True)
+	overnight_hospital_stays = models.BooleanField(default=None)
+	overnight_hospital_stays_notes = models.CharField(max_length=100, null=True, blank=True)
+	assist_homebound = models.BooleanField(default=None)
+	assist_homebound_notes = models.CharField(max_length=100, null=True, blank=True)
+	assist_with_children = models.BooleanField(default=None)
+	assist_with_children_notes = models.CharField(max_length=100, null=True, blank=True)
+	assist_with_children_activities = models.BooleanField(default=None)
+	assist_with_children_activities_notes = models.CharField(max_length=100, null=True, blank=True)
+	able_to_entertain_children = models.BooleanField(default=None)
+	able_to_entertain_children_notes = models.CharField(max_length=100, null=True, blank=True)
+	visit_elderly = models.BooleanField(default=None)
+	visit_elderly_notes = models.CharField(max_length=100, null=True, blank=True)
+	assist_with_housekeeping = models.BooleanField(default=None)
+	assist_with_housekeeping_notes = models.CharField(max_length=100, null=True, blank=True)
+	phone_calls = models.BooleanField(default=None)
+	phone_calls_notes = models.CharField(max_length=100, null=True, blank=True)
+	learn_with_elderly = models.BooleanField(default=None)
+	learn_with_elderly_notes = models.CharField(max_length=100, null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+    
 	class Meta:
 		verbose_name_plural = "Volunteers"
 	def __str__(self):
 		return self.first_name + ' ' + self.last_name
-		
-class VolunteerOptions(models.Model):
-	volunteers = models.ForeignKey(Volunteers)
-	option = models.ForeignKey(VolunteerOptionValues)
-	has_option = models.BooleanField(default=None)
-	notes = models.CharField(max_length=200)
-	class Meta:
-		verbose_name_plural = "Volunteer Options"
-	def __str__(self):
-		return  self.option.option + '-' + self.volunteers.first_name + ' ' + self.volunteers.last_name
-	
-class ClientStatus(models.Model):
+
+class Status(models.Model):
 	status = models.CharField(max_length=50)
 	class Meta:
-		verbose_name_plural = "Client Statuses"
+		verbose_name_plural = "Statuses"
 	def __str__(self):
 		return self.status
 		
@@ -92,54 +105,64 @@ class TikvahHouses(models.Model):
 		return self.name
 		
 class Clients(models.Model):
-	client_status = models.ForeignKey(ClientStatus, null = True)
-	start_date = models.DateField('start date')
-	expected_end_date = models.DateField('expected end date')
-	end_date = models.DateField('end date')
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
-	street_number = models.IntegerField()
-	street = models.CharField(max_length=50)
-	city = models.ForeignKey(Cities, null = True)
-	home_phone = models.CharField(max_length=50)
-	cell_phone = models.CharField(max_length=50)
-	text_ability = models.NullBooleanField()
-	email_address = models.EmailField(max_length=50, null=True)
-	current_location = models.ForeignKey(Neighborhoods, null=True)
-	hospital = models.ForeignKey(Hospitals, null=True)
-	hospital_room = models.CharField(max_length=50)
-	hospital_notes = models.TextField(max_length=200)
-	tikvah_house = models.ForeignKey(TikvahHouses, null=True)
-	tikvah_room = models.CharField(max_length=50)
-	food_to_hospital = models.NullBooleanField()
-	food_notes = models.TextField(max_length=300)
-	food_to_home = models.NullBooleanField()
-	allergies = models.TextField(max_length=200)
-	yoshon = models.NullBooleanField()
-	cholov_yisroel = models.NullBooleanField()
-	transportation = models.TextField(max_length=200)
-	visitor_comments = models.TextField(max_length=500)
-	medical_equipment = models.TextField(max_length=200)
+	address = models.CharField(max_length=100, null=True, blank=True)
+	status = models.ForeignKey(Status, null=True, blank=True)
+	start_date = models.DateField(default=None)
+	expected_end_date = models.DateField(default=None)
+	end_date = models.DateField(default=None)
+	city = models.ForeignKey(Cities, null=True, blank=True)
+	home_phone = models.CharField(max_length=50, null=True, blank=True)
+	cell_phone = models.CharField(max_length=50, null=True, blank=True)
+	text_ability = models.BooleanField(default=None)
+	email_address = models.EmailField(max_length=50, null=True, blank=True)
+	current_location = models.ForeignKey(Neighborhoods, null=True, blank=True)
+	hospital = models.ForeignKey(Hospitals, null=True, blank=True)
+	hospital_room = models.CharField(max_length=50, null=True, blank=True)
+	hospital_notes = models.TextField(max_length=200, null=True, blank=True)
+	tikvah_house = models.ForeignKey(TikvahHouses, null=True, blank=True)
+	tikvah_room = models.CharField(max_length=50, null=True, blank=True)
+	food_to_hospital = models.BooleanField(default=None)
+	food_notes = models.TextField(max_length=300, null=True, blank=True)
+	food_to_home = models.BooleanField(default=None)
+	allergies = models.TextField(max_length=200, null=True, blank=True)
+	yoshon = models.BooleanField(default=None)
+	cholov_yisroel = models.BooleanField(default=None)
+	transportation = models.TextField(max_length=200, null=True, blank=True)
+	visitor_comments = models.TextField(max_length=500, null=True, blank=True)
+	medical_equipment = models.TextField(max_length=200, null=True, blank=True)
+	donation_made = models.TextField(max_length=50, null=True, blank=True)
+	meal_coordinator = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_coordinator_set')
+	meal_preparer = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_preparer_set')
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+    
 	class Meta:
 		verbose_name_plural = "Clients"
+	def get_name(self):
+		return self.last_name, + ', ' + self.first_name
 	def __str__(self):
-		return self.first_name + ' ' + self.last_name
-		
-class CaseStatus(models.Model):
-	status = models.CharField(max_length=50)
+		return self.last_name, + ', ' + self.first_name
+
+class Services(models.Model):
+	service = models.CharField(max_length=50)
 	class Meta:
-		verbose_name_plural = "Case Statuses"
+		verbose_name_plural = "Services"
 	def __str__(self):
-		return self.status
-		
+		return self.service
+
 class Cases(models.Model):
 	client = models.ForeignKey(Clients)
-	status = models.ForeignKey(CaseStatus)
-	open_date = models.DateTimeField('open date')
-	date_of_service = models.DateTimeField('service date')
-	close_date = models.DateTimeField('close date')
-	description = models.CharField(max_length=200)
-	volunteer = models.ForeignKey(Volunteers, null=True)
+	status = models.ForeignKey(Status)
+	open_date = models.DateTimeField('open date', default=None)
+	date_of_service = models.DateTimeField('service date', default=None)
+	close_date = models.DateTimeField('close date', default=None)
+	service = models.ForeignKey(Services, null=True, blank=True)
+	description = models.CharField(max_length=200, null=True, blank=True)
+	volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 	class Meta:
 		verbose_name_plural = "Cases"
 	def __str__(self):

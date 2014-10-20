@@ -1,5 +1,5 @@
 import collections
-from bikurcholim.models import Clients, VolunteerOptions, Volunteers
+from bikurcholim.models import Clients, Volunteers
 
 def getCols():
     cols = collections.OrderedDict()
