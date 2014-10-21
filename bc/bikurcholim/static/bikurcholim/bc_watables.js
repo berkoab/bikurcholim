@@ -19,8 +19,8 @@ $(document).ready( function() {
             //urlPost: true             //Use POST httpmethod to webservice. Default is GET.
             types: {                    //Following are some specific properties related to the data types
                 string: {
-                    //filterTooltip: "Giggedi..."    //What to say in tooltip when hoovering filter fields. Set false to remove.
-                    //placeHolder: "Type here..."    //What to say in placeholder filter fields. Set false for empty.
+                   //filterTooltip: "Click here to sort..."    //What to say in tooltip when hoovering filter fields. Set false to remove.
+                   placeHolder: "Type here..."    //What to say in placeholder filter fields. Set false for empty.
                 },
                 number: {
                     decimals: 2   //Sets decimal precision for float types
@@ -39,9 +39,9 @@ $(document).ready( function() {
                 columnPicker: true,   //if true, the columnPicker can be toggled visible and hidden.
                 custom: [             //Add any other elements here. Here is a refresh and export example.
                   $('<a href="#" class="refresh"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Refresh</a>'),
-                  $('<a href="#" class="export_all"><span class="glyphicon glyphicon-share"></span>&nbsp;Export all rows</a>'),
+                  $('<a href="#" class="export_all"><span class="glyphicon glyphicon-share"></span>&nbsp;Export all data</a>'),
                   $('<a href="#" class="export_checked"><span class="glyphicon glyphicon-share"></span>&nbsp;Export checked rows</a>'),
-                  $('<a href="#" class="export_filtered"><span class="glyphicon glyphicon-share"></span>&nbsp;Export filtered rows</a>')
+                  $('<a href="#" class="export_filtered"><span class="glyphicon glyphicon-share"></span>&nbsp;Export filtered data</a>')
                 ]
             },
             tableCreated: function(data) {    //Fires when the table is created / recreated. Use it if you want to manipulate the table in any way.
@@ -97,11 +97,16 @@ $(document).ready( function() {
             var data;
             if (elem.hasClass('export_all')) {
 				data = waTable.getData(false, true);
-				download(JSON.stringify(data), waTable.getCheckedCols())
-
+				download(JSON.stringify(data), waTable.getAllCols())
 			}
-            else if (elem.hasClass('export_checked')) data = waTable.getData(true);
-            else if (elem.hasClass('export_filtered')) data = waTable.getData(false, true);
+            else if (elem.hasClass('export_checked')) {
+            	data = waTable.getData(true);
+            	download(JSON.stringify(data), waTable.getCheckedCols())
+            }
+            else if (elem.hasClass('export_filtered')) {
+            	data = waTable.getData(false, true);
+				download(JSON.stringify(data), waTable.getCheckedCols())
+            }
             console.log(data.rows.length + ' rows returned');
             console.log(data);
             
@@ -150,104 +155,3 @@ $(document).ready( function() {
         };
 		return data;
 	}
-    //Generates some data. This step is of course normally done by your web server.
-    function getData1() {
-
-        //First define the columns
-        var cols = {
-            userId: {
-                index: 1, //The order this column should appear in the table
-                type: "number", //The type. Possible are string, number, bool, date(in milliseconds).
-                friendly: "<span class='glyphicon glyphicon-user'></span>",  //Name that will be used in header. Can also be any html as shown here.
-                format: "<a href='/volunteers/{0}' class='userId' target='_blank'>{0}</a>",  //Used to format the data anything you want. Use {0} as placeholder for the actual data.
-                unique: true,  //This is required if you want checkable rows, or to use the rowClicked callback. Be certain the values are really unique or weird things will happen.
-                sortOrder: "asc", //Data will initially be sorted by this column. Possible are "asc" or "desc"
-                tooltip: "This column has an initial filter", //Show some additional info about column
-                filter: "1..400" //Set initial filter.
-            },
-            name: {
-                index: 2,
-                type: "string",
-                friendly: "Name",
-                tooltip: "This column has a custom placeholder", //Show some additional info about column
-                placeHolder: "abc123" //Overrides default placeholder and placeholder specified in data types(row 34).
-            },
-            age: {
-                index: 3,
-                type: "number",
-                friendly: "Age",
-                sorting: false, //dont allow sorting
-                tooltip: "This column has filtering and sorting turned off", //Show some additional info about column
-                filter: false //Removes filter field for this column
-            },
-            weight: {
-                index: 4,
-                type: "number",
-                decimals: 2, //Force decimal precision
-                friendly: "Weight",
-                placeHolder: "50..90",
-                tooltip: "This column has no tooltip for the filter", //Show some additional info about column
-                filterTooltip: false //Turn off tooltip for this column
-            },
-            height: {
-                index: 5,
-                type: "number",
-                friendly: "Height",
-                hidden:true //Hides the column. Useful if you want this value later on but no visible to user. It's available to be visible if columnPicker is enabled.
-            },
-            important: {
-                index: 6,
-                type: "bool",
-                friendly: "Important"
-            },
-            someDate: {
-                index: 7,
-                type: "date", //Don't forget dates are expressed in milliseconds
-                friendly: "SomeDate"
-            }
-        };
-
-        /*
-          Create the actual data.
-          Whats worth mentioning is that you can use a 'format' property just as in the column definition,
-          but on a row level. See below on how we create a weightFormat property. This will be used when rendering the weight column.
-          Also, you can pre-check rows with the 'checked' property and prevent rows from being checkable with the 'checkable' property.
-        */
-        var rows = [];
-        var i = 1;
-        while(i <= 1000)
-        {
-            var weight = (Math.floor(Math.random()*40)+50) + (Math.floor(Math.random()*100)/100);
-            var weightClass = weight <70 ? 'green' : weight <80 && weight >=70 ? 'yellow' : 'red';
-
-            //We leave some fields intentionally undefined, so you can see how sorting/filtering works with these.
-            var doc = {
-                userId: i,
-                name: i%100 == 0 ? undefined : elfName(),
-                age: Math.floor(Math.random()*50)+20,
-                weight: weight > 50 && weight < 60 ? undefined:weight,
-                weightFormat:  "<div class='" + weightClass + "'>{0}</div>",
-                height: Math.floor(Math.random()*50)+150,
-                important: i%3 == 0 ? undefined : i%4 == 0,
-                someDate: i%4 == 0
-                    ? undefined
-                    : Date.now() + (i*Math.floor(Math.random()*(60*60*24*100))),
-                checkable: i % 4 != 0,
-                checked: i % 3 == 0
-            };
-            rows.push(doc);
-            i++;
-        }
-
-        //Create the returning object. Besides cols and rows, you can also pass any other object you would need later on.
-        var data = {
-            cols: cols,
-            rows: rows,
-            otherStuff: {
-                thatIMight: 1,
-                needLater: true
-            }
-        };
-
-        return data;
-    }

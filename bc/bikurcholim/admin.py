@@ -14,7 +14,7 @@ from bikurcholim.models import Services
 class VolunteersAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name')
 	list_filter = ['neighborhood']
-	search_fields = ['last_name', 'first_name', 'street']
+	search_fields = ['last_name', 'first_name', 'street', 'work_place', 'email_address', ]
 	fieldsets = [
 		(None, {'fields': ['first_name', 'last_name', 'address', 'city', 'neighborhood', 'work_place', 'medical_training', 'home_phone', 
 		'cell_phone', 'email_address', 'vehicle', 'other_languages', 'other_specialties']}),
@@ -31,9 +31,9 @@ class VolunteersAdmin(admin.ModelAdmin):
 										('phone_calls', 'phone_calls_notes'), ('learn_with_elderly', 'learn_with_elderly_notes')]})
 	]
 
-class ClientAdmin(admin.ModelAdmin):
+class ClientsAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name')
-	list_filter = ['status__status', 'neighborhood', 'hospital', 'tikvah_house', 'email_address', 'home_phone', 'cell_phone']
+	list_filter = ['status__status', 'neighborhood', 'hospital', 'tikvah_house']
 	search_fields = ['last_name', 'first_name', 'street']
 class CasesAdmin(admin.ModelAdmin):
 	list_display = ('id', 'client', 'volunteer')
@@ -46,7 +46,7 @@ admin.site.register(Volunteers, VolunteersAdmin)
 admin.site.register(Cities)
 admin.site.register(Hospitals)
 admin.site.register(TikvahHouses)
-admin.site.register(Clients)
+admin.site.register(Clients, ClientsAdmin)
 admin.site.register(ClientStatus)
 admin.site.register(CaseStatus)
 admin.site.register(Cases, CasesAdmin)

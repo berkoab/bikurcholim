@@ -82,6 +82,7 @@
         var _uniqueCols = {}; //array with checked rows
         var _checkToggleChecked = false; //check-all toggle state
 		var _checkedCols = [];
+		var _sortedCols = [];
 		
         var _vendors = ["webkit", "moz", "Moz", "ms", "o", "O"]; //vendors prefixes. used for not yet officially supported features.
         var _transition = {
@@ -212,7 +213,7 @@
             var colsSorted = Object.keys(_data.cols).sort(function (a, b) {
                 return _data.cols[a].index - _data.cols[b].index;
             });
-
+			_sortedCols = colsSorted;
             //create the header sorting row
             if (!_headSort) {
                 _head.find('.sort i').tooltip('hide');
@@ -1372,6 +1373,10 @@
 		
 		publ.getCheckedCols = function () {
 			return _checkedCols;
+		};
+		
+		publ.getAllCols = function () {
+			return _sortedCols;
 		};
         publ.setData = function (data, skipCols, resetChecked) {
             priv.log('publ.setData called');
