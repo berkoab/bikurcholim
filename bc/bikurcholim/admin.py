@@ -20,7 +20,8 @@ class VolunteersAdmin(admin.ModelAdmin):
 		('Times Available', {'fields': ['start_time_available', 'end_time_availalable']}),
 		('Days Available', {'fields': [('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'shabbos')]}),
 		(None, {'fields': ['days_and_times_available_notes']}), 
-		('Volunteer Options', {'fields': [('wants_alerts', 'wants_alerts_notes'), ('meal_preparation', 'meal_preparation_notes'),
+		('Volunteer Options', {'classes': ('wide', 'extrapretty'),
+		'fields': [('wants_alerts', 'wants_alerts_notes'), ('meal_preparation', 'meal_preparation_notes'),
 										('meal_delivery', 'meal_delivery_notes'), ('hospital_visitation', 'hospital_visitation_notes'),
 										('transportation_to_appointments', 'transportation_to_appointments_notes'), ('overnight_hospital_stays', 'overnight_hospital_stays_notes'),
 										('assist_homebound', 'assist_homebound_notes'), ('assist_with_children', 'assist_with_children_notes'), 
@@ -29,20 +30,24 @@ class VolunteersAdmin(admin.ModelAdmin):
 										('phone_calls', 'phone_calls_notes'), ('learn_with_elderly', 'learn_with_elderly_notes')]})
 	]
 
+class ClientAdmin(admin.ModelAdmin):
+	list_display = ('last_name', 'first_name')
+	list_filter = ['status__status', 'neighborhood', 'hospital', 'tikvah_house', 'email_address', 'home_phone', 'cell_phone']
+	search_fields = ['last_name', 'first_name', 'street']
 class CasesAdmin(admin.ModelAdmin):
 	list_display = ('id', 'client', 'volunteer')
 	list_filter = ['status__status']
 	search_fields = ['client__first_name', 'client__last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
 	
-admin.site.register(Neighborhoods)
-admin.site.register(Vehicles)
+#admin.site.register(Neighborhoods)
+#admin.site.register(Vehicles)
 admin.site.register(Volunteers, VolunteersAdmin)
-admin.site.register(Cities)
-admin.site.register(Hospitals)
-admin.site.register(TikvahHouses)
+#admin.site.register(Cities)
+#admin.site.register(Hospitals)
+#admin.site.register(TikvahHouses)
 admin.site.register(Clients)
-admin.site.register(Status)
+#admin.site.register(Status)
 admin.site.register(Cases, CasesAdmin)
-admin.site.register(Services)
+#admin.site.register(Services)
 
 admin.AdminSite.site_header="Bikur Cholim Database Administration"
