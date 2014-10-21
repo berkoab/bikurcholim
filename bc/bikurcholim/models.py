@@ -46,33 +46,33 @@ class Volunteers(models.Model):
 	friday = models.BooleanField(default=None)
 	shabbos = models.BooleanField(default=None)
 	wants_alerts = models.BooleanField(default=None)
-	wants_alerts_notes = models.CharField(max_length=100, null=True, blank=True)
+	wants_alerts_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	meal_preparation = models.BooleanField(default=None)
-	meal_preparation_notes = models.CharField(max_length=100, null=True, blank=True)
+	meal_preparation_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	meal_delivery = models.BooleanField(default=None)
-	meal_delivery_notes = models.CharField(max_length=100, null=True, blank=True)
+	meal_delivery_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	hospital_visitation = models.BooleanField(default=None)
-	hospital_visitation_notes = models.CharField(max_length=100, null=True, blank=True)
+	hospital_visitation_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	transportation_to_appointments = models.BooleanField(default=None)
-	transportation_to_appointments_notes = models.CharField(max_length=100, null=True, blank=True)
+	transportation_to_appointments_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	overnight_hospital_stays = models.BooleanField(default=None)
-	overnight_hospital_stays_notes = models.CharField(max_length=100, null=True, blank=True)
+	overnight_hospital_stays_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	assist_homebound = models.BooleanField(default=None)
-	assist_homebound_notes = models.CharField(max_length=100, null=True, blank=True)
+	assist_homebound_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	assist_with_children = models.BooleanField(default=None)
-	assist_with_children_notes = models.CharField(max_length=100, null=True, blank=True)
+	assist_with_children_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	assist_with_children_activities = models.BooleanField(default=None)
-	assist_with_children_activities_notes = models.CharField(max_length=100, null=True, blank=True)
+	assist_with_children_activities_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	able_to_entertain_children = models.BooleanField(default=None)
-	able_to_entertain_children_notes = models.CharField(max_length=100, null=True, blank=True)
+	able_to_entertain_children_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	visit_elderly = models.BooleanField(default=None)
-	visit_elderly_notes = models.CharField(max_length=100, null=True, blank=True)
+	visit_elderly_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	assist_with_housekeeping = models.BooleanField(default=None)
-	assist_with_housekeeping_notes = models.CharField(max_length=100, null=True, blank=True)
+	assist_with_housekeeping_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	phone_calls = models.BooleanField(default=None)
-	phone_calls_notes = models.CharField(max_length=100, null=True, blank=True)
+	phone_calls_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	learn_with_elderly = models.BooleanField(default=None)
-	learn_with_elderly_notes = models.CharField(max_length=100, null=True, blank=True)
+	learn_with_elderly_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
     
@@ -81,10 +81,17 @@ class Volunteers(models.Model):
 	def __str__(self):
 		return self.first_name + ' ' + self.last_name
 
-class Status(models.Model):
+class ClientStatus(models.Model):
 	status = models.CharField(max_length=50)
 	class Meta:
-		verbose_name_plural = "Statuses"
+		verbose_name_plural = "Client Statuses"
+	def __str__(self):
+		return self.status
+
+class CaseStatus(models.Model):
+	status = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Case Statuses"
 	def __str__(self):
 		return self.status
 		
@@ -113,7 +120,7 @@ class Clients(models.Model):
 	cell_phone = models.CharField(max_length=50, null=True, blank=True)
 	email_address = models.EmailField(max_length=50, null=True, blank=True)
 	neighborhood = models.ForeignKey(Neighborhoods, null=True, blank=True)
-	status = models.ForeignKey(Status, null=True, blank=True)
+	status = models.ForeignKey(ClientStatus, null=True, blank=True)
 	start_date = models.DateField(null=True, blank=True)
 	expected_end_date = models.DateField(null=True, blank=True)
 	end_date = models.DateField(null=True, blank=True)	
@@ -154,7 +161,7 @@ class Services(models.Model):
 
 class Cases(models.Model):
 	client = models.ForeignKey(Clients)
-	status = models.ForeignKey(Status)
+	status = models.ForeignKey(CaseStatus)
 	volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
 	open_date = models.DateTimeField('open date', null=True, blank=True)
 	date_of_service = models.DateTimeField('service date', null=True, blank=True)
