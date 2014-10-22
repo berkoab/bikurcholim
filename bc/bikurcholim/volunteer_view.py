@@ -296,7 +296,24 @@ def getCols():
 		'friendly': "Learn with Elderly Notes", 
 		'hidden':'true'
 	}
-	
+    cols['home_phone'] = {
+		'index': 49,
+		'type': "string",
+		'friendly': "Home Phone", 
+		'hidden':'true'
+	}
+    cols['cell_phone'] = {
+		'index': 50,
+		'type': "string",
+		'friendly': "Cell Phone", 
+		'hidden':'true'
+	}
+    cols['email_address'] = {
+		'index': 51,
+		'type': "string",
+		'friendly': "Email", 
+		'hidden':'true'
+	}
     return cols
    
 def getRows():
@@ -355,7 +372,9 @@ def getRows():
 		columns['phone_calls_notes'] = volunteer.phone_calls_notes
 		columns['learn_with_elderly'] = volunteer.learn_with_elderly
 		columns['learn_with_elderly_notes'] = volunteer.learn_with_elderly_notes
-
+		columns['home_phone'] = volunteer.home_phone
+		columns['cell_phone'] = volunteer.cell_phone
+		columns['email_address'] = volunteer.email_address
 		#voptions = o.filter(volunteers=volunteer.id)
 		
 		#meal_prep = voptions.filter(option__option='Meal Preparation')

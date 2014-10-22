@@ -35,9 +35,9 @@ class Volunteers(models.Model):
 	vehicle = models.ForeignKey(Vehicles, null=True, blank=True)
 	other_languages = models.TextField(max_length=200, null=True, blank=True)
 	other_specialties = models.TextField(max_length=200, null = True, blank=True)
-	days_and_times_available_notes = models.TextField(max_length=200, null = True, blank=True)
-	start_time_available = models.TimeField(null=True, blank=True)
-	end_time_availalable = models.TimeField(null=True, blank=True)
+	days_and_times_available_notes = models.TextField("Notes on Availability", max_length=200, null = True, blank=True)
+	start_time_available = models.TimeField("Available From", null=True, blank=True)
+	end_time_availalable = models.TimeField("Available To", null=True, blank=True)
 	sunday = models.BooleanField(default=None)
 	monday = models.BooleanField(default=None)
 	tuesday = models.BooleanField(default=None)
@@ -80,6 +80,20 @@ class Volunteers(models.Model):
 		verbose_name_plural = "Volunteers"
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name
+	def get_fields(self):
+		name_value = []
+		for field in self.__class__._meta.fields:
+			name = field.verbose_name
+			value = field._get_val_from_obj(self)
+			if(name=='city'):
+				name_value.append(('City', self.city.city))
+			elif(name=='neighborhood'):
+				name_value.append(('Neighborhood', self.neighborhood.neighborhood))
+			elif(name=='vehicle'):
+				name_value.append(('Vehicle', self.vehicle.vehicle))
+			else:
+				name_value.append((name.title(), value))
+		return name_value
 	def __str__(self):
 		return self.last_name + ', ' + self.first_name
 

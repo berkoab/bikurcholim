@@ -5,16 +5,16 @@
 	<div class="breadcrumbs">
 	<a href="{% url 'index' %}">Home</a>
 	&rsaquo; <a href="{% url 'volunteers' %}">Volunteers</a>
-	&rsaquo; {{ object.first_name }} {{ object.last_name }}
+	&rsaquo; {{ object.get_name }}
 	</div>
 {% endblock %}
 
 {% block content %}
-	<h1>Volunteer - {{ object.first_name }} {{ object.last_name }}</h1>
+	<h1>Volunteer - {{ object.get_name }}</h1>
     <ul class="object-tools">
 	    <li>
-	    	<a href={% url change object.id %} class="addlink">			
-	        Change {{ object.first_name }} {{ object.last_name }}
+	    	<a href={% url change object.id %} >			
+	        Change {{ object.get_name }}
 	        </a>
 	      </a>
 	    </li>
@@ -22,25 +22,385 @@
 	<div id=
 	<div id="content-main">
 		<div>
-			<fieldset class="module aligned ">
-				<div class="form-row">                     
-					<div>
-						<label class="required">First name:</label>
-							{{ object.first_name }}			
-					</div>
-				</div>
-				<div class="form-row">                     
-					<div>
-						<label class="required">Last name:</label>
-							{{ object.last_name }}			
-					</div>
-				</div>
-				<div class="form-row">                     
-					<div>
-						<label class="required">Address:</label>
-							{{ object.address }}			
-					</div>
-				</div>
+			  <fieldset class="module aligned ">
+			        <div class="form-row field-first_name">
+			                <div>
+			                        <label class="required" for="id_first_name">First name:</label>
+			                            {{ object.first_name }}
+			                </div>
+			        </div>  
+			        <div class="form-row field-last_name">
+			                <div>
+			                        <label class="required" for="id_last_name">Last name:</label>
+										{{ object.last_name }}
+			                </div>
+			        </div>
+			        <div class="form-row field-address">
+			                <div> 
+			                        <label class="required" for="id_address">Address:</label>
+			                            {{ object.address }}
+			                </div>
+			        </div>
+			        <div class="form-row field-city">
+			                <div>
+			                        <label class="required" for="id_city">City:</label>
+										{{ object.city.city }}
+			                </div>
+			        </div>
+			        <div class="form-row field-neighborhood">
+			                <div>
+			                        <label class="required" for="id_neighborhood">Neighborhood:</label>
+									{{ object.neighborhood.neighborhood }}
+			                </div>
+			        </div>
+			        <div class="form-row field-work_place">
+			                <div>
+			                        <label class="required" for="id_work_place">Work place:</label>
+									{{ object.work_place }}
+			                </div>
+			        </div>
+			        <div class="form-row field-medical_training">
+			                <div>
+			                        <label class="required" for="id_medical_training">Medical training:</label>
+									{{ object.medical_training }}
+			                </div>
+			        </div>
+			        <div class="form-row field-home_phone">
+			                <div>
+			                        <label class="required" for="id_home_phone">Home phone:</label>
+									{{ object.home_phone }}
+			                </div>
+			        </div>
+			        <div class="form-row field-cell_phone">
+			                <div>
+			                        <label class="required" for="id_cell_phone">Cell phone:</label>
+									{{ object.cell_phone }}
+			                </div>
+			        </div>
+			        <div class="form-row field-email_address">
+			                <div>
+			                        <label class="required" for="id_email_address">Email address:</label>
+									{{ object.email_address }}
+			                </div>
+			        </div>
+			        <div class="form-row field-vehicle">
+			                <div>
+			                        <label class="required" for="id_vehicle">Vehicle:</label>
+									{{ object.vehicle }}
+			                </div>
+			        </div>
+			        <div class="form-row field-other_languages">
+			                <div>
+			                        <label class="required" for="id_other_languages">Other languages:</label>
+									{{ object.other_languages }}
+			                </div>
+			        </div>
+			        <div class="form-row field-other_specialties">
+			                <div>
+			                        <label class="required" for="id_other_specialties">Other specialties:</label>
+									{{ object.other_specialties }}
+			                </div>
+			        </div>
+			</fieldset>
+			  <fieldset class="module aligned ">
+			    <h2>Times Available</h2>
+			        <div class="form-row field-start_time_available">
+			                <div>
+			                        <label class="required" for="id_start_time_available">Available From:</label>
+									{{ object.start_time_available }}
+			                </div>
+			        </div>
+			        <div class="form-row field-end_time_availalable">
+			                <div>
+			                        <label class="required" for="id_end_time_availalable">Available To:</label>
+									{{ object.end_time_availalable }}
+			                </div>
+			        </div>
+			</fieldset>
+			  <fieldset class="module aligned ">
+			    <h2>Days Available</h2>
+			        <div class="form-row field-sunday field-monday field-tuesday field-wednesday field-thursday field-friday field-shabbos">
+			                <div class="field-box field-sunday">
+								<label class="vCheckboxLabel inline required">Sunday</label>
+								{% if object.sunday == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}	
+			                </div>
+			                <div class="field-box field-monday">
+			                    <label class="vCheckboxLabel inline required" for="id_monday">Monday</label>
+								{% if object.monday == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}	
+			                </div>
+			                <div class="field-box field-tuesday">
+			                    <label class="vCheckboxLabel inline required" for="id_tuesday">Tuesday</label>
+								{% if object.tuesday == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}	
+			                </div>
+			                <div class="field-box field-wednesday">
+			                    <label class="vCheckboxLabel inline required" for="id_wednesday">Wednesday</label>
+								{% if object.wednesday == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}	
+			                </div>
+			                <div class="field-box field-thursday">
+			                    <label class="vCheckboxLabel inline required" for="id_thursday">Thursday</label>
+								{% if object.thursday == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}	
+			                </div>
+			                <div class="field-box field-friday">
+			                    <label class="vCheckboxLabel inline required" for="id_friday">Friday</label>
+								{% if object.friday == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}	
+			                </div>
+			                <div class="field-box field-shabbos">
+			                    <label class="vCheckboxLabel inline required" for="id_shabbos">Shabbos</label>
+								{% if object.shabbos == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}	
+			                </div>
+			        </div>
+			</fieldset>
+			  <fieldset class="module aligned ">
+			        <div class="form-row field-days_and_times_available_notes">
+			                <div>
+			                        <label class="required" for="id_days_and_times_available_notes">Notes on Availability:</label>
+									{{ object.days_and_times_available_notes }}
+			                </div>
+			        </div>
+			</fieldset>
+			  <fieldset class="module aligned wide extrapretty">
+			    <h2>Volunteer Options</h2>
+			        <div class="form-row field-wants_alerts field-wants_alerts_notes">
+			                <div class="field-box field-wants_alerts">
+								<label class="vCheckboxLabel required" for="id_wants_alerts">Wants alerts</label>
+			                    {% if object.wants_alerts == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-wants_alerts_notes">
+			                        <label class="inline" for="id_wants_alerts_notes">Notes:</label>
+			                        {{ object.wants_alerts_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-meal_preparation field-meal_preparation_notes">
+			                <div class="field-box field-meal_preparation">
+			                    <label class="vCheckboxLabel required" for="id_meal_preparation">Meal preparation</label>
+			                    {% if object.meal_preparation == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-meal_preparation_notes">
+			                        <label class="inline" for="id_meal_preparation_notes">Notes:</label>
+			                        {{ object.meal_preparation_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-meal_delivery field-meal_delivery_notes">
+			                <div class="field-box field-meal_delivery">
+								<label class="vCheckboxLabel required" for="id_meal_delivery">Meal delivery</label>
+			                    {% if object.meal_delivery == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-meal_delivery_notes">
+			                        <label class="inline" for="id_meal_delivery_notes">Notes:</label>
+			                        {{ object.meal_preparation_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-hospital_visitation field-hospital_visitation_notes">
+			                <div class="field-box field-hospital_visitation">
+			                    <label class="vCheckboxLabel required" for="id_hospital_visitation">Hospital visitation</label>
+			                    {% if object.hospital_visitation == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-hospital_visitation_notes">
+			                        <label class="inline" for="id_hospital_visitation_notes">Notes:</label>
+			                        {{ object.hospital_visitation_notes }}
+			                </div>
+			            
+			        </div>
+			        <div class="form-row field-transportation_to_appointments field-transportation_to_appointments_notes">
+			                <div class="field-box field-transportation_to_appointments">
+			                    <label class="vCheckboxLabel required" for="id_transportation_to_appointments">Transportation to appointments</label>
+			                    {% if object.transportation_to_appointments == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-transportation_to_appointments_notes">
+			                        <label class="inline" for="id_transportation_to_appointments_notes">Notes:</label>
+			                        {{ object.transportation_to_appointments_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-overnight_hospital_stays field-overnight_hospital_stays_notes">
+			                <div class="field-box field-overnight_hospital_stays">
+			                    <label class="vCheckboxLabel required" for="id_overnight_hospital_stays">Overnight hospital stays</label>
+			                    {% if object.overnight_hospital_stays == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-overnight_hospital_stays_notes">
+			                        <label class="inline" for="id_overnight_hospital_stays_notes">Notes:</label>
+			                        {{ object.overnight_hospital_stays_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-assist_homebound field-assist_homebound_notes">
+			                <div class="field-box field-assist_homebound">
+			                    <label class="vCheckboxLabel required" for="id_assist_homebound">Assist homebound</label>
+			                    {% if object.assist_homebound == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-assist_homebound_notes">
+			                        <label class="inline" for="id_assist_homebound_notes">Notes:</label>
+			                        {{ object.assist_homebound_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-assist_with_children field-assist_with_children_notes">
+			                <div class="field-box field-assist_with_children">
+			                    <label class="vCheckboxLabel required" for="id_assist_with_children">Assist with children</label>
+			                    {% if object.assist_with_children == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-assist_with_children_notes">
+			                        <label class="inline" for="id_assist_with_children_notes">Notes:</label>
+			                        {{ object.assist_with_children_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-assist_with_children_activities field-assist_with_children_activities_notes">
+			                <div class="field-box field-assist_with_children_activities">
+			                    <label class="vCheckboxLabel required" for="id_assist_with_children_activities">Assist with children activities</label>
+			                    {% if object.assist_with_children_activities == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-assist_with_children_activities_notes">
+			                        <label class="inline" for="id_assist_with_children_activities_notes">Notes:</label>
+			                        {{ object.assist_with_children_activities_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-able_to_entertain_children field-able_to_entertain_children_notes">
+			                <div class="field-box field-able_to_entertain_children">
+			                    <label class="vCheckboxLabel required" for="id_able_to_entertain_children">Able to entertain children</label>
+			                    {% if object.able_to_entertain_children == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-able_to_entertain_children_notes">
+			                        <label class="inline" for="id_able_to_entertain_children_notes">Notes:</label>
+			                        {{ object.able_to_entertain_children_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-visit_elderly field-visit_elderly_notes">
+			                <div class="field-box field-visit_elderly">
+			                    <label class="vCheckboxLabel required" for="id_visit_elderly">Visit elderly</label>
+			                    {% if object.visit_elderly == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-visit_elderly_notes">
+			                        <label class="inline" for="id_visit_elderly_notes">Notes:</label>
+			                        {{ object.visit_elderly_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-assist_with_housekeeping field-assist_with_housekeeping_notes">
+			                <div class="field-box field-assist_with_housekeeping">
+			                    <label class="vCheckboxLabel required" for="id_assist_with_housekeeping">Assist with housekeeping</label>
+			                    {% if object.assist_with_housekeeping == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-assist_with_housekeeping_notes">
+			                        <label class="inline" for="id_assist_with_housekeeping_notes">Notes:</label>
+			                        {{ object.id_assist_with_housekeeping_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-phone_calls field-phone_calls_notes">
+			                <div class="field-box field-phone_calls">
+			                    <label class="vCheckboxLabel required" for="id_phone_calls">Phone calls</label>
+			                    {% if object.phone_calls == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-phone_calls_notes">
+			                        <label class="inline" for="id_phone_calls_notes">Notes:</label>
+			                        {{ object.phone_calls_notes }}
+			                </div>
+			        </div>
+			        <div class="form-row field-learn_with_elderly field-learn_with_elderly_notes">
+			                <div class="field-box field-learn_with_elderly">
+			                    <label class="vCheckboxLabel required" for="id_learn_with_elderly">Learn with elderly</label>
+			                    {% if object.learn_with_elderly == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-learn_with_elderly_notes">
+			                        <label class="inline" for="id_learn_with_elderly_notes">Notes:</label>
+			                        {{ object.learn_with_elderly_notes }}
+			                </div>
+			            
+			        </div>
+			    
+			</fieldset>
+			  <fieldset class="module aligned ">
+			        <div class="form-row">
+			                <div>
+			                        <label>Created at:</label>
+									{{ object.created_at }}
+			                </div>
+			        </div>
+					<div class="form-row">
+			                <div>
+			                        <label>Updated at:</label>
+									{{ object.updated_at }}
+			                </div>
+			        </div>
 			</fieldset>
 		</div>
 	</div>
