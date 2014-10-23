@@ -11,7 +11,6 @@ def getCols():
         'unique': 'true',  #This is required if you want checkable rows, or to use the rowClicked callback. Be certain the values are really unique or weird things will happen.
         'sortOrder': "asc", #Data will initially be sorted by this column. Possible are "asc" or "desc"
         'tooltip': "Unique ID number", #Show some additional info about column
-        #'filter': "1..400" #Set initial filter.
     }
     cols['name'] = {
         'index': 2,
