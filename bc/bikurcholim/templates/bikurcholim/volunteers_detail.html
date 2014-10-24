@@ -1,5 +1,4 @@
 {% extends "bikurcholim/bc_base_site.html" %}
-
 {% block title %}Volunteer - {{ object.first_name }} {{ object.last_name }}{% endblock %}
 {% block breadcrumbs %}
 	<div class="breadcrumbs">
@@ -10,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+
 	<h1>Volunteer - {{ object.get_name }}</h1>
     <ul class="object-tools">
 	    <li>

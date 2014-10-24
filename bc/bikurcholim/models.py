@@ -113,7 +113,7 @@ class CaseStatus(models.Model):
 		
 class Hospitals(models.Model):
 	name = models.CharField(max_length=100)
-	address = models.CharField(max_length=200)
+	address = models.CharField(max_length=200, null=True, blank=True)
 	class Meta:
 		verbose_name_plural = "Hospitals"
 	def __str__(self):
@@ -121,7 +121,7 @@ class Hospitals(models.Model):
 	
 class TikvahHouses(models.Model):
 	name = models.CharField(max_length=50)
-	address = models.CharField(max_length=200)
+	address = models.CharField(max_length=200, null=True, blank=True)
 	class Meta:
 		verbose_name_plural = "Tikvah Houses"
 	def __str__(self):
@@ -179,9 +179,9 @@ class Cases(models.Model):
 	client = models.ForeignKey(Clients)
 	status = models.ForeignKey(CaseStatus)
 	volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
-	open_date = models.DateTimeField('open date', null=True, blank=True)
-	date_of_service = models.DateTimeField('service date', null=True, blank=True)
-	close_date = models.DateTimeField('close date', null=True, blank=True)
+	open_date = models.DateField('open date', null=True, blank=True)
+	date_of_service = models.DateTimeField('date and time of service', null=True, blank=True)
+	close_date = models.DateField('close date', null=True, blank=True)
 	service = models.ForeignKey(Services, null=True, blank=True)
 	description = models.TextField(max_length=200, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)

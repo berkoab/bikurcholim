@@ -31,157 +31,160 @@ def getCols():
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['home_phone'] = {
-        'index': 4,
+        'index': 5,
         'type': "string",
         'friendly': "Home Phone",
         'tooltip': "Click here to sort", #Show some additional info about column
+		'hidden':'true'
     }
     cols['cell_phone'] = {
-        'index': 4,
+        'index': 6,
         'type': "string",
         'friendly': "Cell Phone",
         'tooltip': "Click here to sort", #Show some additional info about column
+		'hidden':'true'
     }
     cols['email_address'] = {
-        'index': 4,
+        'index': 7,
         'type': "string",
         'friendly': "Email",
         'tooltip': "Click here to sort", #Show some additional info about column
+		'hidden':'true'
     }
     cols['neighborhood'] = {
-        'index': 5,
+        'index': 8,
         'type': "string",
         'friendly': "Neighborhood",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['status'] = {
-        'index': 5,
+        'index': 9,
         'type': "string",
         'friendly': "Status",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['start_date'] = {
-        'index': 5,
-        'type': "string",
+        'index': 10,
+        'type': "date",
         'friendly': "Start Date",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['expected_end_date'] = {
-        'index': 5,
-        'type': "string",
+        'index': 11,
+        'type': "date",
         'friendly': "Exp. End Date",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['end_date'] = {
-        'index': 5,
-        'type': "string",
+        'index': 12,
+        'type': "date",
         'friendly': "End Date",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['hospital'] = {
-        'index': 5,
+        'index': 13,
         'type': "string",
         'friendly': "Hospital",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['hospital_room'] = {
-        'index': 5,
+        'index': 14,
         'type': "string",
         'friendly': "Hospital Room",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['hospital_notes'] = {
-        'index': 5,
+        'index': 15,
         'type': "string",
         'friendly': "Hospital Notes",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['tikvah_house'] = {
-        'index': 5,
+        'index': 16,
         'type': "string",
         'friendly': "Tikvah House",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['tikvah_room'] = {
-        'index': 5,
+        'index': 17,
         'type': "string",
         'friendly': "Tikvah Room",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['food_notes'] = {
-        'index': 5,
+        'index': 18,
         'type': "string",
         'friendly': "Food Notes",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['allergies'] = {
-        'index': 5,
+        'index': 19,
         'type': "string",
         'friendly': "Allergies",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['transportation'] = {
-        'index': 5,
+        'index': 20,
         'type': "string",
         'friendly': "Transportation",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['visitor_comments'] = {
-        'index': 5,
+        'index': 21,
         'type': "string",
         'friendly': "Visitor Comments",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['medical_equipment'] = {
-        'index': 5,
+        'index': 22,
         'type': "string",
         'friendly': "Medical Equipment",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['donation_made'] = {
-        'index': 5,
+        'index': 23,
         'type': "string",
         'friendly': "Donation Made",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['text_ability'] = {
-        'index': 5,
-        'type': "string",
+        'index': 24,
+        'type': "bool",
         'friendly': "Text Ability",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['yoshon'] = {
-        'index': 5,
-        'type': "string",
+        'index': 25,
+        'type': "bool",
         'friendly': "Yoshon",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['cholov_yisroel'] = {
-        'index': 5,
-        'type': "string",
+        'index': 26,
+        'type': "bool",
         'friendly': "Cholov Yisroel",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['food_to_hospital'] = {
-        'index': 5,
-        'type': "string",
+        'index': 27,
+        'type': "bool",
         'friendly': "Food To Hospital",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['food_to_home'] = {
-        'index': 5,
-        'type': "string",
+        'index': 28,
+        'type': "bool",
         'friendly': "Food To Home",
-        'tooltip': "Click here to sort", #Show some additional info about column
+        'hidden':'true'
     }
     cols['meal_coordinator'] = {
-        'index': 5,
+        'index': 29,
         'type': "string",
         'friendly': "Meal Coordinator",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['meal_preparer'] = {
-        'index': 5,
+        'index': 30,
         'type': "string",
         'friendly': "Meal Preparer",
         'tooltip': "Click here to sort", #Show some additional info about column
@@ -205,13 +208,13 @@ def getRows():
 		columns['cell_phone']=client.cell_phone
 		columns['email_address']=client.email_address
 		columns['status']=client.status.status
-		columns['start_date']=client.start_date
-		columns['expected_end_date']=client.expected_end_date
-		columns['end_date']=client.end_date
-		columns['hospital']=client.hospital
+		columns['start_date']=str(client.start_date)
+		columns['expected_end_date']=str(client.expected_end_date)
+		columns['end_date']=str(client.end_date)
+		columns['hospital']=client.hospital.name
 		columns['hospital_room']=client.hospital_room
 		columns['hospital_notes']=client.hospital_notes
-		columns['tikvah_house']=client.tikvah_house
+		columns['tikvah_house']=client.tikvah_house.name
 		columns['tikvah_room']=client.tikvah_room
 		columns['food_notes']=client.food_notes
 		columns['allergies']=client.allergies

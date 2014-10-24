@@ -1,4 +1,5 @@
 import collections
+import datetime
 from bikurcholim.models import Cases
 
 def getCols():
@@ -10,35 +11,57 @@ def getCols():
         'format': "<a href='/bikurcholim/cases/{0}' class='userId' target='_blank'>{0}</a>",  #Used to format the data anything you want. Use {0} as placeholder for the actual data.
         'unique': 'true',  #This is required if you want checkable rows, or to use the rowClicked callback. Be certain the values are really unique or weird things will happen.
         'sortOrder': "asc", #Data will initially be sorted by this column. Possible are "asc" or "desc"
-        'tooltip': "This column has an initial filter", #Show some additional info about column
-        'filter': "1..400" #Set initial filter.
+        'tooltip': "Unique ID number", #Show some additional info about column
     }
     cols['status'] = {
         'index': 2,
         'type': "string",
         'friendly': "Status",
-        'tooltip': "This column has a custom placeholder", #Show some additional info about column
-        'placeHolder': "abc123" #Overrides default placeholder and placeholder specified in data types(row 34).
+        'tooltip': "Click here to sort"
     }
     cols['client'] = {
         'index': 3,
         'type': "string",
         'friendly': "Client",
-        'tooltip': "This column has a custom placeholder", #Show some additional info about column
+        'tooltip': "Click here to sort"
     }
     cols['volunteer'] = {
         'index': 4,
         'type': "string",
         'friendly': "Volunteer",
-        'tooltip': "This column has a custom placeholder", #Show some additional info about column
+        'tooltip': "Click here to sort"
+    }
+    cols['open_date'] = {
+        'index': 5,
+        'type': "date",
+        'friendly': "Open Date",
+        'tooltip': "Click here to sort"
+    }
+    cols['date_of_service'] = {
+        'index': 6,
+        'type': "date",
+        'friendly': "Date and Time of Service",
+        'tooltip': "Click here to sort"
+    }
+    cols['close_date'] = {
+        'index': 7,
+        'type': "date",
+        'friendly': "Close Date",
+        'tooltip': "Click here to sort"
+    }
+    cols['service'] = {
+        'index': 8,
+        'type': "string",
+        'friendly': "Service",
+        'tooltip': "Click here to sort"
     }
     cols['description'] = {
-        'index': 5,
+        'index': 9,
         'type': "string",
         'friendly': "Description",
-        'tooltip': "This column has a custom placeholder", #Show some additional info about column
+        'tooltip': "Click here to sort"
     }
-    
+
     return cols
    
 def getRows():
@@ -50,8 +73,18 @@ def getRows():
 		columns = collections.OrderedDict()
 		columns['id']=cases.id
 		columns['status']=cases.status.status
-		columns['client']=cases.client.last_name
-		columns['volunteer']=cases.volunteer.last_name
+		if(cases.status.status=='Closed'):
+			columns['statusFormat']="<div class='red'>{0}</div>"
+		elif(cases.status.status=='Assigned'):
+			columns['statusFormat']="<div class='green'>{0}</div>"
+		else:
+			columns['statusFormat']="<div class='yellow'>{0}</div>"
+		columns['client']=cases.client.get_name()
+		columns['volunteer']=cases.volunteer.get_name()
+		columns['open_date']=str(cases.open_date)
+		columns['date_of_service']=cases.date_of_service.strftime('%Y-%m-%d %H:%M')
+		columns['close_date']=str(cases.close_date)
+		columns['service']=cases.service.service
 		columns['description']=cases.description
 
 		rows.append(columns)
