@@ -1,5 +1,8 @@
 import collections
 import datetime
+from datetime import date
+import time
+from datetime import datetime
 from bikurcholim.models import Cases
 
 def getCols():
@@ -63,7 +66,11 @@ def getCols():
     }
 
     return cols
-   
+
+def datetime_to_ms_str(dt):
+	t = time.mktime(dt.timetuple())
+	return int(t*1000)
+
 def getRows():
 	rows=[]
 	
@@ -81,8 +88,8 @@ def getRows():
 			columns['statusFormat']="<div class='yellow'>{0}</div>"
 		columns['client']=cases.client.get_name()
 		columns['volunteer']=cases.volunteer.get_name()
-		columns['open_date']=str(cases.open_date)
-		columns['date_of_service']=cases.date_of_service.strftime('%Y-%m-%d %H:%M')
+		columns['open_date']=datetime_to_ms_str(cases.open_date)
+		columns['date_of_service']=str(cases.date_of_service)
 		columns['close_date']=str(cases.close_date)
 		columns['service']=cases.service.service
 		columns['description']=cases.description

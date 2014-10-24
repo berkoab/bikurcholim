@@ -13,7 +13,7 @@ from bikurcholim.models import Services
 		
 class VolunteersAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name')
-	list_filter = ['neighborhood']
+	list_filter = ['neighborhood', 'vehicle', 'start_time_available', 'end_time_availalable']
 	search_fields = ['last_name', 'first_name', 'street', 'work_place', 'email_address', ]
 	fieldsets = [
 		(None, {'fields': ['first_name', 'last_name', 'address', 'city', 'neighborhood', 'work_place', 'medical_training', 'home_phone', 
