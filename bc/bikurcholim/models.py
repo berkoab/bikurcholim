@@ -134,7 +134,7 @@ class Clients(models.Model):
 	city = models.ForeignKey(Cities, null=True, blank=True)
 	home_phone = models.CharField(max_length=50, null=True, blank=True)
 	cell_phone = models.CharField(max_length=50, null=True, blank=True)
-	email_address = models.EmailField(max_length=50, null=True, blank=True)
+	email_address = models.EmailField(max_length=100, null=True, blank=True)
 	neighborhood = models.ForeignKey(Neighborhoods, null=True, blank=True)
 	status = models.ForeignKey(ClientStatus, null=True, blank=True)
 	start_date = models.DateField(null=True, blank=True)

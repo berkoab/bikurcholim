@@ -71,6 +71,10 @@ def cases(request):
 
 	return render(request, 'bikurcholim/table_base.html', context)
 
+def cases_advanced(request):
+	context = []
+	return render(request, 'bikurcholim/cases_advanced.html', context)
+
 class VolunteersDetailView(generic.DetailView):
 
 	model = Volunteers

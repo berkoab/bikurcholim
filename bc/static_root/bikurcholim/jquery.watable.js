@@ -455,8 +455,8 @@
                                     }
                                     break;
                                 case "date":
-                                    val = new priv.ext.XDate(val, priv.options.types.date.utc === true).toString(priv.options.types.date.format || 'yyyy-MM-dd HH:mm:ss');
-                                    cell.html(format.f(val));
+									val = new priv.ext.XDate(val, priv.options.types.date.utc === true).toString(priv.options.types.date.format || 'yyyy-MM-dd HH:mm:ss');
+									cell.html(format.f(val));
                                     break;
                                 case "bool":
                                     $('<input type="checkbox" {0} disabled />'.f(val ? "checked" : "")).appendTo(cell);

@@ -14,4 +14,5 @@ urlpatterns = patterns('',
 	url(r'^cases/(?P<pk>\d+)/$', CasesDetailView.as_view(), name='cases-detail'),
 	url(r'^login/$', views.user_login, name='login'),
 	url(r'^export_xls/$', views.export_xls, name='export_xls'),
+	url(r'^cases_advanced/$', views.cases_advanced, name='cases_advanced'),
 )

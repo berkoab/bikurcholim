@@ -62,14 +62,17 @@ def getCols():
         'index': 9,
         'type': "string",
         'friendly': "Description",
-        'tooltip': "Click here to sort"
+        'hidden': 'true'
     }
 
     return cols
 
 def datetime_to_ms_str(dt):
-	t = time.mktime(dt.timetuple())
-	return int(t*1000)
+	if(dt):
+		t = time.mktime(dt.timetuple())
+		return int(t*1000)
+	else:
+		return 0
 
 def getRows():
 	rows=[]
@@ -89,8 +92,8 @@ def getRows():
 		columns['client']=cases.client.get_name()
 		columns['volunteer']=cases.volunteer.get_name()
 		columns['open_date']=datetime_to_ms_str(cases.open_date)
-		columns['date_of_service']=str(cases.date_of_service)
-		columns['close_date']=str(cases.close_date)
+		columns['date_of_service']=datetime_to_ms_str(cases.date_of_service)
+		columns['close_date']=datetime_to_ms_str(cases.close_date)
 		columns['service']=cases.service.service
 		columns['description']=cases.description
 

@@ -68,15 +68,15 @@ def getCols():
     }
     cols['start_time_available'] = {
         'index': 11,
-        'type': "string",
+        'type': "number",
         'friendly': "Start Time Available",
-        'hidden':'true'
+		'tooltip': "Click here to sort"
     }
     cols['end_time_availalable'] = {
         'index': 12,
-        'type': "string",
+        'type': "number",
         'friendly': "End Time Available",
-        'hidden':'true'
+		'tooltip': "Click here to sort"
     }
     cols['days_and_times_available_notes'] = {
         'index': 13,
@@ -333,8 +333,8 @@ def getRows():
 		columns['vehicle']=volunteer.vehicle.vehicle
 		columns['other_languages']=volunteer.other_languages
 		columns['other_specialties']=volunteer.other_specialties
-		columns['start_time_available']=str(volunteer.start_time_available)
-		columns['end_time_availalable']=str(volunteer.end_time_availalable)
+		columns['start_time_available']=volunteer.start_time_available.hour
+		columns['end_time_availalable']=volunteer.end_time_availalable.hour
 		columns['days_and_times_available_notes']=volunteer.days_and_times_available_notes
 		columns['sunday']=volunteer.sunday
 		columns['monday']=volunteer.monday

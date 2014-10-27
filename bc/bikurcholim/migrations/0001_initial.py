@@ -57,7 +57,7 @@ class Migration(migrations.Migration):
                 ('address', models.CharField(max_length=100, null=True, blank=True)),
                 ('home_phone', models.CharField(max_length=50, null=True, blank=True)),
                 ('cell_phone', models.CharField(max_length=50, null=True, blank=True)),
-                ('email_address', models.EmailField(max_length=50, null=True, blank=True)),
+                ('email_address', models.EmailField(max_length=100, null=True, blank=True)),
                 ('start_date', models.DateField(null=True, blank=True)),
                 ('expected_end_date', models.DateField(null=True, blank=True)),
                 ('end_date', models.DateField(null=True, blank=True)),

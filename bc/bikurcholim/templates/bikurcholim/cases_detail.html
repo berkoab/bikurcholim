@@ -21,26 +21,59 @@
     </ul>
 	<div id="content-main">
 		<div>
-			<fieldset class="module aligned ">
-				<div class="form-row">                     
-					<div>
-						<label class="required">Id:</label>
-							{{ object.id }}			
-					</div>
-				</div>
-				<div class="form-row">                     
-					<div>
-						<label class="required">Client:</label>
-							{{ object.client.last_name }}			
-					</div>
-				</div>
-				<div class="form-row">                     
-					<div>
-						<label class="required">Volunteer:</label>
-							{{ object.volunteer.last_name }}			
-					</div>
-				</div>
-			</fieldset>
+  <fieldset class="module aligned ">
+        <div class="form-row field-client">
+			<div>
+                        <label class="required" for="id_client">Client:</label>
+                        {{ object.client }}
+                </div>
+        </div>
+        <div class="form-row field-status">
+                <div>   
+                        <label class="required" for="id_status">Status:</label>
+                        {{ object.status }}
+                </div>
+        </div>
+        <div class="form-row field-volunteer">
+                <div>
+                        <label for="id_volunteer">Volunteer:</label>
+                        {{ object.volunteer }}
+                </div>
+        </div>
+        <div class="form-row field-open_date">
+                <div>
+                        <label for="id_open_date">Open date:</label>
+                        {{ object.open_date }}
+                </div>
+        </div>
+        <div class="form-row field-date_of_service">
+                <div> 
+                        <label for="id_date_of_service_0">Date and time of service:</label>
+                        {{ object.date_of_service }}
+                </div>
+        </div>
+        <div class="form-row field-close_date">
+                <div> 
+                        <label for="id_close_date">Close date:</label>
+                        {{ object.close_date }}
+                </div>
+        </div>
+        <div class="form-row field-service">
+                <div>
+                        <label for="id_service">Service:</label>
+                        {{ object.service }}
+                </div>
+        </div>
+        <div class="form-row field-description">
+                <div>
+                        <label for="id_description">Description:</label>
+                        {{ object.description }}
+                </div>
+            
+        </div>
+    
+</fieldset>
+
 		</div>
 	</div>
 {% endblock %}

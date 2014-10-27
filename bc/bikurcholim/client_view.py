@@ -1,4 +1,8 @@
 import collections
+import datetime
+from datetime import date
+import time
+from datetime import datetime
 from bikurcholim.models import Clients
 
 def getCols():
@@ -191,7 +195,14 @@ def getCols():
     }
 
     return cols
-   
+
+def datetime_to_ms_str(dt):
+	if(dt):
+		t = time.mktime(dt.timetuple())
+		return int(t*1000)
+	else:
+		return 0
+	
 def getRows():
 	rows=[]
 	
@@ -208,9 +219,9 @@ def getRows():
 		columns['cell_phone']=client.cell_phone
 		columns['email_address']=client.email_address
 		columns['status']=client.status.status
-		columns['start_date']=str(client.start_date)
-		columns['expected_end_date']=str(client.expected_end_date)
-		columns['end_date']=str(client.end_date)
+		columns['start_date']=datetime_to_ms_str(client.start_date)
+		columns['expected_end_date']=datetime_to_ms_str(client.expected_end_date)
+		columns['end_date']=datetime_to_ms_str(client.end_date)
 		columns['hospital']=client.hospital.name
 		columns['hospital_room']=client.hospital_room
 		columns['hospital_notes']=client.hospital_notes
