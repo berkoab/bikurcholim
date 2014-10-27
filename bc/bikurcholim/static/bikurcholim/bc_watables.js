@@ -41,7 +41,8 @@ $(document).ready( function() {
                   $('<a href="#" class="refresh"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Refresh</a>'),
                   $('<a href="#" class="export_all"><span class="glyphicon glyphicon-share"></span>&nbsp;Export all data</a>'),
                   $('<a href="#" class="export_checked"><span class="glyphicon glyphicon-share"></span>&nbsp;Export checked rows</a>'),
-                  $('<a href="#" class="export_filtered"><span class="glyphicon glyphicon-share"></span>&nbsp;Export filtered data</a>')
+                  $('<a href="#" class="export_filtered"><span class="glyphicon glyphicon-share"></span>&nbsp;Export filtered data</a>'),
+                  $('<a href="#" class="advanced"><span class="glyphicon glyphicon-share"></span>&nbsp;Advanced Pivot</a>')
                 ]
             },
             tableCreated: function(data) {    //Fires when the table is created / recreated. Use it if you want to manipulate the table in any way.
@@ -91,21 +92,25 @@ $(document).ready( function() {
             waTable.setData(data, true);
         });
         //Example event handler triggered by the custom export links above.
-        $('body').on('click', '.export_checked, .export_filtered, .export_all', function(e) {
+        $('body').on('click', '.export_checked, .export_filtered, .export_all, .advanced', function(e) {
             e.preventDefault();
             var elem = $(e.target);
             var data;
             if (elem.hasClass('export_all')) {
 				data = waTable.getData(false, true);
-				download(JSON.stringify(data), waTable.getAllCols())
+				download(JSON.stringify(data), waTable.getAllCols(), '/bikurcholim/export_xls/')
 			}
             else if (elem.hasClass('export_checked')) {
             	data = waTable.getData(true);
-            	download(JSON.stringify(data), waTable.getCheckedCols())
+            	download(JSON.stringify(data), waTable.getCheckedCols(), '/bikurcholim/export_xls/')
             }
             else if (elem.hasClass('export_filtered')) {
             	data = waTable.getData(false, true);
-				download(JSON.stringify(data), waTable.getCheckedCols())
+				download(JSON.stringify(data), waTable.getCheckedCols(), '/bikurcholim/export_xls/')
+            }
+            else if (elem.hasClass('advanced')) {
+            	data = waTable.getData(false, true);
+				download(JSON.stringify(data), waTable.getCheckedCols(), '/bikurcholim/cases_advanced/')
             }
             console.log(data.rows.length + ' rows returned');
             console.log(data);
@@ -113,9 +118,9 @@ $(document).ready( function() {
         });
 		
 
-		function download(data, checkedCols){
+		function download(data, checkedCols, page){
 			// Build a form
-			var form = $('<form></form>').attr('action', '/bikurcholim/export_xls/').attr('method', 'post');
+			var form = $('<form></form>').attr('action', page).attr('method', 'post');
 			form.append($('<input></input>').attr('type', 'hidden').attr('name', 'csrfmiddlewaretoken').attr('value', csrftoken));
 			// Add the one key/value
 			form.append($("<input></input>").attr('type', 'hidden').attr('name', 'data').attr('value', data));

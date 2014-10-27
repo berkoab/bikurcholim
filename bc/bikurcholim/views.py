@@ -71,9 +71,42 @@ def cases(request):
 
 	return render(request, 'bikurcholim/table_base.html', context)
 
+@login_required(login_url='/bikurcholim/login/')
 def cases_advanced(request):
-	context = []
+	values_list = request.POST['data']
+	checkedCols = request.POST['checkedCols']
+	json_object = json.JSONDecoder(object_pairs_hook=collections.OrderedDict).decode(values_list)
+	
+	cols=json_object['cols']
+
+	colx=0
+	cc = []
+	for col in cols:
+		if(col in checkedCols):
+			cc.append(True)
+			colx+=1
+		else:
+			cc.append(False)
+	rows=[]
+	for row in json_object['rows']:
+		colx=0
+		ccx=0
+		r={}
+		#for v in row:
+		if(cc[ccx]):
+		#	key=cols[ccx]
+		#	value=row[v]
+		#	r[key] = value	
+		#ccx+=1
+			rows.append(row)		
+	
+	context = {}
+	context = {'data': json.dumps(rows)}
 	return render(request, 'bikurcholim/cases_advanced.html', context)
+
+def test(request):
+	context = []
+	return render(request, 'bikurcholim/test.html', context)
 
 class VolunteersDetailView(generic.DetailView):
 

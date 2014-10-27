@@ -1,9 +1,8 @@
 {% extends "bikurcholim/bc_base_site.html" %}
 {% load static %}
 {% block title %}Cases Advanced{% endblock %}
-{% block extrahead %}
+{% block head %}
 {{ block.super }}
-
  <link rel="stylesheet" type="text/css" href="{% static "bikurcholim/pivot.css" %}">
  <script type="text/javascript" src="{% static "bikurcholim/jquery-1.8.3.min.js" %}"></script>
  <script type="text/javascript" src="{% static "bikurcholim/jquery-ui-1.9.2.custom.min.js" %}"></script>
@@ -15,30 +14,45 @@
 	<div class="breadcrumbs">
 	<a href="{% url 'index' %}">Home</a>
 	&rsaquo; <a href="{% url 'cases' %}">Cases</a>
-	&rsaquo;Advanced&rsaquo;
+	&rsaquo; Advanced &rsaquo;
 	</div>
 {% endblock %}
 {% block content %}
 <h1>Cases Advanced</h1>
 
 	<script type="text/javascript">
-
+		var json_data="{{ data }}"
+		alert(getData())
         $(function(){
-        $("#output").pivotUI(
-        [
-            {color: "blue", shape: "circle"},
-            {color: "red", shape: "triangle"}
-        ],
-        {
-            rows: ["color"],
-            cols: ["shape"]
-        }
-		);
-    });
+	        $("#output").pivotUI(
+	        [
+	            {color: "blue", shape: "circle"},
+	            {color: "red", shape: "triangle"}
+	        ],
+	        {
+	            rows: ["color"],
+	            cols: ["shape"]
+	        }
+			);
+    	});
+    	$(function(){
+	        $("#output").pivotUI(
+	        getData()
+			);
+    	});
+    	function getData() {
+			var json = json_data;
+			json=json.replace(/&quot;/g, '"');
+			json=json.replace(/&lt;/g, '<');
+			json=json.replace(/&gt;/g, '>');
+			json=json.replace(/&#39;/g, "'");
+			obj = JSON.parse(json);
+			json=json.replace(/"(\w+)"\s*:/g, '$1:');
+			return "[{id: \"1\", status: \"Open\", statusFormat: \"<div class='yellow'>{0}</div>\", client: \"Rich, Timothy\", volunteer: \"Allison, Wyoming\", open_date: \"1416459600000\", date_of_service: \"1409547600000\", close_date: \"0\", service: \"Drive\", description: \"nisi\"}, {id: \"2\", status: \"Assigned\", statusFormat: \"<div class='green'>{0}</div>\", client: \"Tanner, Amela\", volunteer: \"Phelps, Sybil\", open_date: \"1409544000000\", date_of_service: \"1409547600000\", close_date: \"0\", service: \"Drive\", description: \"et magnis dis parturient\"}]"
+			return json;
+		}	
     </script>
 
-	<div id="content-main">
-
-		<div id="div1" style="width:auto"></div>
-	</div>
+	<div id="output" style="margin: 10px;"></div>
+	
 {% endblock %}

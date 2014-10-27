@@ -15,4 +15,5 @@ urlpatterns = patterns('',
 	url(r'^login/$', views.user_login, name='login'),
 	url(r'^export_xls/$', views.export_xls, name='export_xls'),
 	url(r'^cases_advanced/$', views.cases_advanced, name='cases_advanced'),
+	url(r'^test/$', views.test, name='test'),
 )

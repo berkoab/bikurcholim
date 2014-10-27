@@ -1,0 +1,42 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+{% load static %}
+{% block title %}Cases Advanced{% endblock %}
+{% block head %}
+
+
+        <link rel="stylesheet" type="text/css" href="{% static "bikurcholim/pivot.css" %}">
+ 		<script type="text/javascript" src="{% static "bikurcholim/jquery-1.8.3.min.js" %}"></script>
+ 		<script type="text/javascript" src="{% static "bikurcholim/jquery-ui-1.9.2.custom.min.js" %}"></script>
+ 		<script type="text/javascript" src="{% static "bikurcholim/pivot.js" %}"></script>
+ 		
+
+    
+
+    {% endblock %}
+    {% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; <a href="{% url 'cases' %}">Cases</a>
+	&rsaquo;Advanced&rsaquo;
+	</div>
+{% endblock %}
+    {% block content %}
+<h1>Cases Advanced</h1>
+        <script type="text/javascript">
+            $(function(){
+                        $("#output").pivotUI(
+        [
+            {color: "blue", shape: "circle"},
+            {color: "red", shape: "triangle"}
+        ],
+        {
+            rows: ["color"],
+            cols: ["shape"]
+        }
+    );
+             });
+        </script>
+
+
+    {% endblock %}
+</html>
