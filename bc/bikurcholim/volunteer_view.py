@@ -326,15 +326,20 @@ def getRows():
 		columns['id']=volunteer.id
 		columns['name']=volunteer.get_name()
 		columns['address']=volunteer.address
-		columns['city']=volunteer.city.city
-		columns['neighborhood']=volunteer.neighborhood.neighborhood
+		if(volunteer.city):
+			columns['city']=volunteer.city.city
+		if(volunteer.neighborhood):
+			columns['neighborhood']=volunteer.neighborhood.neighborhood
 		columns['work_place']=volunteer.work_place
 		columns['medical_training']=volunteer.medical_training
-		columns['vehicle']=volunteer.vehicle.vehicle
+		if(volunteer.vehicle):
+			columns['vehicle']=volunteer.vehicle.vehicle
 		columns['other_languages']=volunteer.other_languages
 		columns['other_specialties']=volunteer.other_specialties
-		columns['start_time_available']=volunteer.start_time_available.hour
-		columns['end_time_availalable']=volunteer.end_time_availalable.hour
+		if(volunteer.start_time_available):
+			columns['start_time_available']=volunteer.start_time_available.hour
+		if(volunteer.end_time_availalable):
+			columns['end_time_availalable']=volunteer.end_time_availalable.hour
 		columns['days_and_times_available_notes']=volunteer.days_and_times_available_notes
 		columns['sunday']=volunteer.sunday
 		columns['monday']=volunteer.monday

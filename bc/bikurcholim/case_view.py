@@ -58,8 +58,14 @@ def getCols():
         'friendly': "Service",
         'tooltip': "Click here to sort"
     }
-    cols['description'] = {
+    cols['location'] = {
         'index': 9,
+        'type': "string",
+        'friendly': "Location",
+        'tooltip': "Click here to sort"
+    }
+    cols['description'] = {
+        'index': 10,
         'type': "string",
         'friendly': "Description",
         'hidden': 'true'
@@ -82,7 +88,8 @@ def getRows():
 	for cases in d:
 		columns = collections.OrderedDict()
 		columns['id']=cases.id
-		columns['status']=cases.status.status
+		if(cases.status):
+			columns['status']=cases.status.status
 		if(cases.status.status=='Closed'):
 			columns['statusFormat']="<div class='red'>{0}</div>"
 		elif(cases.status.status=='Assigned'):
@@ -90,11 +97,15 @@ def getRows():
 		else:
 			columns['statusFormat']="<div class='yellow'>{0}</div>"
 		columns['client']=cases.client.get_name()
-		columns['volunteer']=cases.volunteer.get_name()
+		if (cases.volunteer):
+			columns['volunteer']=cases.volunteer.get_name()
 		columns['open_date']=datetime_to_ms_str(cases.open_date)
 		columns['date_of_service']=datetime_to_ms_str(cases.date_of_service)
 		columns['close_date']=datetime_to_ms_str(cases.close_date)
-		columns['service']=cases.service.service
+		if(cases.service):
+			columns['service']=cases.service.service
+		if (cases.location):
+			columns['location']=cases.location.name
 		columns['description']=cases.description
 
 		rows.append(columns)

@@ -37,7 +37,7 @@ class ClientsAdmin(admin.ModelAdmin):
 	search_fields = ['last_name', 'first_name', 'street']
 class CasesAdmin(admin.ModelAdmin):
 	list_display = ('id', 'client', 'volunteer')
-	list_filter = ['status__status']
+	list_filter = ['status__status', 'location__name']
 	search_fields = ['client__first_name', 'client__last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
 	
 admin.site.register(Neighborhoods)

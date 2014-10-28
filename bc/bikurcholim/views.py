@@ -79,26 +79,35 @@ def cases_advanced(request):
 	
 	cols=json_object['cols']
 
-	colx=0
 	cc = []
 	for col in cols:
 		if(col in checkedCols):
 			cc.append(True)
-			colx+=1
 		else:
 			cc.append(False)
+
 	rows=[]
+	ccx=0
+	
 	for row in json_object['rows']:
-		colx=0
 		ccx=0
-		r={}
-		#for v in row:
-		if(cc[ccx]):
-		#	key=cols[ccx]
-		#	value=row[v]
-		#	r[key] = value	
-		#ccx+=1
-			rows.append(row)		
+		r = collections.OrderedDict()
+		for key, value in row.iteritems():
+			#if(item[-6:]=='Format'):
+			#	del row[item]
+			#	continue
+			#if(not cc[ccx]):
+			#	del row[item]
+			if(key in checkedCols):
+				r[key]=value
+			ccx+=1
+		rows.append(r)
+
+	#for row in json_object['rows']:
+	#	r={}
+	#	if(cc[ccx]):
+	#		rows.append(row)
+	#		ccx+=1		
 	
 	context = {}
 	context = {'data': json.dumps(rows)}

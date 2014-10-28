@@ -213,8 +213,10 @@ def getRows():
 		columns['id']=client.id
 		columns['name']=client.get_name()
 		columns['address']=client.address
-		columns['city']=client.city.city
-		columns['neighborhood']=client.neighborhood.neighborhood
+		if(client.city):
+			columns['city']=client.city.city
+		if(client.neighborhood):
+			columns['neighborhood']=client.neighborhood.neighborhood
 		columns['home_phone']=client.home_phone
 		columns['cell_phone']=client.cell_phone
 		columns['email_address']=client.email_address
@@ -222,10 +224,12 @@ def getRows():
 		columns['start_date']=datetime_to_ms_str(client.start_date)
 		columns['expected_end_date']=datetime_to_ms_str(client.expected_end_date)
 		columns['end_date']=datetime_to_ms_str(client.end_date)
-		columns['hospital']=client.hospital.name
+		if(client.hospital):
+			columns['hospital']=client.hospital.name
 		columns['hospital_room']=client.hospital_room
 		columns['hospital_notes']=client.hospital_notes
-		columns['tikvah_house']=client.tikvah_house.name
+		if(client.tikvah_house):
+			columns['tikvah_house']=client.tikvah_house.name
 		columns['tikvah_room']=client.tikvah_room
 		columns['food_notes']=client.food_notes
 		columns['allergies']=client.allergies
@@ -238,8 +242,10 @@ def getRows():
 		columns['cholov_yisroel']=client.cholov_yisroel
 		columns['food_to_hospital']=client.food_to_hospital
 		columns['food_to_home']=client.food_to_home
-		columns['meal_coordinator']=client.meal_coordinator.get_name()
-		columns['meal_preparer']=client.meal_preparer.get_name()		
+		if(client.meal_coordinator):
+			columns['meal_coordinator']=client.meal_coordinator.get_name()
+		if(client.meal_preparer):
+			columns['meal_preparer']=client.meal_preparer.get_name()		
 
 		rows.append(columns)
 	return rows

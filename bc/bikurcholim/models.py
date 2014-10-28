@@ -183,6 +183,7 @@ class Cases(models.Model):
 	date_of_service = models.DateTimeField('date and time of service', null=True, blank=True)
 	close_date = models.DateField('close date', null=True, blank=True)
 	service = models.ForeignKey(Services, null=True, blank=True)
+	location = models.ForeignKey(Hospitals, null=True, blank=True)
 	description = models.TextField(max_length=200, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
