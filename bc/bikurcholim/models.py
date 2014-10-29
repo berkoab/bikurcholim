@@ -4,6 +4,7 @@ class Neighborhoods(models.Model):
 	neighborhood = models.CharField(max_length=50)
 	class Meta:
 		verbose_name_plural = "Neighborhoods"
+		ordering = ('neighborhood',)
 	def __str__(self):
 		return self.neighborhood
 		
@@ -11,6 +12,7 @@ class Cities(models.Model):
 	city = models.CharField(max_length=50)
 	class Meta:
 		verbose_name_plural = "Cities"
+		ordering = ('city',)
 	def __str__(self):
 		return self.city
 		
@@ -18,6 +20,7 @@ class Vehicles(models.Model):
 	vehicle = models.CharField(max_length=50)
 	class Meta:
 		verbose_name_plural = "Vehicles"
+		ordering = ('vehicle',)
 	def __str__(self):
 		return self.vehicle
 	
@@ -78,6 +81,7 @@ class Volunteers(models.Model):
     
 	class Meta:
 		verbose_name_plural = "Volunteers"
+		ordering = ('last_name',)
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name
 	def get_fields(self):
@@ -101,6 +105,7 @@ class ClientStatus(models.Model):
 	status = models.CharField(max_length=50)
 	class Meta:
 		verbose_name_plural = "Client Statuses"
+		ordering = ('status',)
 	def __str__(self):
 		return self.status
 
@@ -108,6 +113,7 @@ class CaseStatus(models.Model):
 	status = models.CharField(max_length=50)
 	class Meta:
 		verbose_name_plural = "Case Statuses"
+		ordering = ('status',)
 	def __str__(self):
 		return self.status
 		
@@ -116,6 +122,7 @@ class Hospitals(models.Model):
 	address = models.CharField(max_length=200, null=True, blank=True)
 	class Meta:
 		verbose_name_plural = "Hospitals"
+		ordering = ('name',)
 	def __str__(self):
 		return self.name
 	
@@ -124,6 +131,7 @@ class TikvahHouses(models.Model):
 	address = models.CharField(max_length=200, null=True, blank=True)
 	class Meta:
 		verbose_name_plural = "Tikvah Houses"
+		ordering = ('name',)
 	def __str__(self):
 		return self.name
 		
@@ -163,6 +171,7 @@ class Clients(models.Model):
     
 	class Meta:
 		verbose_name_plural = "Clients"
+		ordering = ('last_name',)
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name
 	def __str__(self):
@@ -172,6 +181,7 @@ class Services(models.Model):
 	service = models.CharField(max_length=50)
 	class Meta:
 		verbose_name_plural = "Services"
+		ordering = ('service',)
 	def __str__(self):
 		return self.service
 
@@ -191,4 +201,17 @@ class Cases(models.Model):
 		verbose_name_plural = "Cases"
 	def __str__(self):
 		return str(self.id)
-		
+
+class HousingSchedule(models.Model):
+	tikvah_house = models.ForeignKey(TikvahHouses, null=True, blank=True)
+	tikvah_room = models.CharField(max_length=50, null=True, blank=True)
+	client = models.ForeignKey(Clients)
+	from_date = models.DateField('from date', null=True, blank=True)
+	to_date = models.DateField('to date', null=True, blank=True)
+	description = models.TextField(max_length=200, null=True, blank=True)
+	def get_days(self):
+		return self.to_date - self.from_date
+	class Meta:
+		verbose_name_plural = "HousingSchedule"
+	def __str__(self):
+		return str(self.id)

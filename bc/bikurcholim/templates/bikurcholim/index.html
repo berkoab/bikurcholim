@@ -1,11 +1,84 @@
 {% extends "bikurcholim/bc_base_site.html" %}
 {% load static %}
-{% block title %}Cases{% endblock %}
+{% block title %}Bikur Cholim Database{% endblock %}
 {% block extrahead %}
 {{ block.super }}
 
 <link rel="stylesheet" type="text/css" href="{% static "bikurcholim/bikurcholim.css" %}" />
+<link href="{% static "bikurcholim/fullcalendar/fullcalendar.css" %}" rel='stylesheet' />
+<link href="{% static "bikurcholim/fullcalendar/fullcalendar.print.css" %}" rel='stylesheet' media='print' />
+<script src="{% static "bikurcholim/fullcalendar/lib/moment.min.js" %}"></script>
+<script src="{% static "bikurcholim/fullcalendar/lib/jquery.min.js" %}"></script>
+<script src="{% static "bikurcholim/fullcalendar/fullcalendar.min.js" %}"></script>
+<style>
+	#calendar {
+		max-width: 300px;
+		margin: 0 auto;
+	}
+	#housingcalendar {
+		max-width: 300px;
+		margin: 0 auto;
+	}
+	#loading {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+	#loading2 {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+</style>
 
+<script>
+
+	$(document).ready(function() {
+		
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			defaultDate: '2014-09-12',
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			events: {
+				url: 'php/get-events.php',
+				error: function() {
+					$('#script-warning').show();
+				}
+			},
+			loading: function(bool) {
+				$('#loading').toggle(bool);
+			}
+		});
+		$('#housingcalendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			defaultDate: '2014-09-12',
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			events: {
+				url: 'php/get-events.php',
+				error: function() {
+					$('#script-warning').show();
+				}
+			},
+			loading: function(bool) {
+				$('#loading2').toggle(bool);
+			}
+		});
+	});
+
+</script>
+	
 <!-- END Header -->
 {% endblock %}
 {% block breadcrumbs %}
@@ -18,7 +91,7 @@
 <div id="content-main" align="center">
 <table>
 	<tr align="center" >
-		<td colspan="5">
+		<td colspan="8">
 			<a href="{% url 'admin:index' %}">
 			<span id="id_0" class="button_example" style="cursor:pointer;">Administration</span>
 			</a>
@@ -43,7 +116,37 @@
 			<span id="id_0" class="button_example" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;Cases&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 			</a>
 		</td>
+		<td width="50"></td>
+		<td>
+			<a href="{% url 'housingschedule' %}">
+			<span id="id_0" class="button_example" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;Housing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			</a>
+		</td>
+		<td>
+			
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			Services Agenda
+		</td>
+		<td colspan="4">
+			Housing Schedule
+		</td>
+	</tr>
+	<tr>
+		
+		<td colspan="4">
+			<div id='loading'>loading...</div>
+			<div id='calendar'></div>
+		</td>
+		<td colspan="4">
+			<div id='loading2'>loading...</div>
+			<div id='housingcalendar'></div>
+		</td>
 	</tr>
 </table>
+
 </div>
+
 {% endblock %}

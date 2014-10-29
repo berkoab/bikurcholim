@@ -10,6 +10,7 @@ from bikurcholim.models import ClientStatus
 from bikurcholim.models import CaseStatus
 from bikurcholim.models import Cases
 from bikurcholim.models import Services
+from bikurcholim.models import HousingSchedule
 		
 class VolunteersAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name')
@@ -51,5 +52,6 @@ admin.site.register(ClientStatus)
 admin.site.register(CaseStatus)
 admin.site.register(Cases, CasesAdmin)
 admin.site.register(Services)
+admin.site.register(HousingSchedule)
 
 admin.AdminSite.site_header="Bikur Cholim Database Administration"

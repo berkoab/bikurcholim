@@ -110,7 +110,7 @@ $(document).ready( function() {
             }
             else if (elem.hasClass('advanced')) {
             	data = waTable.getData(false, true);
-				download(JSON.stringify(data), waTable.getCheckedCols(), '/bikurcholim/cases_advanced/')
+				download(JSON.stringify(data), waTable.getCheckedCols(), '/bikurcholim/'+smallName+'_advanced/')
             }
             console.log(data.rows.length + ' rows returned');
             console.log(data);

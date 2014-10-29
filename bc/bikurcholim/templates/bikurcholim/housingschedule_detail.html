@@ -1,0 +1,67 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+
+{% block title %}Housing Schedule: #{{ object.id }}{% endblock %}
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; <a href="{% url 'housingschedule' %}">Housing Schedule</a>
+	&rsaquo; {{ object.id }}
+	</div>
+{% endblock %}
+
+{% block content %}
+	<h1>Housing Schedule #: {{ object.id }}</h1>
+	<ul class="object-tools">
+	    <li>
+	    	<a href={% url change object.id %} class="addlink">			
+	        Change Housing Schedule #{{ object.id }}
+	        </a>
+	      </a>
+	    </li>
+    </ul>
+	<div id="content-main">
+		<div>
+  <fieldset class="module aligned ">
+        <div class="form-row field-client">
+			<div>
+                        <label class="required" for="id_client">Tikvah House:</label>
+                        {{ object.tikvah_house }}
+                </div>
+        </div>
+        <div class="form-row field-status">
+                <div>   
+                        <label class="required" for="id_status">Tikvah Room:</label>
+                        {{ object.tikvah_room }}
+                </div>
+        </div>
+        <div class="form-row field-volunteer">
+                <div>
+                        <label for="id_volunteer">Client:</label>
+                        {{ object.client }}
+                </div>
+        </div>
+        <div class="form-row field-open_date">
+                <div>
+                        <label for="id_open_date">From Date:</label>
+                        {{ object.from_date }}
+                </div>
+        </div>
+        <div class="form-row field-date_of_service">
+                <div> 
+                        <label for="id_date_of_service_0">To Date:</label>
+                        {{ object.to_date }}
+                </div>
+        </div>
+        <div class="form-row field-close_date">
+                <div> 
+                        <label for="id_close_date">Description:</label>
+                        {{ object.description }}
+                </div>
+        </div>
+ 
+    
+</fieldset>
+
+		</div>
+	</div>
+{% endblock %}

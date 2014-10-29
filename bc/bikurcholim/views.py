@@ -1,4 +1,4 @@
-from bikurcholim.models import Clients, Volunteers, Cases
+from bikurcholim.models import Clients, Volunteers, Cases, HousingSchedule
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.utils import timezone
 from django.views import generic
 from django.core.urlresolvers import reverse
-import volunteer_view, client_view, case_view
+import volunteer_view, client_view, case_view, housing_view
 import collections
 import datetime
 import json
@@ -72,19 +72,28 @@ def cases(request):
 	return render(request, 'bikurcholim/table_base.html', context)
 
 @login_required(login_url='/bikurcholim/login/')
+def housingschedule(request):
+	cols = housing_view.getCols()
+	rows = housing_view.getRows()
+	r = collections.OrderedDict()
+	r['cols'] = cols
+	r['rows'] = rows
+		
+	
+	context = {'data': json.dumps(r),
+			'bigName': 'Housing Schedule',
+			'smallName': 'housingschedule',
+			'add': 'admin:bikurcholim_housingschedule_add'}
+
+	return render(request, 'bikurcholim/table_base.html', context)
+
+@login_required(login_url='/bikurcholim/login/')
 def cases_advanced(request):
 	values_list = request.POST['data']
 	checkedCols = request.POST['checkedCols']
 	json_object = json.JSONDecoder(object_pairs_hook=collections.OrderedDict).decode(values_list)
 	
 	cols=json_object['cols']
-
-	cc = []
-	for col in cols:
-		if(col in checkedCols):
-			cc.append(True)
-		else:
-			cc.append(False)
 
 	rows=[]
 	ccx=0
@@ -93,25 +102,94 @@ def cases_advanced(request):
 		ccx=0
 		r = collections.OrderedDict()
 		for key, value in row.iteritems():
-			#if(item[-6:]=='Format'):
-			#	del row[item]
-			#	continue
-			#if(not cc[ccx]):
-			#	del row[item]
 			if(key in checkedCols):
 				r[key]=value
 			ccx+=1
 		rows.append(r)
 
-	#for row in json_object['rows']:
-	#	r={}
-	#	if(cc[ccx]):
-	#		rows.append(row)
-	#		ccx+=1		
+	context = {}
+	context = {'data': json.dumps(rows),
+			'bigName': 'Cases',
+			'smallName': 'cases',}
+	return render(request, 'bikurcholim/cases_advanced.html', context)
+
+@login_required(login_url='/bikurcholim/login/')
+def volunteers_advanced(request):
+	values_list = request.POST['data']
+	checkedCols = request.POST['checkedCols']
+	json_object = json.JSONDecoder(object_pairs_hook=collections.OrderedDict).decode(values_list)
+	
+	cols=json_object['cols']
+
+	rows=[]
+	ccx=0
+	
+	for row in json_object['rows']:
+		ccx=0
+		r = collections.OrderedDict()
+		for key, value in row.iteritems():
+			if(key in checkedCols):
+				r[key]=value
+			ccx+=1
+		rows.append(r)	
 	
 	context = {}
-	context = {'data': json.dumps(rows)}
-	return render(request, 'bikurcholim/cases_advanced.html', context)
+	context = {'data': json.dumps(rows),
+			'bigName': 'Volunteers',
+			'smallName': 'volunteers',}
+	return render(request, 'bikurcholim/volunteers_advanced.html', context)
+
+@login_required(login_url='/bikurcholim/login/')
+def clients_advanced(request):
+	values_list = request.POST['data']
+	checkedCols = request.POST['checkedCols']
+	json_object = json.JSONDecoder(object_pairs_hook=collections.OrderedDict).decode(values_list)
+	
+	cols=json_object['cols']
+
+	rows=[]
+	ccx=0
+	
+	for row in json_object['rows']:
+		ccx=0
+		r = collections.OrderedDict()
+		for key, value in row.iteritems():
+			if(key in checkedCols):
+				r[key]=value
+			ccx+=1
+		rows.append(r)	
+	
+	context = {}
+	context = {'data': json.dumps(rows),
+			'bigName': 'Clients',
+			'smallName': 'clients',}
+	return render(request, 'bikurcholim/clients_advanced.html', context)
+
+@login_required(login_url='/bikurcholim/login/')
+def housingschedule_advanced(request):
+	values_list = request.POST['data']
+	checkedCols = request.POST['checkedCols']
+	json_object = json.JSONDecoder(object_pairs_hook=collections.OrderedDict).decode(values_list)
+	
+	cols=json_object['cols']
+
+	rows=[]
+	ccx=0
+	
+	for row in json_object['rows']:
+		ccx=0
+		r = collections.OrderedDict()
+		for key, value in row.iteritems():
+			if(key in checkedCols):
+				r[key]=value
+			ccx+=1
+		rows.append(r)	
+	
+	context = {}
+	context = {'data': json.dumps(rows),
+			'bigName': 'Housing Schedule',
+			'smallName': 'housingschedule',}
+	return render(request, 'bikurcholim/housingschedule_advanced.html', context)
 
 def test(request):
 	context = []
@@ -150,6 +228,17 @@ class CasesDetailView(generic.DetailView):
 		context['change'] = url
 		return context
 
+class HousingScheduleDetailView(generic.DetailView):
+
+	model = HousingSchedule
+
+	def get_context_data(self, **kwargs):
+		context = super(HousingScheduleDetailView, self).get_context_data(**kwargs)
+		context['now'] = timezone.now()
+		url = 'admin:bikurcholim_housingschedule_change'
+		context['change'] = url
+		return context
+	
 def user_login(request):
 	# Like before, obtain the context for the user's request.
 	context = RequestContext(request)
