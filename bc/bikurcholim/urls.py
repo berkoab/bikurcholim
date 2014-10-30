@@ -20,5 +20,6 @@ urlpatterns = patterns('',
 	url(r'^volunteers_advanced/$', views.volunteers_advanced, name='volunteers_advanced'),
 	url(r'^clients_advanced/$', views.clients_advanced, name='clients_advanced'),
 	url(r'^housingschedule_advanced/$', views.housingschedule_advanced, name='housingschedule_advanced'),
+	url(r'^events/$', views.events, name='events'),
 	url(r'^test/$', views.test, name='test'),
 )

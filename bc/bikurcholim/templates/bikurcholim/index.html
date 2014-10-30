@@ -1,5 +1,6 @@
 {% extends "bikurcholim/bc_base_site.html" %}
 {% load static %}
+{% load url from future %}
 {% block title %}Bikur Cholim Database{% endblock %}
 {% block extrahead %}
 {{ block.super }}
@@ -12,11 +13,11 @@
 <script src="{% static "bikurcholim/fullcalendar/fullcalendar.min.js" %}"></script>
 <style>
 	#calendar {
-		max-width: 300px;
+		max-width: 400px;
 		margin: 0 auto;
 	}
 	#housingcalendar {
-		max-width: 300px;
+		max-width: 400px;
 		margin: 0 auto;
 	}
 	#loading {
@@ -39,6 +40,23 @@
 	var mm = today.getMonth()+1; //January is 0!
 	var yyyy = today.getFullYear();
 	today = mm+'/'+dd+'/'+yyyy;
+	function getCookie(name) {
+		var cookieValue = null;
+		if (document.cookie && document.cookie != '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = jQuery.trim(cookies[i]);
+				// Does this cookie string begin with the name we want?
+				if (cookie.substring(0, name.length + 1) == (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+	var csrftoken = getCookie('csrftoken');
+	
 	$(document).ready(function() {
 		
 		$('#calendar').fullCalendar({
@@ -48,17 +66,48 @@
 				right: 'month,agendaWeek,agendaDay'
 			},
 			defaultDate: today,
-			editable: true,
+			defaultView: 'agendaDay',
+			editable: false,
 			eventLimit: true, // allow "more" link when too many events
 			events: {
-				url: 'php/get-events.php',
-				error: function() {
+		        url: "{% url 'events' %}",
+		        type: 'POST',
+		        data: {
+		            csrfmiddlewaretoken: csrftoken,
+		            data_type: 'services'
+		        },
+		        error: function() {
 					$('#script-warning').show();
-				}
+				},
+		        color: 'yellow',   // a non-ajax option
+		        textColor: 'black' // a non-ajax option
+		   },
+		   eventMouseover: function(calEvent, jsEvent) {
+			    var tooltip = '<div class="tooltipevent" style="white-space: pre;width:150px;height:75px;background:#FFFFC8;position:absolute;z-index:10001;">' 
+			    	+ 'Title: ' + calEvent.title + '\nStart: ' + new Date(calEvent.start).toLocaleDateString() + '\nEnd: ' 
+			    	+ new Date(calEvent.end).toLocaleDateString() + '</div>';
+			    $("body").append(tooltip);
+			    $(this).mouseover(function(e) {
+			        $(this).css('z-index', 10000);
+			        $('.tooltipevent').fadeIn('500');
+			        $('.tooltipevent').fadeTo('10', 1.9);
+			    }).mousemove(function(e) {
+			        $('.tooltipevent').css('top', e.pageY + 10);
+			        $('.tooltipevent').css('left', e.pageX + 20);
+			    });
 			},
-			loading: function(bool) {
-				$('#loading').toggle(bool);
-			}
+			
+			eventMouseout: function(calEvent, jsEvent) {
+			    $(this).css('z-index', 8);
+			    $('.tooltipevent').remove();
+			},
+		    dayClick: function(date, jsEvent, view) {
+	                $('#calendar') 
+	                   .fullCalendar('changeView', 'agendaDay'/* or 'basicDay' */);
+	                $('#calendar') 
+	                    .fullCalendar('gotoDate', date.format());
+
+		    } 
 		});
 		$('#housingcalendar').fullCalendar({
 			header: {
@@ -67,14 +116,48 @@
 				right: 'month,agendaWeek,agendaDay'
 			},
 			defaultDate: today,
-			editable: true,
+			defaultView: 'agendaWeek',
+			editable: false,
 			eventLimit: true, // allow "more" link when too many events
 			events: {
-				url: 'php/get-events.php',
-				error: function() {
+		        url: "{% url 'events' %}",
+		        type: 'POST',
+		        data: {
+		            csrfmiddlewaretoken: csrftoken,
+		            data_type: 'housing'
+		        },
+		        error: function() {
 					$('#script-warning').show();
-				}
+				},
+		        //color: 'yellow',   // a non-ajax option
+		        //textColor: 'black' // a non-ajax option
+		    },
+			eventMouseover: function(calEvent, jsEvent) {
+			    var tooltip = '<div class="tooltipevent" style="white-space: pre;width:150px;height:75px;background:#FFFFC8;position:absolute;z-index:10001;">' 
+			    	+ 'Title: ' + calEvent.title + '\nStart: ' + new Date(calEvent.start).toLocaleDateString() + '\nEnd: ' 
+			    	+ new Date(calEvent.end).toLocaleDateString() + '</div>';
+			    $("body").append(tooltip);
+			    $(this).mouseover(function(e) {
+			        $(this).css('z-index', 10000);
+			        $('.tooltipevent').fadeIn('500');
+			        $('.tooltipevent').fadeTo('10', 1.9);
+			    }).mousemove(function(e) {
+			        $('.tooltipevent').css('top', e.pageY + 10);
+			        $('.tooltipevent').css('left', e.pageX + 20);
+			    });
 			},
+			
+			eventMouseout: function(calEvent, jsEvent) {
+			    $(this).css('z-index', 8);
+			    $('.tooltipevent').remove();
+			},
+		    dayClick: function(date, jsEvent, view) {
+	                $('#housingcalendar') 
+	                   .fullCalendar('changeView', 'agendaDay'/* or 'basicDay' */);
+	                $('#housingcalendar') 
+	                    .fullCalendar('gotoDate', date.format());
+
+		    },
 			loading: function(bool) {
 				$('#loading2').toggle(bool);
 			}
@@ -133,7 +216,7 @@
 	<tr height="50"></tr>
 	<tr>
 		<td colspan="4" align="center">
-			<span style="font-weight:bold;font-size:x-large">Services Agenda</span>
+			<span style="font-weight:bold;font-size:x-large">Services Schedule</span>
 		</td>
 		<td colspan="4" align="center">
 			<span style="font-weight:bold;font-size:x-large">Housing Schedule</span>
@@ -142,11 +225,12 @@
 		<tr height="25"></tr>
 	<tr>
 		
-		<td colspan="4">
+		<td colspan="3">
 			<div id='loading'>loading...</div>
 			<div id='calendar'></div>
 		</td>
-		<td colspan="4">
+		<td width="50"></td><td width="50"></td>
+		<td colspan="3">
 			<div id='loading2'>loading...</div>
 			<div id='housingcalendar'></div>
 		</td>

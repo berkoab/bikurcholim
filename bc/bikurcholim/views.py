@@ -2,13 +2,13 @@ from bikurcholim.models import Clients, Volunteers, Cases, HousingSchedule
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.utils import timezone
 from django.views import generic
 from django.core.urlresolvers import reverse
-import volunteer_view, client_view, case_view, housing_view
+import volunteer_view, client_view, case_view, housing_view, service_events_view, housing_events_view
 import collections
 import datetime
 import json
@@ -341,4 +341,18 @@ def export_xls(request):
 	response['Content-Disposition'] = 'attachment; filename=example.xls'
 	book.save(response)
 	return response
+
+def events(request):
+	start = request.POST['start']
+	end = request.POST['end']
+	data_type = request.POST['data_type']
+	#csrfmiddlewaretoken = request.POST['csrfmiddlewaretoken']
+	
+	if(data_type=='services'):
+		rows = service_events_view.getRows(start, end)
+	elif(data_type=='housing'):
+		rows = housing_events_view.getRows(start, end)
+	context = {}
+	context = {'data': json.dumps(rows)}
+	return HttpResponse(json.dumps(rows))
     

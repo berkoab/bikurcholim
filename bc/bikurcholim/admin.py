@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django import forms
+from django.core.exceptions import ValidationError
 from bikurcholim.models import Neighborhoods
 from bikurcholim.models import Vehicles
 from bikurcholim.models import Volunteers
@@ -36,11 +38,38 @@ class ClientsAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name')
 	list_filter = ['status__status', 'neighborhood', 'hospital', 'tikvah_house']
 	search_fields = ['last_name', 'first_name', 'street']
+
+class CasesAdminForm(forms.ModelForm):
+    def clean_close_date(self):
+    	open_date = self.cleaned_data["open_date"]
+    	close_date = self.cleaned_data["close_date"]
+    	if(close_date):
+        	if((not open_date) or (close_date < open_date)):
+        		raise forms.ValidationError('"Close Date" needs to be greater than "Open Date')
+        return close_date
+       
 class CasesAdmin(admin.ModelAdmin):
 	list_display = ('id', 'client', 'volunteer')
 	list_filter = ['status__status', 'location__name']
 	search_fields = ['client__first_name', 'client__last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
+	form = CasesAdminForm
 	
+class HousingAdminForm(forms.ModelForm):
+    def clean_to_date(self):
+    	from_date = self.cleaned_data["from_date"]
+    	to_date = self.cleaned_data["to_date"]
+    	if(to_date):
+        	if((not from_date) or (to_date < from_date)):
+        		raise forms.ValidationError('"To Date" needs to be greater than "From Date')
+        return to_date
+       
+class HousingScheduleAdmin(admin.ModelAdmin):
+	list_display = ('from_date', 'to_date', 'tikvah_house', 'client')
+	list_filter = ['tikvah_house']
+	form = HousingAdminForm
+    
+
+
 admin.site.register(Neighborhoods)
 admin.site.register(Vehicles)
 admin.site.register(Volunteers, VolunteersAdmin)
@@ -52,6 +81,6 @@ admin.site.register(ClientStatus)
 admin.site.register(CaseStatus)
 admin.site.register(Cases, CasesAdmin)
 admin.site.register(Services)
-admin.site.register(HousingSchedule)
+admin.site.register(HousingSchedule, HousingScheduleAdmin)
 
 admin.AdminSite.site_header="Bikur Cholim Database Administration"

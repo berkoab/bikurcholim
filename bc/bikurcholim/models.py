@@ -189,8 +189,8 @@ class Cases(models.Model):
 	client = models.ForeignKey(Clients)
 	status = models.ForeignKey(CaseStatus)
 	volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
-	open_date = models.DateField('open date', null=True, blank=True)
-	date_of_service = models.DateTimeField('date and time of service', null=True, blank=True)
+	open_date = models.DateField('open date')
+	date_of_service = models.DateTimeField('date and time of service')
 	close_date = models.DateField('close date', null=True, blank=True)
 	service = models.ForeignKey(Services, null=True, blank=True)
 	location = models.ForeignKey(Hospitals, null=True, blank=True)
@@ -203,11 +203,11 @@ class Cases(models.Model):
 		return str(self.id)
 
 class HousingSchedule(models.Model):
-	tikvah_house = models.ForeignKey(TikvahHouses, null=True, blank=True)
+	tikvah_house = models.ForeignKey(TikvahHouses)
 	tikvah_room = models.CharField(max_length=50, null=True, blank=True)
 	client = models.ForeignKey(Clients)
-	from_date = models.DateField('from date', null=True, blank=True)
-	to_date = models.DateField('to date', null=True, blank=True)
+	from_date = models.DateField('from date')
+	to_date = models.DateField('to date')
 	description = models.TextField(max_length=200, null=True, blank=True)
 	def get_days(self):
 		return self.to_date - self.from_date
