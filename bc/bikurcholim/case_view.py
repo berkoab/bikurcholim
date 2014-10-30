@@ -101,7 +101,8 @@ def getRows():
 			columns['volunteer']=cases.volunteer.get_name()
 		columns['open_date']=datetime_to_ms_str(cases.open_date)
 		columns['date_of_service']=datetime_to_ms_str(cases.date_of_service)
-		columns['close_date']=datetime_to_ms_str(cases.close_date)
+		if(datetime_to_ms_str(cases.close_date)>0):
+			columns['close_date']=datetime_to_ms_str(cases.close_date)
 		if(cases.service):
 			columns['service']=cases.service.service
 		if (cases.location):
