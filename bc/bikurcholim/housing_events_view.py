@@ -24,6 +24,6 @@ def getRows(sd, ed):
 		event['title'] = c.tikvah_house.name
 		event['start'] = format_datetime(c.from_date, True)
 		event['end'] = format_datetime(c.to_date, False)
-		event['url'] = ''
+		event['url'] = '/admin/bikurcholim/housingschedule/' + str(c.id)
 		events.append(event)
 	return events

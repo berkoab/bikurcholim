@@ -1,16 +1,26 @@
 {% extends "bikurcholim/bc_base_site.html" %}
 {% load static %}
+{% load i18n admin_urls admin_static admin_list %}
 {% load url from future %}
 {% block title %}Bikur Cholim Database{% endblock %}
 {% block extrahead %}
 {{ block.super }}
 
 <link rel="stylesheet" type="text/css" href="{% static "bikurcholim/bikurcholim.css" %}" />
-<link href="{% static "bikurcholim/fullcalendar/fullcalendar.css" %}" rel='stylesheet' />
+<link rel="stylesheet" href="{% static "bikurcholim/fullcalendar/fullcalendar.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "bikurcholim/menu/menu.css" %}" media="screen" />
 <link href="{% static "bikurcholim/fullcalendar/fullcalendar.print.css" %}" rel='stylesheet' media='print' />
 <script src="{% static "bikurcholim/fullcalendar/lib/moment.min.js" %}"></script>
 <script src="{% static "bikurcholim/fullcalendar/lib/jquery.min.js" %}"></script>
 <script src="{% static "bikurcholim/fullcalendar/fullcalendar.min.js" %}"></script>
+<script src="{% static "bikurcholim/utils.js" %}"></script>
+<script src="{% static "bikurcholim/bc_calendars.js" %}"></script>
+
+<script>
+	var today = getDate();
+	var csrftoken = getCookie('csrftoken');
+	var events = "{% url 'events' %}";
+</script>
 <style>
 	#calendar {
 		max-width: 400px;
@@ -32,140 +42,35 @@
 		top: 10px;
 		right: 10px;
 	}
-</style>
-
-<script>
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1; //January is 0!
-	var yyyy = today.getFullYear();
-	today = mm+'/'+dd+'/'+yyyy;
-	function getCookie(name) {
-		var cookieValue = null;
-		if (document.cookie && document.cookie != '') {
-			var cookies = document.cookie.split(';');
-			for (var i = 0; i < cookies.length; i++) {
-				var cookie = jQuery.trim(cookies[i]);
-				// Does this cookie string begin with the name we want?
-				if (cookie.substring(0, name.length + 1) == (name + '=')) {
-					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-					break;
-				}
-			}
-		}
-		return cookieValue;
+	#menu {
+	    list-style:none;
+	    width:575px;
+	    margin:30px auto 0px auto;
+	    height:43px;
+	    padding:0px 20px 0px 20px;
+	 
+	    /* Rounded Corners */
+	     
+	    -moz-border-radius: 10px;
+	    -webkit-border-radius: 10px;
+	    border-radius: 10px;
+	 
+	    /* Background color and gradients */
+	     
+	    background: #014464;
+	    background: -moz-linear-gradient(top, #0272a7, #013953);
+	    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0272a7), to(#013953));
+	     
+	    /* Borders */
+	     
+	    border: 1px solid #002232;
+	 
+	    -moz-box-shadow:inset 0px 0px 1px #edf9ff;
+	    -webkit-box-shadow:inset 0px 0px 1px #edf9ff;
+	    box-shadow:inset 0px 0px 1px #edf9ff;
 	}
-	var csrftoken = getCookie('csrftoken');
-	
-	$(document).ready(function() {
-		
-		$('#calendar').fullCalendar({
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},
-			defaultDate: today,
-			defaultView: 'agendaDay',
-			editable: false,
-			eventLimit: true, // allow "more" link when too many events
-			events: {
-		        url: "{% url 'events' %}",
-		        type: 'POST',
-		        data: {
-		            csrfmiddlewaretoken: csrftoken,
-		            data_type: 'services'
-		        },
-		        error: function() {
-					$('#script-warning').show();
-				},
-		        color: 'yellow',   // a non-ajax option
-		        textColor: 'black' // a non-ajax option
-		   },
-		   eventMouseover: function(calEvent, jsEvent) {
-			    var tooltip = '<div class="tooltipevent" style="white-space: pre;width:150px;height:75px;background:#FFFFC8;position:absolute;z-index:10001;">' 
-			    	+ 'Title: ' + calEvent.title + '\nStart: ' + new Date(calEvent.start).toLocaleDateString() + '\nEnd: ' 
-			    	+ new Date(calEvent.end).toLocaleDateString() + '</div>';
-			    $("body").append(tooltip);
-			    $(this).mouseover(function(e) {
-			        $(this).css('z-index', 10000);
-			        $('.tooltipevent').fadeIn('500');
-			        $('.tooltipevent').fadeTo('10', 1.9);
-			    }).mousemove(function(e) {
-			        $('.tooltipevent').css('top', e.pageY + 10);
-			        $('.tooltipevent').css('left', e.pageX + 20);
-			    });
-			},
-			
-			eventMouseout: function(calEvent, jsEvent) {
-			    $(this).css('z-index', 8);
-			    $('.tooltipevent').remove();
-			},
-		    dayClick: function(date, jsEvent, view) {
-	                $('#calendar') 
-	                   .fullCalendar('changeView', 'agendaDay'/* or 'basicDay' */);
-	                $('#calendar') 
-	                    .fullCalendar('gotoDate', date.format());
-
-		    } 
-		});
-		$('#housingcalendar').fullCalendar({
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},
-			defaultDate: today,
-			defaultView: 'agendaWeek',
-			editable: false,
-			eventLimit: true, // allow "more" link when too many events
-			events: {
-		        url: "{% url 'events' %}",
-		        type: 'POST',
-		        data: {
-		            csrfmiddlewaretoken: csrftoken,
-		            data_type: 'housing'
-		        },
-		        error: function() {
-					$('#script-warning').show();
-				},
-		        //color: 'yellow',   // a non-ajax option
-		        //textColor: 'black' // a non-ajax option
-		    },
-			eventMouseover: function(calEvent, jsEvent) {
-			    var tooltip = '<div class="tooltipevent" style="white-space: pre;width:150px;height:75px;background:#FFFFC8;position:absolute;z-index:10001;">' 
-			    	+ 'Title: ' + calEvent.title + '\nStart: ' + new Date(calEvent.start).toLocaleDateString() + '\nEnd: ' 
-			    	+ new Date(calEvent.end).toLocaleDateString() + '</div>';
-			    $("body").append(tooltip);
-			    $(this).mouseover(function(e) {
-			        $(this).css('z-index', 10000);
-			        $('.tooltipevent').fadeIn('500');
-			        $('.tooltipevent').fadeTo('10', 1.9);
-			    }).mousemove(function(e) {
-			        $('.tooltipevent').css('top', e.pageY + 10);
-			        $('.tooltipevent').css('left', e.pageX + 20);
-			    });
-			},
-			
-			eventMouseout: function(calEvent, jsEvent) {
-			    $(this).css('z-index', 8);
-			    $('.tooltipevent').remove();
-			},
-		    dayClick: function(date, jsEvent, view) {
-	                $('#housingcalendar') 
-	                   .fullCalendar('changeView', 'agendaDay'/* or 'basicDay' */);
-	                $('#housingcalendar') 
-	                    .fullCalendar('gotoDate', date.format());
-
-		    },
-			loading: function(bool) {
-				$('#loading2').toggle(bool);
-			}
-		});
-	});
-
-</script>
-	
+	.dropdown_3columns {width: 475px;}
+</style>	
 <!-- END Header -->
 {% endblock %}
 {% block breadcrumbs %}
@@ -176,61 +81,70 @@
 {% endblock %}
 {% block content %}
 <div id="content-main" align="center">
+<ul id="menu">
+    <li><a href="#">Home</a></li>
+    <li><a href="#" class="drop">Administration</a>
+    	<div class="dropdown_3columns">
+	    	<div class="col_1">
+	            <h3>Main</h3>
+	            <ul>
+	                <li><a href="{% url 'admin:index' %}" target="_blank">Home</a></li>
+	            </ul>   
+	        </div>
+	        <div class="col_1">
+	            <h3>Data Entry</h3>
+	            <ul>
+	                <li><a href="{% url 'admin:bikurcholim_volunteers_changelist' %}" target="_blank">Volunteers</a></li>
+	                <li><a href="{% url 'admin:bikurcholim_clients_changelist' %}" target="_blank">Clients</a></li>
+	                <li><a href="{% url 'admin:bikurcholim_cases_changelist' %}" target="_blank">Cases</a></li>
+	                <li><a href="{% url 'admin:bikurcholim_housingschedule_changelist' %}" target="_blank">Housing</a></li>
+	            </ul>  
+	        </div>
+	        <div class="col_1">
+	            <h3>User Administration</h3>
+	            <ul>
+	                <li><a href="{% url 'admin:auth_user_changelist' %}" target="_blank">Users</a></li>
+	                <li><a href="{% url 'admin:auth_group_changelist' %}" target="_blank">Groups</a></li>
+	           </ul>  
+	        </div>
+	    </div>
+    </li>
+    <li><a href="#" class="drop">Reporting</a>
+    	<div class="dropdown_1column">
+	    	<p><a href="{% url 'volunteers' %}">Volunteers</a></p>
+	    	<p><a href="{% url 'clients' %}">Clients</a></p>
+	    	<p><a href="{% url 'cases' %}">Cases</a></p>
+	    	<p><a href="{% url 'housingschedule' %}">Housing</a></p>
+    	</div>
+    </li>
+    <li><a href="#" class="drop">Calendars</a>
+    	<div class="dropdown_1column">
+    		<p><a href="{% url 'casecalendar' %}">Case Calendar</a></p>
+    		<p><a href="{% url 'housingcalendar' %}">Housing Calendar</a></p>
+    	</div>
+    </li>
+</ul>
+
 <table>
-	<tr align="center" >
-		<td colspan="8">
-			<a href="{% url 'admin:index' %}">
-			<span id="id_0" class="button_example" style="cursor:pointer;">Administration</span>
-			</a>
-		</td>
-	</tr>
-	<tr height="50"></tr>
-	<tr align="center">
-		<td>
-			<a href="{% url 'volunteers' %}">
-			<span id="id_0" class="button_example" style="cursor:pointer;">&nbsp;&nbsp;Volunteers&nbsp;&nbsp;</span>
-			</a>
-		</td>
-		<td width="50"></td>
-		<td>
-			<a href="{% url 'clients' %}">
-			<span id="id_0" class="button_example" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Clients&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-			</a>
-		</td>
-		<td width="50"></td>
-		<td>
-			<a href="{% url 'cases' %}">
-			<span id="id_0" class="button_example" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;Cases&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-			</a>
-		</td>
-		<td width="50"></td>
-		<td>
-			<a href="{% url 'housingschedule' %}">
-			<span id="id_0" class="button_example" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;Housing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-			</a>
-		</td>
-		<td width="50">
-			
-		</td>
-	</tr>
-	<tr height="50"></tr>
+	<tr height="150"></tr>
 	<tr>
-		<td colspan="4" align="center">
-			<span style="font-weight:bold;font-size:x-large">Services Schedule</span>
+		<td align="center">
+			<span style="font-weight:bold;font-size:x-large">Cases Schedule</span>
 		</td>
-		<td colspan="4" align="center">
+		<td width="50"></td><td width="50"></td>
+		<td align="center">
 			<span style="font-weight:bold;font-size:x-large">Housing Schedule</span>
 		</td>
 	</tr>
-		<tr height="25"></tr>
+	<tr height="25"></tr>
 	<tr>
 		
-		<td colspan="3">
+		<td>
 			<div id='loading'>loading...</div>
 			<div id='calendar'></div>
 		</td>
 		<td width="50"></td><td width="50"></td>
-		<td colspan="3">
+		<td>
 			<div id='loading2'>loading...</div>
 			<div id='housingcalendar'></div>
 		</td>

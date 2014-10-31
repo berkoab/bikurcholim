@@ -355,4 +355,19 @@ def events(request):
 	context = {}
 	context = {'data': json.dumps(rows)}
 	return HttpResponse(json.dumps(rows))
+
+@login_required(login_url='/bikurcholim/login/')
+def casecalendar(request):
+	context = {}
+	return render(request, 'bikurcholim/casescalendar.html', context)
+
+@login_required(login_url='/bikurcholim/login/')
+def housingcalendar(request):
+	context = {}
+	return render(request, 'bikurcholim/housingcalendar.html', context)
+
+def gotoevent(request):
+	url = request.POST['url']
+	context = {}
+	return render(request, url, context)
     

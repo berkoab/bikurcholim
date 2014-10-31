@@ -1,0 +1,47 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+{% load static %}
+{% load i18n admin_urls admin_static admin_list %}
+{% load url from future %}
+{% block title %}Bikur Cholim Database{% endblock %}
+{% block extrahead %}
+{{ block.super }}
+
+<link rel="stylesheet" type="text/css" href="{% static "bikurcholim/bikurcholim.css" %}" />
+<link rel="stylesheet" href="{% static "bikurcholim/fullcalendar/fullcalendar.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "bikurcholim/menu/menu.css" %}" media="screen" />
+<link href="{% static "bikurcholim/fullcalendar/fullcalendar.print.css" %}" rel='stylesheet' media='print' />
+<script src="{% static "bikurcholim/fullcalendar/lib/moment.min.js" %}"></script>
+<script src="{% static "bikurcholim/fullcalendar/lib/jquery.min.js" %}"></script>
+<script src="{% static "bikurcholim/fullcalendar/fullcalendar.min.js" %}"></script>
+<script src="{% static "bikurcholim/utils.js" %}"></script>
+<script src="{% static "bikurcholim/bc_calendars.js" %}"></script>
+
+<script>
+	var today = getDate()
+	var csrftoken = getCookie('csrftoken');
+	var events = "{% url 'events' %}";
+</script>
+<style>
+	
+	#loading2 {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+
+</style>	
+<!-- END Header -->
+{% endblock %}
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; Housing Calendar &rsaquo;
+	</div>
+{% endblock %}
+{% block content %}
+
+	<div id='loading2'>loading...</div>
+	<div id='housingcalendar'></div>
+
+{% endblock %}

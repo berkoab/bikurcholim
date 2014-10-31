@@ -84,3 +84,4 @@ admin.site.register(Services)
 admin.site.register(HousingSchedule, HousingScheduleAdmin)
 
 admin.AdminSite.site_header="Bikur Cholim Database Administration"
+admin.AdminSite.site_title="Bikur Cholim Database Administration"
