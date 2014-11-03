@@ -11,8 +11,8 @@ def getRows(sd, ed):
 	end_date = datetime.strptime(ed, "%Y-%m-%d").date() 
 
 	d = Cases.objects.filter(date_of_service__range=(start_date, end_date))
-	#o = VolunteerOptions.objects.all()
-
+	
+	
 	for c in d:
 		event = collections.OrderedDict()
 		event['id'] = c.id
@@ -20,6 +20,6 @@ def getRows(sd, ed):
 		event['start'] = format_datetime(c.date_of_service)
 		event['end'] = format_datetime(c.date_of_service+timedelta(hours=1))
 		event['service'] = c.service.service
-		event['url'] = '/admin/bikurcholim/cases/' + str(c.id)
+		event['url'] = '/bikurcholim/cases/' + str(c.id)
 		events.append(event)
 	return events
