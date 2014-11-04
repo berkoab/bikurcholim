@@ -10,6 +10,10 @@
 {% endblock %}
 
 {% block content %}
+{{ block.super }}
+<table>
+	<tr height="75"><td></td></tr>
+</table>
 	<h1>Case #: {{ object.id }}</h1>
 	<ul class="object-tools">
 	    <li>

@@ -29,7 +29,34 @@
 		top: 10px;
 		right: 10px;
 	}
-
+	#menu {
+	    list-style:none;
+	    width:575px;
+	    margin:30px auto 0px auto;
+	    height:43px;
+	    padding:0px 20px 0px 20px;
+	 
+	    /* Rounded Corners */
+	     
+	    -moz-border-radius: 10px;
+	    -webkit-border-radius: 10px;
+	    border-radius: 10px;
+	 
+	    /* Background color and gradients */
+	     
+	    background: #014464;
+	    background: -moz-linear-gradient(top, #0272a7, #013953);
+	    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0272a7), to(#013953));
+	     
+	    /* Borders */
+	     
+	    border: 1px solid #002232;
+	 
+	    -moz-box-shadow:inset 0px 0px 1px #edf9ff;
+	    -webkit-box-shadow:inset 0px 0px 1px #edf9ff;
+	    box-shadow:inset 0px 0px 1px #edf9ff;
+	}
+	.dropdown_3columns {width: 475px;}
 </style>	
 <!-- END Header -->
 {% endblock %}
@@ -40,7 +67,10 @@
 	</div>
 {% endblock %}
 {% block content %}
-
+{{ block.super }}
+<table>
+	<tr height="100"><td></td></tr>
+</table>
 	<div id='loading'>loading...</div>
 	<div id='calendar'></div>
 

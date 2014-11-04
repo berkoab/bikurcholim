@@ -9,7 +9,10 @@
 {% endblock %}
 
 {% block content %}
-
+{{ block.super }}
+<table>
+	<tr height="75"><td></td></tr>
+</table>
 	<h1>Volunteer - {{ object.get_name }}</h1>
     <ul class="object-tools">
 	    <li>

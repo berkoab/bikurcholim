@@ -43,31 +43,31 @@
 		right: 10px;
 	}
 	#menu {
-	    list-style:none;
-	    width:575px;
-	    margin:30px auto 0px auto;
-	    height:43px;
-	    padding:0px 20px 0px 20px;
-	 
-	    /* Rounded Corners */
-	     
-	    -moz-border-radius: 10px;
-	    -webkit-border-radius: 10px;
-	    border-radius: 10px;
-	 
-	    /* Background color and gradients */
-	     
-	    background: #014464;
-	    background: -moz-linear-gradient(top, #0272a7, #013953);
-	    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0272a7), to(#013953));
-	     
-	    /* Borders */
-	     
-	    border: 1px solid #002232;
-	 
-	    -moz-box-shadow:inset 0px 0px 1px #edf9ff;
-	    -webkit-box-shadow:inset 0px 0px 1px #edf9ff;
-	    box-shadow:inset 0px 0px 1px #edf9ff;
+    list-style:none;
+    width:575px;
+    margin:30px auto 0px auto;
+    height:43px;
+    padding:0px 20px 0px 20px;
+ 
+    /* Rounded Corners */
+     
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+ 
+    /* Background color and gradients */
+     
+    background: #014464;
+    background: -moz-linear-gradient(top, #0272a7, #013953);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0272a7), to(#013953));
+     
+    /* Borders */
+     
+    border: 1px solid #002232;
+ 
+    -moz-box-shadow:inset 0px 0px 1px #edf9ff;
+    -webkit-box-shadow:inset 0px 0px 1px #edf9ff;
+    box-shadow:inset 0px 0px 1px #edf9ff;
 	}
 	.dropdown_3columns {width: 475px;}
 </style>	
@@ -80,50 +80,9 @@
 	</div>
 {% endblock %}
 {% block content %}
+{{ block.super }}
 <div id="content-main" align="center">
-<ul id="menu">
-    <li><a href="#">Home</a></li>
-    <li><a href="#" class="drop">Administration</a>
-    	<div class="dropdown_3columns">
-	    	<div class="col_1">
-	            <h3>Main</h3>
-	            <ul>
-	                <li><a href="{% url 'admin:index' %}" target="_blank">Home</a></li>
-	            </ul>   
-	        </div>
-	        <div class="col_1">
-	            <h3>Data Entry</h3>
-	            <ul>
-	                <li><a href="{% url 'admin:bikurcholim_volunteers_changelist' %}" target="_blank">Volunteers</a></li>
-	                <li><a href="{% url 'admin:bikurcholim_clients_changelist' %}" target="_blank">Clients</a></li>
-	                <li><a href="{% url 'admin:bikurcholim_cases_changelist' %}" target="_blank">Cases</a></li>
-	                <li><a href="{% url 'admin:bikurcholim_housingschedule_changelist' %}" target="_blank">Housing</a></li>
-	            </ul>  
-	        </div>
-	        <div class="col_1">
-	            <h3>User Administration</h3>
-	            <ul>
-	                <li><a href="{% url 'admin:auth_user_changelist' %}" target="_blank">Users</a></li>
-	                <li><a href="{% url 'admin:auth_group_changelist' %}" target="_blank">Groups</a></li>
-	           </ul>  
-	        </div>
-	    </div>
-    </li>
-    <li><a href="#" class="drop">Reporting</a>
-    	<div class="dropdown_1column">
-	    	<p><a href="{% url 'volunteers' %}">Volunteers</a></p>
-	    	<p><a href="{% url 'clients' %}">Clients</a></p>
-	    	<p><a href="{% url 'cases' %}">Cases</a></p>
-	    	<p><a href="{% url 'housingschedule' %}">Housing</a></p>
-    	</div>
-    </li>
-    <li><a href="#" class="drop">Calendars</a>
-    	<div class="dropdown_1column">
-    		<p><a href="{% url 'casecalendar' %}">Case Calendar</a></p>
-    		<p><a href="{% url 'housingcalendar' %}">Housing Calendar</a></p>
-    	</div>
-    </li>
-</ul>
+
 
 <table>
 	<tr height="150"></tr>
