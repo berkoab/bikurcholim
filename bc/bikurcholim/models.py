@@ -1,4 +1,5 @@
 from django.db import models
+from paintstore.fields import ColorPickerField
 
 class Neighborhoods(models.Model):
 	neighborhood = models.CharField(max_length=50)
@@ -129,6 +130,7 @@ class Hospitals(models.Model):
 class TikvahHouses(models.Model):
 	name = models.CharField(max_length=50)
 	address = models.CharField(max_length=200, null=True, blank=True)
+	color = ColorPickerField(null=True, blank=True)
 	class Meta:
 		verbose_name_plural = "Tikvah Houses"
 		ordering = ('name',)
@@ -209,6 +211,8 @@ class HousingSchedule(models.Model):
 	from_date = models.DateField('from date')
 	to_date = models.DateField('to date')
 	description = models.TextField(max_length=200, null=True, blank=True)
+	def get_color(self):
+		return self.tikvah_house.color
 	def get_days(self):
 		return self.to_date - self.from_date
 	class Meta:

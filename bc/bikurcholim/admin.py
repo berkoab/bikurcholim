@@ -69,7 +69,6 @@ class HousingScheduleAdmin(admin.ModelAdmin):
 	form = HousingAdminForm
     
 
-
 admin.site.register(Neighborhoods)
 admin.site.register(Vehicles)
 admin.site.register(Volunteers, VolunteersAdmin)
