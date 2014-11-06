@@ -178,13 +178,13 @@ def getCols():
     cols['transportation_to_appointments'] = {
 		'index': 29,
 		'type': "bool",
-		'friendly': "Hospital Visit.",
+		'friendly': "Transportation",
 		'hidden':'true'
 	}
     cols['transportation_to_appointments_notes'] = {
 		'index': 30,
 		'type': "string",
-		'friendly': "Hospital Visit. Notes", 
+		'friendly': "Transportation Notes", 
 		'hidden':'true'
 	}
     cols['overnight_hospital_stays'] = {
