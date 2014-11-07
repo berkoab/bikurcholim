@@ -219,3 +219,12 @@ class HousingSchedule(models.Model):
 		verbose_name_plural = "HousingSchedule"
 	def __str__(self):
 		return str(self.id)
+		
+class Tasks(models.Model):
+	title = models.CharField(max_length=100)
+	description = models.TextField(max_length=200, null=True, blank =True)
+	due_by = models.DateField('close date', null=True, blank=True)
+	class Meta:
+		verbose_name_plural = "Tasks"
+	def __str__(self):
+		return str(self.title)
