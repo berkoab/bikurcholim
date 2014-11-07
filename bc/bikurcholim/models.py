@@ -201,6 +201,7 @@ class Cases(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 	class Meta:
 		verbose_name_plural = "Cases"
+		ordering = ('id',)
 	def __str__(self):
 		return str(self.id)
 
@@ -219,12 +220,24 @@ class HousingSchedule(models.Model):
 		verbose_name_plural = "HousingSchedule"
 	def __str__(self):
 		return str(self.id)
+
+class TaskStatus(models.Model):
+	status = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Task Statuses"
+		ordering = ('status',)
+	def __str__(self):
+		return self.status
 		
 class Tasks(models.Model):
 	title = models.CharField(max_length=100)
+	status = models.ForeignKey(TaskStatus)
 	description = models.TextField(max_length=200, null=True, blank =True)
-	due_by = models.DateField('close date', null=True, blank=True)
+	due_by = models.DateField('due by', null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 	class Meta:
 		verbose_name_plural = "Tasks"
+		ordering = ('status', 'created_at',)
 	def __str__(self):
 		return str(self.title)

@@ -22,6 +22,7 @@
 	var events = "{% url 'events' %}";
 </script>
 <style>
+
 	#calendar {
 		max-width: 400px;
 		margin: 0 auto;
@@ -70,6 +71,13 @@
     box-shadow:inset 0px 0px 1px #edf9ff;
 	}
 	.dropdown_3columns {width: 475px;}
+	.center {
+	    margin-left: auto;
+	    margin-right: auto;
+	    width: 50%;
+	    background-color: #417690;
+	    text-align: center
+	}
 </style>	
 <!-- END Header -->
 {% endblock %}
@@ -81,23 +89,59 @@
 {% endblock %}
 {% block content %}
 {{ block.super }}
-<div id="content-main" align="center">
+	<table>
+		<tr height="150"><td></td></tr>
+	</table>
+<div class="center">
 
-
+	<span style="font-weight:bold;font-size:large;">Open Tasks</span>
+	{% if tasks %}
+	    {% for task in tasks %}
+	        <div><a href="/bikurcholim/tasks/{{ task.id }}/" style="color: white; font-weight:bold">
+	        	{{ task.title }}</a></div>
+	    {% endfor %}
+	{% else %}
+	    <p>You have no open tasks</p>
+	{% endif %}
+	<table>
+		<tr height="25"><td></td></tr>
+	</table>
+	<span style="font-weight:bold;font-size:large;">Active Clients</span>
+	{% if clients %}
+	    {% for client in clients %}
+	        <div><a href="/bikurcholim/clients/{{ client.id }}/" style="color: white; font-weight:bold">
+	        	{{ client.get_name }}</a></div>
+	    {% endfor %}
+	{% else %}
+	    <p>You have no active clients</p>
+	{% endif %}
+<!--
 <table>
 	<tr height="150"></tr>
 	<tr>
 		<td align="center">
-			<span style="font-weight:bold;font-size:x-large">Cases Schedule</span>
+			<span style="font-weight:bold;font-size:large">Open Tasks</span>
 		</td>
+		<!--
 		<td width="50"></td><td width="50"></td>
 		<td align="center">
 			<span style="font-weight:bold;font-size:x-large">Housing Schedule</span>
 		</td>
+
 	</tr>
 	<tr height="25"></tr>
 	<tr>
-		
+		<td align="center">
+			{% if tasks %}
+			    {% for task in tasks %}
+			        <div><a href="/bikurcholim/tasks/{{ task.id }}/">{{ task.title }}</a></div>
+			    {% endfor %}
+			{% else %}
+			    <p>You have no open tasks</p>
+			{% endif %}
+		</td>
+
+
 		<td>
 			<div id='loading'>loading...</div>
 			<div id='calendar'></div>
@@ -107,9 +151,10 @@
 			<div id='loading2'>loading...</div>
 			<div id='housingcalendar'></div>
 		</td>
+
 	</tr>
 </table>
-
+-->
 </div>
 
 {% endblock %}

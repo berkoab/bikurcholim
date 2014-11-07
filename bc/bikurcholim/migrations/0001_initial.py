@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import paintstore.fields
 
 
 class Migration(migrations.Migration):
@@ -14,14 +15,15 @@ class Migration(migrations.Migration):
             name='Cases',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('open_date', models.DateField(null=True, verbose_name=b'open date', blank=True)),
-                ('date_of_service', models.DateTimeField(null=True, verbose_name=b'date and time of service', blank=True)),
+                ('open_date', models.DateField(verbose_name=b'open date')),
+                ('date_of_service', models.DateTimeField(verbose_name=b'date and time of service')),
                 ('close_date', models.DateField(null=True, verbose_name=b'close date', blank=True)),
                 ('description', models.TextField(max_length=200, null=True, blank=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
             ],
             options={
+                'ordering': ('id',),
                 'verbose_name_plural': 'Cases',
             },
             bases=(models.Model,),
@@ -33,6 +35,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(max_length=50)),
             ],
             options={
+                'ordering': ('status',),
                 'verbose_name_plural': 'Case Statuses',
             },
             bases=(models.Model,),
@@ -44,6 +47,7 @@ class Migration(migrations.Migration):
                 ('city', models.CharField(max_length=50)),
             ],
             options={
+                'ordering': ('city',),
                 'verbose_name_plural': 'Cities',
             },
             bases=(models.Model,),
@@ -80,6 +84,7 @@ class Migration(migrations.Migration):
                 ('city', models.ForeignKey(blank=True, to='bikurcholim.Cities', null=True)),
             ],
             options={
+                'ordering': ('last_name',),
                 'verbose_name_plural': 'Clients',
             },
             bases=(models.Model,),
@@ -91,6 +96,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(max_length=50)),
             ],
             options={
+                'ordering': ('status',),
                 'verbose_name_plural': 'Client Statuses',
             },
             bases=(models.Model,),
@@ -103,7 +109,23 @@ class Migration(migrations.Migration):
                 ('address', models.CharField(max_length=200, null=True, blank=True)),
             ],
             options={
+                'ordering': ('name',),
                 'verbose_name_plural': 'Hospitals',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='HousingSchedule',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('tikvah_room', models.CharField(max_length=50, null=True, blank=True)),
+                ('from_date', models.DateField(verbose_name=b'from date')),
+                ('to_date', models.DateField(verbose_name=b'to date')),
+                ('description', models.TextField(max_length=200, null=True, blank=True)),
+                ('client', models.ForeignKey(to='bikurcholim.Clients')),
+            ],
+            options={
+                'verbose_name_plural': 'HousingSchedule',
             },
             bases=(models.Model,),
         ),
@@ -114,6 +136,7 @@ class Migration(migrations.Migration):
                 ('neighborhood', models.CharField(max_length=50)),
             ],
             options={
+                'ordering': ('neighborhood',),
                 'verbose_name_plural': 'Neighborhoods',
             },
             bases=(models.Model,),
@@ -125,7 +148,36 @@ class Migration(migrations.Migration):
                 ('service', models.CharField(max_length=50)),
             ],
             options={
+                'ordering': ('service',),
                 'verbose_name_plural': 'Services',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Tasks',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=100)),
+                ('description', models.TextField(max_length=200, null=True, blank=True)),
+                ('due_by', models.DateField(null=True, verbose_name=b'due by', blank=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
+            ],
+            options={
+                'ordering': ('status', 'created_at'),
+                'verbose_name_plural': 'Tasks',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='TaskStatus',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('status', models.CharField(max_length=50)),
+            ],
+            options={
+                'ordering': ('status',),
+                'verbose_name_plural': 'Task Statuses',
             },
             bases=(models.Model,),
         ),
@@ -135,8 +187,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
                 ('address', models.CharField(max_length=200, null=True, blank=True)),
+                ('color', paintstore.fields.ColorPickerField(max_length=7, null=True, blank=True)),
             ],
             options={
+                'ordering': ('name',),
                 'verbose_name_plural': 'Tikvah Houses',
             },
             bases=(models.Model,),
@@ -148,6 +202,7 @@ class Migration(migrations.Migration):
                 ('vehicle', models.CharField(max_length=50)),
             ],
             options={
+                'ordering': ('vehicle',),
                 'verbose_name_plural': 'Vehicles',
             },
             bases=(models.Model,),
@@ -211,9 +266,22 @@ class Migration(migrations.Migration):
                 ('vehicle', models.ForeignKey(blank=True, to='bikurcholim.Vehicles', null=True)),
             ],
             options={
+                'ordering': ('last_name',),
                 'verbose_name_plural': 'Volunteers',
             },
             bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='tasks',
+            name='status',
+            field=models.ForeignKey(to='bikurcholim.TaskStatus'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='housingschedule',
+            name='tikvah_house',
+            field=models.ForeignKey(to='bikurcholim.TikvahHouses'),
+            preserve_default=True,
         ),
         migrations.AddField(
             model_name='clients',
@@ -255,6 +323,12 @@ class Migration(migrations.Migration):
             model_name='cases',
             name='client',
             field=models.ForeignKey(to='bikurcholim.Clients'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='cases',
+            name='location',
+            field=models.ForeignKey(blank=True, to='bikurcholim.Hospitals', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

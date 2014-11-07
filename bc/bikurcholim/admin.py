@@ -13,6 +13,8 @@ from bikurcholim.models import CaseStatus
 from bikurcholim.models import Cases
 from bikurcholim.models import Services
 from bikurcholim.models import HousingSchedule
+from bikurcholim.models import Tasks
+from bikurcholim.models import TaskStatus
 		
 class VolunteersAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name')
@@ -68,6 +70,11 @@ class HousingScheduleAdmin(admin.ModelAdmin):
 	list_filter = ['tikvah_house']
 	form = HousingAdminForm
     
+class TasksAdmin(admin.ModelAdmin):
+	list_display = ('title', 'status')
+	list_filter = ['status__status']
+	search_fields = ['title', 'description']
+	form = CasesAdminForm
 
 admin.site.register(Neighborhoods)
 admin.site.register(Vehicles)
@@ -81,6 +88,8 @@ admin.site.register(CaseStatus)
 admin.site.register(Cases, CasesAdmin)
 admin.site.register(Services)
 admin.site.register(HousingSchedule, HousingScheduleAdmin)
+admin.site.register(TaskStatus)
+admin.site.register(Tasks, TasksAdmin)
 
 admin.AdminSite.site_header="Bikur Cholim Database Administration"
 admin.AdminSite.site_title="Bikur Cholim Database Administration"
