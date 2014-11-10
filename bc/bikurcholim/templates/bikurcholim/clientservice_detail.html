@@ -1,0 +1,81 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+
+{% block title %}Service: #{{ object.id }}{% endblock %}
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; <a href="{% url 'clientservice' %}">Client Services</a>
+	&rsaquo; {{ object.id }}
+	</div>
+{% endblock %}
+
+{% block content %}
+{{ block.super }}
+<table>
+	<tr height="75"><td></td></tr>
+</table>
+	<h1>Service #: {{ object.id }}</h1>
+	<ul class="object-tools">
+	    <li>
+	    	<a href={% url change object.id %} class="addlink">			
+	        Change Service #{{ object.id }}
+	        </a>
+	      </a>
+	    </li>
+    </ul>
+	<div id="content-main">
+		<div>
+  <fieldset class="module aligned ">
+        <div class="form-row field-client">
+			<div>
+                        <label class="required" for="id_client">Service:</label>
+                        {{ object.service }}
+                </div>
+        </div>
+        <div class="form-row field-status">
+                <div>   
+                        <label class="required" for="id_status">Client:</label>
+                        {{ object.client }}
+                </div>
+        </div>
+        <div class="form-row field-volunteer">
+                <div>
+                        <label for="id_volunteer">Volunteer:</label>
+                        {{ object.volunteer }}
+                </div>
+        </div>
+        <div class="form-row field-description">
+                <div>
+                        <label for="id_volunteer">Description:</label>
+                        {{ object.description }}
+                </div>
+        </div>
+        <div class="form-row field-open_date">
+                <div>
+                        <label for="id_open_date">Begin date:</label>
+                        {{ object.begin_date }}
+                </div>
+        </div>
+        <div class="form-row field-date_of_service">
+                <div> 
+                        <label for="id_date_of_service_0">End Date:</label>
+                        {{ object.end_date }}
+                </div>
+        </div>
+        <div class="form-row field-status">
+                <div> 
+                        <label for="id_close_date">Status:</label>
+                        {{ object.status }}
+                </div>
+        </div>
+        <div class="form-row field-number_of_times">
+                <div>
+                        <label for="id_number_of_times">Number Of Times:</label>
+                        {{ object.number_of_times }}
+                </div>
+        </div>    
+</fieldset>
+
+		</div>
+	</div>
+{% endblock %}

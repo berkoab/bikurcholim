@@ -15,6 +15,7 @@ from bikurcholim.models import Services
 from bikurcholim.models import HousingSchedule
 from bikurcholim.models import Tasks
 from bikurcholim.models import TaskStatus
+from bikurcholim.models import ClientService
 		
 class VolunteersAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name')
@@ -35,12 +36,22 @@ class VolunteersAdmin(admin.ModelAdmin):
 										('visit_elderly', 'visit_elderly_notes'), ('assist_with_housekeeping', 'assist_with_housekeeping_notes'),
 										('phone_calls', 'phone_calls_notes'), ('learn_with_elderly', 'learn_with_elderly_notes')]})
 	]
-
+	
+class ClientServiceInline(admin.TabularInline):
+    model = ClientService
+    extra = 3
+    
 class ClientsAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name')
 	list_filter = ['status__status', 'neighborhood', 'hospital', 'tikvah_house']
 	search_fields = ['last_name', 'first_name', 'street']
+	inlines = [ClientServiceInline]
 
+class ClientServiceAdmin(admin.ModelAdmin):
+	list_display = ('client', 'volunteer', 'status')
+	list_filter = ['status__status']
+	search_fields = ['description', 'client', 'volunteer']
+	
 class CasesAdminForm(forms.ModelForm):
     def clean_close_date(self):
     	open_date = self.cleaned_data["open_date"]
@@ -90,6 +101,7 @@ admin.site.register(Services)
 admin.site.register(HousingSchedule, HousingScheduleAdmin)
 admin.site.register(TaskStatus)
 admin.site.register(Tasks, TasksAdmin)
+admin.site.register(ClientService, ClientServiceAdmin)
 
 admin.AdminSite.site_header="Bikur Cholim Database Administration"
 admin.AdminSite.site_title="Bikur Cholim Database Administration"

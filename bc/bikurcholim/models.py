@@ -136,7 +136,23 @@ class TikvahHouses(models.Model):
 		ordering = ('name',)
 	def __str__(self):
 		return self.name
-		
+
+class Services(models.Model):
+	service = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Services"
+		ordering = ('service',)
+	def __str__(self):
+		return self.service
+
+class TaskStatus(models.Model):
+	status = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Task Statuses"
+		ordering = ('status',)
+	def __str__(self):
+		return self.status
+				
 class Clients(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
@@ -168,6 +184,7 @@ class Clients(models.Model):
 	food_to_home = models.BooleanField(default=None)
 	meal_coordinator = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_coordinator_set')
 	meal_preparer = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_preparer_set')
+	services = models.ManyToManyField(Services, through='ClientService')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
     
@@ -179,14 +196,19 @@ class Clients(models.Model):
 	def __str__(self):
 		return self.last_name + ', ' + self.first_name
 
-class Services(models.Model):
-	service = models.CharField(max_length=50)
+class ClientService(models.Model):
+	service = models.ForeignKey(Services)
+	client = models.ForeignKey(Clients)
+	volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
+	description = models.TextField(max_length=200, null=True, blank=True)
+	begin_date = models.DateField('open date', null=True, blank=True)
+	end_date = models.DateField('close date', null=True, blank=True)
+	status = models.ForeignKey(TaskStatus, null=True, blank=True)
+	number_of_times = models.IntegerField(null=True, blank=True)
 	class Meta:
-		verbose_name_plural = "Services"
-		ordering = ('service',)
-	def __str__(self):
-		return self.service
-
+		verbose_name_plural = "Client Services"
+		ordering = ('client', 'begin_date', 'status')
+		
 class Cases(models.Model):
 	client = models.ForeignKey(Clients)
 	status = models.ForeignKey(CaseStatus)
@@ -220,15 +242,7 @@ class HousingSchedule(models.Model):
 		verbose_name_plural = "HousingSchedule"
 	def __str__(self):
 		return str(self.id)
-
-class TaskStatus(models.Model):
-	status = models.CharField(max_length=50)
-	class Meta:
-		verbose_name_plural = "Task Statuses"
-		ordering = ('status',)
-	def __str__(self):
-		return self.status
-		
+	
 class Tasks(models.Model):
 	title = models.CharField(max_length=100)
 	status = models.ForeignKey(TaskStatus)

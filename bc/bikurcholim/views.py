@@ -1,4 +1,4 @@
-from bikurcholim.models import Clients, Volunteers, Cases, HousingSchedule, Tasks
+from bikurcholim.models import Clients, Volunteers, Cases, HousingSchedule, Tasks, ClientService
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.utils import timezone
 from django.views import generic
 from django.core.urlresolvers import reverse
-import volunteer_view, client_view, case_view, housing_view, service_events_view, housing_events_view, tasks_view
+import volunteer_view, client_view, case_view, housing_view, service_events_view, housing_events_view, tasks_view, services_view
 import collections
 import datetime
 import json
@@ -61,6 +61,12 @@ def cases(request):
 def tasks(request):
 	r = get_table_rows(tasks_view)		
 	context = get_context(r, 'Tasks', 'tasks', 'admin:bikurcholim_tasks_add')
+	return render(request, 'bikurcholim/table_base.html', context)
+
+@login_required(login_url='/bikurcholim/login/')
+def clientservice(request):
+	r = get_table_rows(services_view)		
+	context = get_context(r, 'Client Services', 'clientservice', 'admin:bikurcholim_clientservice_add')
 	return render(request, 'bikurcholim/table_base.html', context)
 
 @login_required(login_url='/bikurcholim/login/')
@@ -119,6 +125,12 @@ def clients_advanced(request):
 	return render(request, 'bikurcholim/clients_advanced.html', context)
 
 @login_required(login_url='/bikurcholim/login/')
+def clientservice_advanced(request):
+	rows = get_advanced_rows(request)
+	context = get_context_advanced(rows, 'ClientServices', 'clientservice')
+	return render(request, 'bikurcholim/clientservice_advanced.html', context)
+
+@login_required(login_url='/bikurcholim/login/')
 def housingschedule_advanced(request):
 	rows = get_advanced_rows(request)
 	context = get_context_advanced(rows, 'Housing Schedule', 'housingschedule')
@@ -161,6 +173,17 @@ class CasesDetailView(generic.DetailView):
 		context['change'] = url
 		return context
 
+class ClientServiceDetailView(generic.DetailView):
+
+	model = ClientService
+
+	def get_context_data(self, **kwargs):
+		context = super(ClientServiceDetailView, self).get_context_data(**kwargs)
+		context['now'] = timezone.now()
+		url = 'admin:bikurcholim_clientservice_change'
+		context['change'] = url
+		return context
+	
 class TasksDetailView(generic.DetailView):
 
 	model = Tasks

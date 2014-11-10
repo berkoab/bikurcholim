@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url
 from bikurcholim import views
 from bikurcholim.views import VolunteersDetailView, HousingScheduleDetailView
 from bikurcholim.views import ClientsDetailView, CasesDetailView
-from bikurcholim.views import TasksDetailView
+from bikurcholim.views import TasksDetailView, ClientServiceDetailView
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
@@ -11,16 +11,19 @@ urlpatterns = patterns('',
 	url(r'^clients/$', views.clients, name='clients'),
 	url(r'^cases/$', views.cases, name='cases'),
 	url(r'^tasks/$', views.tasks, name='tasks'),
+	url(r'^clientservice/$', views.clientservice, name='clientservice'),
 	url(r'^housingschedule/$', views.housingschedule, name='housingschedule'),
 	url(r'^clients/(?P<pk>\d+)/$', ClientsDetailView.as_view(), name='client-detail'),
 	url(r'^volunteers/(?P<pk>\d+)/$', VolunteersDetailView.as_view(), name='volunteers-detail'),
 	url(r'^cases/(?P<pk>\d+)/$', CasesDetailView.as_view(), name='cases-detail'),
 	url(r'^tasks/(?P<pk>\d+)/$', TasksDetailView.as_view(), name='tasks-detail'),
+	url(r'^clientservice/(?P<pk>\d+)/$', ClientServiceDetailView.as_view(), name='clientservice-detail'),
 	url(r'^housingschedule/(?P<pk>\d+)/$', HousingScheduleDetailView.as_view(), name='housingschedule-detail'),
 	url(r'^login/$', views.user_login, name='login'),
 	url(r'^export_xls/$', views.export_xls, name='export_xls'),
 	url(r'^cases_advanced/$', views.cases_advanced, name='cases_advanced'),
 	url(r'^tasks_advanced/$', views.tasks_advanced, name='tasks_advanced'),
+	url(r'^clientservice_advanced/$', views.clientservice_advanced, name='clientservice_advanced'),
 	url(r'^volunteers_advanced/$', views.volunteers_advanced, name='volunteers_advanced'),
 	url(r'^clients_advanced/$', views.clients_advanced, name='clients_advanced'),
 	url(r'^housingschedule_advanced/$', views.housingschedule_advanced, name='housingschedule_advanced'),

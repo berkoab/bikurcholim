@@ -1,0 +1,79 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+{% load static %}
+{% block title %}{{ bigName }} Advanced{% endblock %}
+{% block head %}
+{{ block.super }}
+ <link rel="stylesheet" type="text/css" href="{% static "bikurcholim/pivot.css" %}">
+ <script type="text/javascript" src="{% static "bikurcholim/jquery-1.8.3.min.js" %}"></script>
+ <script type="text/javascript" src="{% static "bikurcholim/jquery-ui-1.9.2.custom.min.js" %}"></script>
+ <script type="text/javascript" src="{% static "bikurcholim/pivot.js" %}"></script>
+ <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+ <script type="text/javascript" src="{% static "bikurcholim/gchart_renderers.js" %}"></script>
+ <script type="text/javascript" src="{% static "bikurcholim/d3_renderers.js" %}"></script>	
+ <script type="text/javascript" src="{% static "bikurcholim/jquery.ui.touch-punch.min.js" %}"></script>
+ <script type="text/javascript" src="{% static "bikurcholim/d3.v3.min.js" %}"></script>
+
+<!-- END Header -->
+{% endblock %}
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; <a href="{% url smallName %}">{{ bigName }}</a>
+	&rsaquo; Advanced &rsaquo;
+	</div>
+{% endblock %}
+{% block content %}
+{{ block.super }}
+<table>
+	<tr height="75"><td></td></tr>
+</table>
+
+<h1>{{ bigName }} Advanced</h1>
+
+	<script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart", "charteditor"]});
+		var json_data="{{ data }}";
+		json_data=getData(json_data);
+		
+		function convert_date(mp, field) {
+			var d = new Date(mp[field]);
+
+	        return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+		}
+    	$(function(){
+    		var derivers = $.pivotUtilities.derivers;
+    		//var monthAndDayDeriver = derivers.dateFormat("open_date", "%m/%d")
+            var renderers = $.extend($.pivotUtilities.renderers, 
+                					 $.pivotUtilities.gchart_renderers,
+                					 $.pivotUtilities.d3_renderers);
+	        $("#output").pivotUI(
+
+	        json_data, {
+	        			renderers: renderers,
+	        			derivedAttributes: {
+	        				"Open Date": function(mp) {
+	        					return convert_date(mp, "open_date")
+	        				},
+	        				"End Date": function(mp) {
+	        					return convert_date(mp, "end_date")
+	        				}
+	        			},
+	        			
+	        		   }
+			);
+    	});
+    	function getData(data) {
+    		
+			data=data.replace(/&quot;/g, '"');
+			data=data.replace(/&lt;/g, '<');
+			data=data.replace(/&gt;/g, '>');
+			data=data.replace(/&#39;/g, "'");
+
+			var array = JSON.parse(data);
+			return array;
+		}	
+    </script>
+
+	<div id="output" style="margin: 10px;"></div>
+	
+{% endblock %}
