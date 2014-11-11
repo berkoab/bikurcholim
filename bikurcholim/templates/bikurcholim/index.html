@@ -97,7 +97,7 @@
 	<span style="font-weight:bold;font-size:large;">Open Tasks</span>
 	{% if tasks %}
 	    {% for task in tasks %}
-	        <div><a href="/bikurcholim/tasks/{{ task.id }}/" style="color: white; font-weight:bold">
+	        <div><a href="{% url 'tasks' %}{{ task.id }}/" style="color: white; font-weight:bold">
 	        	{{ task.title }}</a></div>
 	    {% endfor %}
 	{% else %}
@@ -109,7 +109,7 @@
 	<span style="font-weight:bold;font-size:large;">Active Clients</span>
 	{% if clients %}
 	    {% for client in clients %}
-	        <div><a href="/bikurcholim/clients/{{ client.id }}/" style="color: white; font-weight:bold">
+	        <div><a href="{% url 'clients' %}{{ client.id }}/" style="color: white; font-weight:bold">
 	        	{{ client.get_name }}</a></div>
 	    {% endfor %}
 	{% else %}
