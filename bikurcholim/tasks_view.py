@@ -4,14 +4,16 @@ from datetime import date
 import time
 from datetime import datetime
 from bikurcholim.models import Tasks
+from django.core.urlresolvers import reverse_lazy
 
 def getCols():
+    href = "<a href=" + str(reverse_lazy('tasks')) + "{0} class='userId' target='_blank'>{0}</a>"
     cols = collections.OrderedDict()
     cols['id']={
         'index': 1, #The order this column should appear in the table
         'type': "number", #The type. Possible are string, number, bool, date(in milliseconds).
         'friendly': "<span class='glyphicon glyphicon-user'></span>",  #Name that will be used in header. Can also be any html as shown here.
-        'format': "<a href='/bikurcholim/tasks/{0}' class='userId' target='_blank'>{0}</a>",  #Used to format the data anything you want. Use {0} as placeholder for the actual data.
+        'format': href,  #Used to format the data anything you want. Use {0} as placeholder for the actual data.
         'unique': 'true',  #This is required if you want checkable rows, or to use the rowClicked callback. Be certain the values are really unique or weird things will happen.
         'sortOrder': "asc", #Data will initially be sorted by this column. Possible are "asc" or "desc"
         'tooltip': "Unique ID number", #Show some additional info about column

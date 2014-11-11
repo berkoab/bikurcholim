@@ -2,6 +2,7 @@ import collections
 from bikurcholim.models import HousingSchedule
 from datetime import datetime
 from datetime import timedelta
+from django.core.urlresolvers import reverse_lazy
 
 def format_datetime(dt, start):
 	if(start):
@@ -25,6 +26,6 @@ def getRows(sd, ed):
 		event['start'] = format_datetime(c.from_date, True)
 		event['end'] = format_datetime(c.to_date, False)
 		event['color'] = c.get_color()
-		event['url'] = '/bikurcholim/housingschedule/' + str(c.id)
+		event['url'] = str(reverse_lazy('housingschedule')) + str(c.id)
 		events.append(event)
 	return events
