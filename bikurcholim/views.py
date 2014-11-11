@@ -1,6 +1,7 @@
 from bikurcholim.models import Clients, Volunteers, Cases, HousingSchedule, Tasks, ClientService
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
@@ -51,7 +52,7 @@ def clients(request):
 	context = get_context(r, 'Clients', 'clients', 'admin:bikurcholim_clients_add')
 	return render(request, 'bikurcholim/table_base.html', context)
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def cases(request):
 	r = get_table_rows(case_view)		
 	context = get_context(r, 'Cases', 'cases', 'admin:bikurcholim_cases_add')
