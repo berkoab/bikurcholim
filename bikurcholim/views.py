@@ -17,7 +17,7 @@ import re
 import xlwt
 ezxf = xlwt.easyxf
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def index(request):
 	tasks = Tasks.objects.all().filter(status__status='Open')
 	clients = Clients.objects.all().filter(status__status='Active')
@@ -40,13 +40,13 @@ def get_context(data, bigName, smallName, add):
 			'add': add}
 	return context
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def volunteers(request):
 	r = get_table_rows(volunteer_view)
 	context = get_context(r, 'Volunteers', 'volunteers', 'admin:bikurcholim_volunteers_add')
 	return render(request, 'bikurcholim/table_base.html', context)
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def clients(request):
 	r = get_table_rows(client_view)		
 	context = get_context(r, 'Clients', 'clients', 'admin:bikurcholim_clients_add')
@@ -58,19 +58,19 @@ def cases(request):
 	context = get_context(r, 'Cases', 'cases', 'admin:bikurcholim_cases_add')
 	return render(request, 'bikurcholim/table_base.html', context)
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def tasks(request):
 	r = get_table_rows(tasks_view)		
 	context = get_context(r, 'Tasks', 'tasks', 'admin:bikurcholim_tasks_add')
 	return render(request, 'bikurcholim/table_base.html', context)
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def clientservice(request):
 	r = get_table_rows(services_view)		
 	context = get_context(r, 'Client Services', 'clientservice', 'admin:bikurcholim_clientservice_add')
 	return render(request, 'bikurcholim/table_base.html', context)
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def housingschedule(request):
 	r = get_table_rows(housing_view)		
 	context = get_context(r, 'Housing Schedule', 'housingschedule', 'admin:bikurcholim_housingschedule_add')
@@ -82,7 +82,7 @@ def get_context_advanced(data, bigName, smallName):
 			'smallName': smallName}
 	return context
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def cases_advanced(request):
 	rows = get_advanced_rows(request)
 	context = get_context_advanced(rows, 'Cases', 'cases')
@@ -113,25 +113,25 @@ def tasks_advanced(request):
 	context = get_context_advanced(rows, 'Tasks', 'tasks')
 	return render(request, 'bikurcholim/tasks_advanced.html', context)
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def volunteers_advanced(request):
 	rows = get_advanced_rows(request)	
 	context = get_context_advanced(rows, 'Volunteers', 'volunteers')
 	return render(request, 'bikurcholim/volunteers_advanced.html', context)
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def clients_advanced(request):
 	rows = get_advanced_rows(request)
 	context = get_context_advanced(rows, 'Clients', 'clients')
 	return render(request, 'bikurcholim/clients_advanced.html', context)
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def clientservice_advanced(request):
 	rows = get_advanced_rows(request)
 	context = get_context_advanced(rows, 'ClientServices', 'clientservice')
 	return render(request, 'bikurcholim/clientservice_advanced.html', context)
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def housingschedule_advanced(request):
 	rows = get_advanced_rows(request)
 	context = get_context_advanced(rows, 'Housing Schedule', 'housingschedule')
@@ -324,12 +324,12 @@ def events(request):
 	context = {'data': json.dumps(rows)}
 	return HttpResponse(json.dumps(rows))
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def casecalendar(request):
 	context = {}
 	return render(request, 'bikurcholim/casescalendar.html', context)
 
-@login_required(login_url='/bikurcholim/login/')
+@login_required(login_url=reverse_lazy('login'))
 def housingcalendar(request):
 	context = {}
 	return render(request, 'bikurcholim/housingcalendar.html', context)
