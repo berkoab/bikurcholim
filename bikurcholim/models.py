@@ -32,6 +32,8 @@ class Volunteers(models.Model):
 	city = models.ForeignKey(Cities, null = True, blank=True)
 	neighborhood = models.ForeignKey(Neighborhoods, null=True, blank=True)
 	work_place = models.TextField(max_length=100, null=True, blank=True)
+	start_date = models.DateField(null=True, blank=True)
+	end_date = models.DateField(null=True, blank=True)
 	medical_training = models.TextField(max_length=100, null=True, blank=True)
 	home_phone = models.CharField(max_length=50, null=True, blank=True)
 	cell_phone = models.CharField(max_length=50, null=True, blank=True)
@@ -77,6 +79,9 @@ class Volunteers(models.Model):
 	phone_calls_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	learn_with_elderly = models.BooleanField(default=None)
 	learn_with_elderly_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
+	visit_homebound = models.BooleanField(default=None)
+	visit_homebound_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
+	last_update_date = models.DateField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
     
@@ -130,9 +135,10 @@ class Hospitals(models.Model):
 class TikvahHouses(models.Model):
 	name = models.CharField(max_length=50)
 	address = models.CharField(max_length=200, null=True, blank=True)
+	phone_number = models.CharField(max_length=50, null=True, blank=True)
 	color = ColorPickerField(null=True, blank=True)
 	class Meta:
-		verbose_name_plural = "Tikvah Houses"
+		verbose_name_plural = "Housing"
 		ordering = ('name',)
 	def __str__(self):
 		return self.name
@@ -189,8 +195,8 @@ class Clients(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
     
 	class Meta:
-		verbose_name_plural = "Clients"
-		ordering = ('last_name',)
+		verbose_name_plural = "Cases"
+		ordering = ('last_name','first_name')
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name
 	def __str__(self):
@@ -210,7 +216,8 @@ class ClientService(models.Model):
 		ordering = ('client', 'begin_date', 'status')
 		
 class Cases(models.Model):
-	client = models.ForeignKey(Clients)
+	first_name = models.CharField(max_length=50)
+	last_name = models.CharField(max_length=50)
 	status = models.ForeignKey(CaseStatus)
 	volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
 	open_date = models.DateField('open date')
@@ -222,18 +229,18 @@ class Cases(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	class Meta:
-		verbose_name_plural = "Cases"
+		verbose_name_plural = "Intake Calls"
 		ordering = ('id',)
 	def __str__(self):
 		return str(self.id)
 
 class HousingSchedule(models.Model):
-	tikvah_house = models.ForeignKey(TikvahHouses)
-	tikvah_room = models.CharField(max_length=50, null=True, blank=True)
+	housing = models.ForeignKey(TikvahHouses)
+	apt = models.CharField(max_length=50, null=True, blank=True)
 	client = models.ForeignKey(Clients)
 	from_date = models.DateField('from date')
 	to_date = models.DateField('to date')
-	description = models.TextField(max_length=200, null=True, blank=True)
+	notes = models.TextField(max_length=200, null=True, blank=True)
 	def get_color(self):
 		return self.tikvah_house.color
 	def get_days(self):

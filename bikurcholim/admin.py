@@ -19,11 +19,14 @@ from bikurcholim.models import ClientService
 		
 class VolunteersAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name')
-	list_filter = ['neighborhood', 'vehicle', 'start_time_available', 'end_time_availalable']
-	search_fields = ['last_name', 'first_name', 'street', 'work_place', 'email_address', ]
+	list_filter = ['neighborhood', 'vehicle', 'hospital_visitation', 
+					'transportation_to_appointments', 'overnight_hospital_stays', 'assist_homebound', 'assist_with_children', 
+					'assist_with_children_activities', 'able_to_entertain_children', 'visit_elderly', 
+					'assist_with_housekeeping', 'phone_calls', 'learn_with_elderly', 'visit_homebound']
+	search_fields = ['last_name', 'first_name', 'street', 'work_place', 'email_address']
 	fieldsets = [
-		(None, {'fields': ['first_name', 'last_name', 'address', 'city', 'neighborhood', 'work_place', 'medical_training', 'home_phone', 
-		'cell_phone', 'email_address', 'vehicle', 'other_languages', 'other_specialties']}),
+		(None, {'fields': ['first_name', 'last_name', 'home_phone', 
+		'cell_phone', 'email_address', 'address', 'city', 'neighborhood', 'work_place', 'start_date', 'end_date', 'medical_training', 'vehicle', 'other_languages', 'other_specialties']}),
 		('Times Available', {'fields': ['start_time_available', 'end_time_availalable']}),
 		('Days Available', {'fields': [('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'shabbos')]}),
 		(None, {'fields': ['days_and_times_available_notes']}), 
@@ -34,8 +37,7 @@ class VolunteersAdmin(admin.ModelAdmin):
 										('assist_homebound', 'assist_homebound_notes'), ('assist_with_children', 'assist_with_children_notes'), 
 										('assist_with_children_activities', 'assist_with_children_activities_notes'), ('able_to_entertain_children', 'able_to_entertain_children_notes'), 
 										('visit_elderly', 'visit_elderly_notes'), ('assist_with_housekeeping', 'assist_with_housekeeping_notes'),
-										('phone_calls', 'phone_calls_notes'), ('learn_with_elderly', 'learn_with_elderly_notes')]})
-	]
+										('phone_calls', 'phone_calls_notes'), ('learn_with_elderly', 'learn_with_elderly_notes'), ('visit_homebound', 'visit_homebound_notes')]})]
 	
 class ClientServiceInline(admin.TabularInline):
     model = ClientService
@@ -62,9 +64,9 @@ class CasesAdminForm(forms.ModelForm):
         return close_date
        
 class CasesAdmin(admin.ModelAdmin):
-	list_display = ('id', 'client', 'volunteer')
+	list_display = ('id', 'last_name', 'first_name', 'volunteer')
 	list_filter = ['status__status', 'location__name']
-	search_fields = ['client__first_name', 'client__last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
+	search_fields = ['first_name', 'last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
 	form = CasesAdminForm
 	
 class HousingAdminForm(forms.ModelForm):
@@ -77,8 +79,8 @@ class HousingAdminForm(forms.ModelForm):
         return to_date
        
 class HousingScheduleAdmin(admin.ModelAdmin):
-	list_display = ('from_date', 'to_date', 'tikvah_house', 'client')
-	list_filter = ['tikvah_house']
+	list_display = ('from_date', 'to_date', 'housing', 'client')
+	list_filter = ['housing']
 	form = HousingAdminForm
     
 class TasksAdmin(admin.ModelAdmin):
