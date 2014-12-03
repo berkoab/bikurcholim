@@ -158,7 +158,23 @@ class TaskStatus(models.Model):
 		ordering = ('status',)
 	def __str__(self):
 		return self.status
-				
+
+class HousingSchedule(models.Model):
+	housing = models.ForeignKey(TikvahHouses)
+	apt = models.CharField(max_length=50, null=True, blank=True)
+	client = models.ForeignKey('Clients')
+	from_date = models.DateField('from date')
+	to_date = models.DateField('to date')
+	notes = models.TextField(max_length=200, null=True, blank=True)
+	def get_color(self):
+		return self.tikvah_house.color
+	def get_days(self):
+		return self.to_date - self.from_date
+	class Meta:
+		verbose_name_plural = "HousingSchedule"
+	def __str__(self):
+		return str(self.id)
+					
 class Clients(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
@@ -175,8 +191,8 @@ class Clients(models.Model):
 	hospital = models.ForeignKey(Hospitals, null=True, blank=True)
 	hospital_room = models.CharField(max_length=50, null=True, blank=True)
 	hospital_notes = models.TextField(max_length=200, null=True, blank=True)
-	tikvah_house = models.ForeignKey(TikvahHouses, null=True, blank=True)
-	tikvah_room = models.CharField(max_length=50, null=True, blank=True)
+#	tikvah_house = models.ForeignKey(TikvahHouses, null=True, blank=True)
+#	tikvah_room = models.CharField(max_length=50, null=True, blank=True)
 	food_notes = models.TextField(max_length=300, null=True, blank=True)
 	allergies = models.TextField(max_length=200, null=True, blank=True)
 	transportation = models.TextField(max_length=200, null=True, blank=True)
@@ -191,6 +207,7 @@ class Clients(models.Model):
 	meal_coordinator = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_coordinator_set')
 	meal_preparer = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_preparer_set')
 	services = models.ManyToManyField(Services, through='ClientService')
+# 	housing = models.ManyToManyField(HousingSchedule)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
     
@@ -234,21 +251,7 @@ class Cases(models.Model):
 	def __str__(self):
 		return str(self.id)
 
-class HousingSchedule(models.Model):
-	housing = models.ForeignKey(TikvahHouses)
-	apt = models.CharField(max_length=50, null=True, blank=True)
-	client = models.ForeignKey(Clients)
-	from_date = models.DateField('from date')
-	to_date = models.DateField('to date')
-	notes = models.TextField(max_length=200, null=True, blank=True)
-	def get_color(self):
-		return self.tikvah_house.color
-	def get_days(self):
-		return self.to_date - self.from_date
-	class Meta:
-		verbose_name_plural = "HousingSchedule"
-	def __str__(self):
-		return str(self.id)
+
 	
 class Tasks(models.Model):
 	title = models.CharField(max_length=100)

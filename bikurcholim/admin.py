@@ -41,13 +41,17 @@ class VolunteersAdmin(admin.ModelAdmin):
 	
 class ClientServiceInline(admin.TabularInline):
     model = ClientService
-    extra = 3
+    extra = 2
+
+class HousingScheduleInline(admin.TabularInline):
+    model = HousingSchedule
+    extra = 2
     
 class ClientsAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name')
-	list_filter = ['status__status', 'neighborhood', 'hospital', 'tikvah_house']
+	list_filter = ['status__status', 'neighborhood', 'hospital']
 	search_fields = ['last_name', 'first_name', 'street']
-	inlines = [ClientServiceInline]
+	inlines = [ClientServiceInline, HousingScheduleInline]
 
 class ClientServiceAdmin(admin.ModelAdmin):
 	list_display = ('client', 'volunteer', 'status')
@@ -79,7 +83,7 @@ class HousingAdminForm(forms.ModelForm):
         return to_date
        
 class HousingScheduleAdmin(admin.ModelAdmin):
-	list_display = ('from_date', 'to_date', 'housing', 'client')
+	list_display = ('from_date', 'to_date', 'housing')
 	list_filter = ['housing']
 	form = HousingAdminForm
     
