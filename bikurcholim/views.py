@@ -1,4 +1,4 @@
-from bikurcholim.models import Clients, Volunteers, Cases, HousingSchedule, Tasks, ClientService
+from bikurcholim.models import Cases, Volunteers, IntakeCalls, HousingSchedule, Tasks, ClientService
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
@@ -9,7 +9,7 @@ from django.template import RequestContext
 from django.utils import timezone
 from django.views import generic
 from django.core.urlresolvers import reverse
-import volunteer_view, client_view, case_view, housing_view, service_events_view, housing_events_view, tasks_view, services_view
+import volunteer_view, case_view, intakecalls_view, housing_view, service_events_view, housing_events_view, tasks_view, services_view
 import collections
 import datetime
 import json
@@ -20,7 +20,7 @@ ezxf = xlwt.easyxf
 @login_required(login_url=reverse_lazy('login'))
 def index(request):
 	tasks = Tasks.objects.all().filter(status__status='Open')
-	clients = Clients.objects.all().filter(status__status='Active')
+	clients = Cases.objects.all().filter(status__status='Active')
 	context = {'tasks': tasks,
 			'clients': clients}
 	return render(request, 'bikurcholim/index.html', context)
@@ -47,15 +47,15 @@ def volunteers(request):
 	return render(request, 'bikurcholim/table_base.html', context)
 
 @login_required(login_url=reverse_lazy('login'))
-def clients(request):
+def cases(request):
 	r = get_table_rows(client_view)		
-	context = get_context(r, 'Clients', 'clients', 'admin:bikurcholim_clients_add')
+	context = get_context(r, 'Cases', 'cases', 'admin:bikurcholim_cases_add')
 	return render(request, 'bikurcholim/table_base.html', context)
 
 @login_required(login_url=reverse_lazy('login'))
-def cases(request):
-	r = get_table_rows(case_view)		
-	context = get_context(r, 'Cases', 'cases', 'admin:bikurcholim_cases_add')
+def intakecalls(request):
+	r = get_table_rows(intakecalls_view)		
+	context = get_context(r, 'Intake Calls', 'intakecalls', 'admin:bikurcholim_intakecalls_add')
 	return render(request, 'bikurcholim/table_base.html', context)
 
 @login_required(login_url=reverse_lazy('login'))
@@ -83,10 +83,10 @@ def get_context_advanced(data, bigName, smallName):
 	return context
 
 @login_required(login_url=reverse_lazy('login'))
-def cases_advanced(request):
+def intakecalls_advanced(request):
 	rows = get_advanced_rows(request)
-	context = get_context_advanced(rows, 'Cases', 'cases')
-	return render(request, 'bikurcholim/cases_advanced.html', context)
+	context = get_context_advanced(rows, 'Intake Calls', 'intakecalls')
+	return render(request, 'bikurcholim/intakecalls_advanced.html', context)
 
 def get_advanced_rows(request):
 	values_list = request.POST['data']
@@ -120,10 +120,10 @@ def volunteers_advanced(request):
 	return render(request, 'bikurcholim/volunteers_advanced.html', context)
 
 @login_required(login_url=reverse_lazy('login'))
-def clients_advanced(request):
+def cases_advanced(request):
 	rows = get_advanced_rows(request)
-	context = get_context_advanced(rows, 'Clients', 'clients')
-	return render(request, 'bikurcholim/clients_advanced.html', context)
+	context = get_context_advanced(rows, 'Cases', 'cases')
+	return render(request, 'bikurcholim/cases_advanced.html', context)
 
 @login_required(login_url=reverse_lazy('login'))
 def clientservice_advanced(request):
@@ -152,17 +152,6 @@ class VolunteersDetailView(generic.DetailView):
 		context['change'] = url
 		return context
 
-class ClientsDetailView(generic.DetailView):
-
-	model = Clients
-
-	def get_context_data(self, **kwargs):
-		context = super(ClientsDetailView, self).get_context_data(**kwargs)
-		context['now'] = timezone.now()
-		url = 'admin:bikurcholim_clients_change'
-		context['change'] = url
-		return context
-	
 class CasesDetailView(generic.DetailView):
 
 	model = Cases
@@ -171,6 +160,17 @@ class CasesDetailView(generic.DetailView):
 		context = super(CasesDetailView, self).get_context_data(**kwargs)
 		context['now'] = timezone.now()
 		url = 'admin:bikurcholim_cases_change'
+		context['change'] = url
+		return context
+	
+class IntakeCallsDetailView(generic.DetailView):
+
+	model = Cases
+
+	def get_context_data(self, **kwargs):
+		context = super(IntakeCallsDetailView, self).get_context_data(**kwargs)
+		context['now'] = timezone.now()
+		url = 'admin:bikurcholim_intakecalls_change'
 		context['change'] = url
 		return context
 

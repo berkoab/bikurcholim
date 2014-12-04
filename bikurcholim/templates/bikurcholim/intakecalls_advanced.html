@@ -9,8 +9,10 @@
  <script type="text/javascript" src="{% static "bikurcholim/pivot.js" %}"></script>
  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
  <script type="text/javascript" src="{% static "bikurcholim/gchart_renderers.js" %}"></script>
+ <script type="text/javascript" src="{% static "bikurcholim/d3_renderers.js" %}"></script>	
+ <script type="text/javascript" src="{% static "bikurcholim/jquery.ui.touch-punch.min.js" %}"></script>
+ <script type="text/javascript" src="{% static "bikurcholim/d3.v3.min.js" %}"></script>
 
-  
 <!-- END Header -->
 {% endblock %}
 {% block breadcrumbs %}
@@ -25,20 +27,39 @@
 <table>
 	<tr height="75"><td></td></tr>
 </table>
+
 <h1>{{ bigName }} Advanced</h1>
 
 	<script type="text/javascript">
 		google.load("visualization", "1", {packages:["corechart", "charteditor"]});
 		var json_data="{{ data }}";
 		json_data=getData(json_data);
+		
+		function convert_date(mp, field) {
+			var d = new Date(mp[field]);
 
+	        return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+		}
     	$(function(){
     		var derivers = $.pivotUtilities.derivers;
+    		//var monthAndDayDeriver = derivers.dateFormat("open_date", "%m/%d")
             var renderers = $.extend($.pivotUtilities.renderers, 
-                $.pivotUtilities.gchart_renderers);
+                					 $.pivotUtilities.gchart_renderers,
+                					 $.pivotUtilities.d3_renderers);
 	        $("#output").pivotUI(
 
-	        json_data, {renderers: renderers}
+	        json_data, {
+	        			renderers: renderers,
+	        			derivedAttributes: {
+	        				"Date of Service": function(mp) {
+	        					return convert_date(mp, "date_of_service")
+	        				},
+	        				"Open Date": function(mp) {
+	        					return convert_date(mp, "open_date")
+	        				}
+	        			},
+	        			
+	        		   }
 			);
     	});
     	function getData(data) {

@@ -24,7 +24,25 @@ class Vehicles(models.Model):
 		ordering = ('vehicle',)
 	def __str__(self):
 		return self.vehicle
-	
+
+class Options(models.Model):
+	name = models.CharField(max_length=100)
+	class Meta:
+		verbose_name_plural = "Options"
+		ordering = ('name', )
+	def __str__(self):
+		return str(self.name)
+
+class VolunteerClients(models.Model):
+	case = models.ForeignKey('Cases')
+	volunteer = models.ForeignKey('Volunteers')
+	note = models.TextField(max_length=200)
+	class Meta:
+		verbose_name_plural = "Volunteer Clients"
+		ordering = ('case__last_name', 'case__first_name')
+	def __str__(self):
+		return str(self.case.last_name + ', ' + self.case.first_name)
+					
 class Volunteers(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
@@ -81,13 +99,15 @@ class Volunteers(models.Model):
 	learn_with_elderly_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	visit_homebound = models.BooleanField(default=None)
 	visit_homebound_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
+	other_options = models.ManyToManyField(Options, through='OtherOptions')
+	#note = models.ManyToManyField(Notes)
 	last_update_date = models.DateField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
     
 	class Meta:
 		verbose_name_plural = "Volunteers"
-		ordering = ('last_name',)
+		ordering = ('last_name','first_name')
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name
 	def get_fields(self):
@@ -107,10 +127,19 @@ class Volunteers(models.Model):
 	def __str__(self):
 		return self.last_name + ', ' + self.first_name
 
+class OtherOptions(models.Model):
+	option = models.ForeignKey(Options)
+	volunteer = models.ForeignKey(Volunteers)
+	notes = models.TextField(max_length=200, null=True, blank=True)
+
+	class Meta:
+		verbose_name_plural = "Other Options"
+		ordering = ('option', 'volunteer')
+		
 class ClientStatus(models.Model):
 	status = models.CharField(max_length=50)
 	class Meta:
-		verbose_name_plural = "Client Statuses"
+		verbose_name_plural = "Case Statuses"
 		ordering = ('status',)
 	def __str__(self):
 		return self.status
@@ -118,7 +147,7 @@ class ClientStatus(models.Model):
 class CaseStatus(models.Model):
 	status = models.CharField(max_length=50)
 	class Meta:
-		verbose_name_plural = "Case Statuses"
+		verbose_name_plural = "Intake Call Statuses"
 		ordering = ('status',)
 	def __str__(self):
 		return self.status
@@ -132,13 +161,13 @@ class Hospitals(models.Model):
 	def __str__(self):
 		return self.name
 	
-class TikvahHouses(models.Model):
+class Houses(models.Model):
 	name = models.CharField(max_length=50)
 	address = models.CharField(max_length=200, null=True, blank=True)
 	phone_number = models.CharField(max_length=50, null=True, blank=True)
 	color = ColorPickerField(null=True, blank=True)
 	class Meta:
-		verbose_name_plural = "Housing"
+		verbose_name_plural = "Houses"
 		ordering = ('name',)
 	def __str__(self):
 		return self.name
@@ -160,14 +189,14 @@ class TaskStatus(models.Model):
 		return self.status
 
 class HousingSchedule(models.Model):
-	housing = models.ForeignKey(TikvahHouses)
+	house = models.ForeignKey(Houses)
 	apt = models.CharField(max_length=50, null=True, blank=True)
-	client = models.ForeignKey('Clients')
+	case = models.ForeignKey('Cases')
 	from_date = models.DateField('from date')
 	to_date = models.DateField('to date')
 	notes = models.TextField(max_length=200, null=True, blank=True)
 	def get_color(self):
-		return self.tikvah_house.color
+		return self.house.color
 	def get_days(self):
 		return self.to_date - self.from_date
 	class Meta:
@@ -175,7 +204,7 @@ class HousingSchedule(models.Model):
 	def __str__(self):
 		return str(self.id)
 					
-class Clients(models.Model):
+class Cases(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
 	address = models.CharField(max_length=100, null=True, blank=True)
@@ -207,6 +236,7 @@ class Clients(models.Model):
 	meal_coordinator = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_coordinator_set')
 	meal_preparer = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_preparer_set')
 	services = models.ManyToManyField(Services, through='ClientService')
+	#note = models.ManyToManyField(Notes)
 # 	housing = models.ManyToManyField(HousingSchedule)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -221,7 +251,7 @@ class Clients(models.Model):
 
 class ClientService(models.Model):
 	service = models.ForeignKey(Services)
-	client = models.ForeignKey(Clients)
+	client = models.ForeignKey(Cases)
 	volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
 	description = models.TextField(max_length=200, null=True, blank=True)
 	begin_date = models.DateField('open date', null=True, blank=True)
@@ -232,13 +262,13 @@ class ClientService(models.Model):
 		verbose_name_plural = "Client Services"
 		ordering = ('client', 'begin_date', 'status')
 		
-class Cases(models.Model):
+class IntakeCalls(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
 	status = models.ForeignKey(CaseStatus)
 	volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
-	open_date = models.DateField('open date')
-	date_of_service = models.DateTimeField('date and time of service')
+	date_call_received = models.DateField('date call received', null=True, blank=True)
+	date_of_service = models.DateTimeField('date and time of service', null=True, blank=True)
 	close_date = models.DateField('close date', null=True, blank=True)
 	service = models.ForeignKey(Services, null=True, blank=True)
 	location = models.ForeignKey(Hospitals, null=True, blank=True)

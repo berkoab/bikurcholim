@@ -1,5 +1,5 @@
 import collections
-from bikurcholim.models import Clients, Volunteers
+from bikurcholim.models import Volunteers
 from django.core.urlresolvers import reverse_lazy
 
 def getCols():
