@@ -3,7 +3,7 @@ import datetime
 from datetime import date
 import time
 from datetime import datetime
-from bikurcholim.models import Cases
+from bikurcholim.models import IntakeCalls
 from django.core.urlresolvers import reverse_lazy
 
 def getCols():
@@ -85,7 +85,7 @@ def datetime_to_ms_str(dt):
 def getRows():
 	rows=[]
 	
-	d = Cases.objects.all()
+	d = IntakeCalls.objects.all()
 	
 	for cases in d:
 		columns = collections.OrderedDict()

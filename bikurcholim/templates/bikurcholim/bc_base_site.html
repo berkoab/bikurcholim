@@ -101,6 +101,7 @@
 	            <h3>Data Entry</h3>
 	            <ul>
 	                <li><a href="{% url 'admin:bikurcholim_volunteers_changelist' %}" target="_blank">Volunteers</a></li>
+	                <li><a href="{% url 'admin:bikurcholim_intakecalls_changelist' %}" target="_blank">Intake Calls</a></li>
 	                <li><a href="{% url 'admin:bikurcholim_cases_changelist' %}" target="_blank">Cases</a></li>
 	                <li><a href="{% url 'admin:bikurcholim_housingschedule_changelist' %}" target="_blank">Housing</a></li>
 	                <li><a href="{% url 'admin:bikurcholim_tasks_changelist' %}" target="_blank">Tasks</a></li>
@@ -118,6 +119,7 @@
     <li><a href="#" class="drop">Reporting</a>
     	<div class="dropdown_1column">
 	    	<p><a href="{% url 'volunteers' %}">Volunteers</a></p>
+	    	<p><a href="{% url 'intakecalls' %}">Intake Calls</a></p>
 	    	<p><a href="{% url 'cases' %}">Cases</a></p>
 	    	<p><a href="{% url 'clientservice' %}">Client Services</a></p>
 	    	<p><a href="{% url 'housingschedule' %}">Housing</a></p>
@@ -126,7 +128,9 @@
     </li>
     <li><a href="#" class="drop">Calendars</a>
     	<div class="dropdown_1column">
+    		<!--
     		<p><a href="{% url 'casecalendar' %}">Case Calendar</a></p>
+    		-->
     		<p><a href="{% url 'housingcalendar' %}">Housing Calendar</a></p>
     	</div>
     </li>

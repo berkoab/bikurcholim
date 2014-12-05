@@ -115,46 +115,6 @@
 	{% else %}
 	    <p>You have no active clients</p>
 	{% endif %}
-<!--
-<table>
-	<tr height="150"></tr>
-	<tr>
-		<td align="center">
-			<span style="font-weight:bold;font-size:large">Open Tasks</span>
-		</td>
-		<!--
-		<td width="50"></td><td width="50"></td>
-		<td align="center">
-			<span style="font-weight:bold;font-size:x-large">Housing Schedule</span>
-		</td>
-
-	</tr>
-	<tr height="25"></tr>
-	<tr>
-		<td align="center">
-			{% if tasks %}
-			    {% for task in tasks %}
-			        <div><a href="/bikurcholim/tasks/{{ task.id }}/">{{ task.title }}</a></div>
-			    {% endfor %}
-			{% else %}
-			    <p>You have no open tasks</p>
-			{% endif %}
-		</td>
-
-
-		<td>
-			<div id='loading'>loading...</div>
-			<div id='calendar'></div>
-		</td>
-		<td width="50"></td><td width="50"></td>
-		<td>
-			<div id='loading2'>loading...</div>
-			<div id='housingcalendar'></div>
-		</td>
-
-	</tr>
-</table>
--->
 </div>
 
 {% endblock %}

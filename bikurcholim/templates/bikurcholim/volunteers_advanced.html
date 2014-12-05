@@ -37,8 +37,7 @@
 		json_data=getData(json_data);
 		function convert_date(mp, field) {
 			var d = new Date(mp[field]);
-
-	        return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+    		return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
 		}
 		
     	$(function(){
@@ -48,7 +47,18 @@
                 					 $.pivotUtilities.d3_renderers);
 	        $("#output").pivotUI(
 
-	        json_data, {renderers: renderers}
+	        json_data, {
+	        			renderers: renderers,
+	        			derivedAttributes: {
+	        				"Start Date": function(mp) {
+	        					return convert_date(mp, "start_date")
+	        				},
+	        				"End Date": function(mp) {
+	        					return convert_date(mp, "end_date")
+	        				}
+	        			},
+	        			
+	        		   }
 			);
     	});
     	function getData(data) {

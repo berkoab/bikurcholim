@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse_lazy
 
 def getCols():
     cols = collections.OrderedDict()
-    href = "<a href=" + str(reverse_lazy('clients')) + "{0} class='userId' target='_blank'>{0}</a>"
+    href = "<a href=" + str(reverse_lazy('cases')) + "{0} class='userId' target='_blank'>{0}</a>"
     cols['id']={
         'index': 1, #The order this column should appear in the table
         'type': "number", #The type. Possible are string, number, bool, date(in milliseconds).
@@ -105,92 +105,80 @@ def getCols():
         'friendly': "Hospital Notes",
         'hidden':'true'
     }
-    cols['tikvah_house'] = {
-        'index': 16,
-        'type': "string",
-        'friendly': "Tikvah House",
-        'hidden':'true'
-    }
-    cols['tikvah_room'] = {
-        'index': 17,
-        'type': "string",
-        'friendly': "Tikvah Room",
-        'hidden':'true'
-    }
     cols['food_notes'] = {
-        'index': 18,
+        'index': 16,
         'type': "string",
         'friendly': "Food Notes",
         'hidden':'true'
     }
     cols['allergies'] = {
-        'index': 19,
+        'index': 17,
         'type': "string",
         'friendly': "Allergies",
         'hidden':'true'
     }
     cols['transportation'] = {
-        'index': 20,
+        'index': 18,
         'type': "string",
         'friendly': "Transportation",
         'hidden':'true'
     }
     cols['visitor_comments'] = {
-        'index': 21,
+        'index': 19,
         'type': "string",
         'friendly': "Visitor Comments",
         'hidden':'true'
     }
     cols['medical_equipment'] = {
-        'index': 22,
+        'index': 20,
         'type': "string",
         'friendly': "Medical Equipment",
         'hidden':'true'
     }
     cols['donation_made'] = {
-        'index': 23,
+        'index': 21,
         'type': "string",
         'friendly': "Donation Made",
         'hidden':'true'
     }
     cols['text_ability'] = {
-        'index': 24,
+        'index': 22,
         'type': "bool",
         'friendly': "Text Ability",
         'hidden':'true'
     }
     cols['yoshon'] = {
-        'index': 25,
+        'index': 23,
         'type': "bool",
         'friendly': "Yoshon",
         'hidden':'true'
     }
     cols['cholov_yisroel'] = {
-        'index': 26,
+        'index': 24,
         'type': "bool",
         'friendly': "Cholov Yisroel",
         'hidden':'true'
     }
     cols['food_to_hospital'] = {
-        'index': 27,
+        'index': 25,
         'type': "bool",
         'friendly': "Food To Hospital",
         'hidden':'true'
     }
     cols['food_to_home'] = {
-        'index': 28,
+        'index': 26,
         'type': "bool",
         'friendly': "Food To Home",
         'hidden':'true'
     }
     cols['meal_coordinator'] = {
-        'index': 29,
+        'index': 27,
         'type': "string",
         'friendly': "Meal Coordinator",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['meal_preparer'] = {
-        'index': 30,
+        'index': 28,
         'type': "string",
         'friendly': "Meal Preparer",
         'tooltip': "Click here to sort", #Show some additional info about column
@@ -208,7 +196,7 @@ def datetime_to_ms_str(dt):
 def getRows():
 	rows=[]
 	
-	d = Clients.objects.all()
+	d = Cases.objects.all()
 	
 	for client in d:
 		columns = collections.OrderedDict()
@@ -222,7 +210,8 @@ def getRows():
 		columns['home_phone']=client.home_phone
 		columns['cell_phone']=client.cell_phone
 		columns['email_address']=client.email_address
-		columns['status']=client.status.status
+		if(client.status):
+			columns['status']=client.status.status
 		columns['start_date']=datetime_to_ms_str(client.start_date)
 		columns['expected_end_date']=datetime_to_ms_str(client.expected_end_date)
 		columns['end_date']=datetime_to_ms_str(client.end_date)
@@ -230,9 +219,6 @@ def getRows():
 			columns['hospital']=client.hospital.name
 		columns['hospital_room']=client.hospital_room
 		columns['hospital_notes']=client.hospital_notes
-		if(client.tikvah_house):
-			columns['tikvah_house']=client.tikvah_house.name
-		columns['tikvah_room']=client.tikvah_room
 		columns['food_notes']=client.food_notes
 		columns['allergies']=client.allergies
 		columns['transportation']=client.transportation

@@ -4,7 +4,7 @@
 {% block breadcrumbs %}
 	<div class="breadcrumbs">
 	<a href="{% url 'index' %}">Home</a>
-	&rsaquo; <a href="{% url 'clients' %}">Clients</a>
+	&rsaquo; <a href="{% url 'cases' %}">Cases</a>
 	&rsaquo; {{ object.get_name }}
 	</div>
 {% endblock %}
@@ -116,18 +116,7 @@
 						{{ hospital_notes }}
                 </div>
         </div>
-        <div class="form-row field-tikvah_house">
-                <div>
-                        <label class="required" for="id_tikvah_house">Tikvah house:</label>
-                        {{ object.tikvah_house }}
-                </div>
-        </div>
-        <div class="form-row field-tikvah_room">
-                <div>
-                        <label class="required" for="id_tikvah_room">Tikvah room:</label>
-                        {{ object.tikvah_room }}
-                </div>
-        </div>
+
         <div class="form-row field-food_notes">
                 <div>
                         <label class="required" for="id_food_notes">Food notes:</label>

@@ -135,7 +135,9 @@ class OtherOptions(models.Model):
 	class Meta:
 		verbose_name_plural = "Other Options"
 		ordering = ('option', 'volunteer')
-		
+	def __str__(self):
+		return self.option.name
+	
 class ClientStatus(models.Model):
 	status = models.CharField(max_length=50)
 	class Meta:

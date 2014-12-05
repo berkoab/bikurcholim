@@ -22,7 +22,7 @@ def getRows(sd, ed):
 	for c in d:
 		event = collections.OrderedDict()
 		event['id'] = c.id
-		event['title'] = c.tikvah_house.name
+		event['title'] = c.house.name
 		event['start'] = format_datetime(c.from_date, True)
 		event['end'] = format_datetime(c.to_date, False)
 		event['color'] = c.get_color()

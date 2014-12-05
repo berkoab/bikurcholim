@@ -48,7 +48,7 @@ def volunteers(request):
 
 @login_required(login_url=reverse_lazy('login'))
 def cases(request):
-	r = get_table_rows(client_view)		
+	r = get_table_rows(case_view)		
 	context = get_context(r, 'Cases', 'cases', 'admin:bikurcholim_cases_add')
 	return render(request, 'bikurcholim/table_base.html', context)
 

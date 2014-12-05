@@ -38,6 +38,24 @@
 										{{ object.last_name }}
 			                </div>
 			        </div>
+			        <div class="form-row field-home_phone">
+			                <div>
+			                        <label class="required" for="id_home_phone">Home phone:</label>
+									{{ object.home_phone }}
+			                </div>
+			        </div>
+			        <div class="form-row field-cell_phone">
+			                <div>
+			                        <label class="required" for="id_cell_phone">Cell phone:</label>
+									{{ object.cell_phone }}
+			                </div>
+			        </div>
+			        <div class="form-row field-email_address">
+			                <div>
+			                        <label class="required" for="id_email_address">Email address:</label>
+									{{ object.email_address }}
+			                </div>
+			        </div>
 			        <div class="form-row field-address">
 			                <div> 
 			                        <label class="required" for="id_address">Address:</label>
@@ -68,24 +86,7 @@
 									{{ object.medical_training }}
 			                </div>
 			        </div>
-			        <div class="form-row field-home_phone">
-			                <div>
-			                        <label class="required" for="id_home_phone">Home phone:</label>
-									{{ object.home_phone }}
-			                </div>
-			        </div>
-			        <div class="form-row field-cell_phone">
-			                <div>
-			                        <label class="required" for="id_cell_phone">Cell phone:</label>
-									{{ object.cell_phone }}
-			                </div>
-			        </div>
-			        <div class="form-row field-email_address">
-			                <div>
-			                        <label class="required" for="id_email_address">Email address:</label>
-									{{ object.email_address }}
-			                </div>
-			        </div>
+
 			        <div class="form-row field-vehicle">
 			                <div>
 			                        <label class="required" for="id_vehicle">Vehicle:</label>
@@ -186,6 +187,27 @@
 			                <div>
 			                        <label class="required" for="id_days_and_times_available_notes">Notes on Availability:</label>
 									{{ object.days_and_times_available_notes }}
+			                </div>
+			        </div>
+			</fieldset>
+			<fieldset class="module aligned ">
+			    <h2>Dates</h2>
+			        <div class="form-row field-start_date">
+			                <div>
+			                        <label class="required" for="id_start_time_available">Start Date:</label>
+									{{ object.start_date }}
+			                </div>
+			        </div>
+			        <div class="form-row field-end_date">
+			                <div>
+			                        <label class="required" for="id_end_time_availalable">End Date:</label>
+									{{ object.end_date }}
+			                </div>
+			        </div>
+			        <div class="form-row field-end_date">
+			                <div>
+			                        <label class="required" for="id_end_time_availalable">Last Updated Date:</label>
+									{{ object.last_updated_date }}
 			                </div>
 			        </div>
 			</fieldset>
@@ -389,7 +411,21 @@
 			                </div>
 			            
 			        </div>
-			    
+			        <div class="form-row field-visit_homebound-learn_with_elderly_notes">
+			                <div class="field-box field-visit_homebound">
+			                    <label class="vCheckboxLabel required" for="id_visit_homebound">Visit Homebound</label>
+			                    {% if object.visit_homebound == 1 %}
+									<input type="checkbox" checked disabled>
+								{% else %}
+									<input type="checkbox" disabled>
+								{% endif %}
+			                </div>
+			                <div class="field-box field-visit_homebound">
+			                        <label class="inline" for="id_learn_with_elderly_notes">Visit Homebound Notes:</label>
+			                        {{ object.visit_homebound_notes }}
+			                </div>
+			            
+			        </div>			    
 			</fieldset>
 			  <fieldset class="module aligned ">
 			        <div class="form-row">
