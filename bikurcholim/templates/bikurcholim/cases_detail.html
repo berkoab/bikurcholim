@@ -1,6 +1,6 @@
 {% extends "bikurcholim/bc_base_site.html" %}
 
-{% block title %}Client - {{ object.get_name }}{% endblock %}
+{% block title %}Case - {{ object.get_name }}{% endblock %}
 {% block breadcrumbs %}
 	<div class="breadcrumbs">
 	<a href="{% url 'index' %}">Home</a>
@@ -14,7 +14,7 @@
 <table>
 	<tr height="75"><td></td></tr>
 </table>
-	<h1>Client - {{ object.get_name }}</h1>
+	<h1>Case - {{ object.get_name }}</h1>
 	<ul class="object-tools">
 	    <li>
 	    	<a href={% url change object.id %} class="changelink">			
@@ -215,6 +215,73 @@
                         {{ object.meal_preparer }}
                 </div>
         </div>
+<div class="inline-group" id="otheroptions_set-group">
+<fieldset class="module">
+   <h2>Client Services</h2>
+   <table>
+     <thead><tr>
+         <th class="required">Service
+         </th>
+		 <th>Volunteer
+         </th>
+         <th>Description
+         </th>
+		 <th>Begin Date
+         </th>
+		 <th>End Date
+         </th>
+		 <th>Status
+         </th>
+		 <th># of Times
+         </th>
+     </tr></thead>
+     <tbody>
+     {% for p in object.clientservice_set.all %}
+        <tr class="form-row row1 has_original"
+             id="otheroptions_set-0">
+        <td class="original">
+          <p>
+           {{ p.service.service }}
+          </p>
+        </td>
+        <td class="original">
+          <p>
+           {{ p.volunteer }}
+          </p>
+        </td>
+		
+		<td class="field-notes">
+        	<p>
+       		{{ p.description }}    
+       		</p> 
+        </td>
+		<td class="original">
+          <p>
+           {{ p.begin_date }}
+          </p>
+        </td>
+		<td class="original">
+          <p>
+           {{ p.end_date }}
+          </p>
+        </td>
+		<td class="original">
+          <p>
+           {{ p.status.status }}
+          </p>
+        </td>
+		<td class="original">
+          <p>
+           {{ p.number_of_times }}
+          </p>
+        </td>
+        </tr>
+     {% endfor %}
+     </tbody>
+   </table>
+</fieldset>
+</div>
+
 		        <div class="form-row field-meal_coordinator">
                 <div>
                         <label for="id_meal_coordinator">Created At:</label>

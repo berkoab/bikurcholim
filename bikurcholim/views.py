@@ -1,4 +1,4 @@
-from bikurcholim.models import Cases, Volunteers, IntakeCalls, HousingSchedule, Tasks, ClientService
+from bikurcholim.models import Cases, Volunteers, IntakeCalls, HousingSchedule, Tasks, ClientService, OtherOptions
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
@@ -145,11 +145,13 @@ class VolunteersDetailView(generic.DetailView):
 
 	model = Volunteers
 	prefetch_related = ['other_options']
+	#otheroptions = OtherOptions.objects.filter(id=model)
 	def get_context_data(self, **kwargs):
 		context = super(VolunteersDetailView, self).get_context_data(**kwargs)
 		context['now'] = timezone.now()
 		url = 'admin:bikurcholim_volunteers_change'
 		context['change'] = url
+		#context['otheroptions'] = otheroptions
 		return context
 
 class CasesDetailView(generic.DetailView):

@@ -101,7 +101,7 @@ class Volunteers(models.Model):
 	visit_homebound = models.BooleanField(default=None)
 	visit_homebound_notes = models.CharField("Notes", max_length=100, null=True, blank=True)
 	other_options = models.ManyToManyField(Options, through='OtherOptions')
-	#note = models.ManyToManyField(Notes)
+	note = models.ManyToManyField(VolunteerClients)
 	last_update_date = models.DateField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -240,7 +240,7 @@ class Cases(models.Model):
 	meal_preparer = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_preparer_set')
 	services = models.ManyToManyField(Services, through='ClientService')
 	#note = models.ManyToManyField(Notes)
-# 	housing = models.ManyToManyField(HousingSchedule)
+ 	housing = models.ManyToManyField(HousingSchedule)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
     

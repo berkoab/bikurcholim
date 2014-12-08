@@ -434,23 +434,54 @@
    <h2>Other Options</h2>
    <table>
      <thead><tr>
-         <th colspan="2" class="required">Option
+         <th class="required">Option
          </th>
          <th>Notes
          </th>
      </tr></thead>
      <tbody>
-     {% for p in object.other_options.all %}
+     {% for p in object.otheroptions_set.all %}
         <tr class="form-row row1 has_original"
              id="otheroptions_set-0">
         <td class="original">
           <p>
-           {{ p.name }}
+           {{ p.option.name }}
           </p>
         </td>
         <td class="field-notes">
         	<p>
        		{{ p.notes }}    
+       		</p> 
+        </td>
+
+        </tr>
+     {% endfor %}
+     </tbody>
+   </table>
+</fieldset>
+</div>
+<div class="inline-group" id="otheroptions_set-group">
+<fieldset class="module">
+   <h2>Volunteer Clients</h2>
+   <table>
+     <thead><tr>
+         <th class="required">Case
+         </th>
+         <th>Notes
+         </th>
+     </tr></thead>
+     <tbody>
+     {% for p in object.volunteerclients_set.all %}
+        <tr class="form-row row1 has_original"
+             id="otheroptions_set-0">
+        <td class="original">
+          <p>
+           {{ p.case }}
+          </p>
+        </td>
+        <td class="field-notes">
+        	<p>
+       		{{ p.note }}    
        		</p> 
         </td>
 
