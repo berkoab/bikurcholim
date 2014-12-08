@@ -17,7 +17,7 @@
 	<h1>Case #: {{ object.id }}</h1>
 	<ul class="object-tools">
 	    <li>
-	    	<a href={% url change object.id %} class="addlink">			
+	    	<a href={% url change object.id %} class="changelink">			
 	        Change Case #{{ object.id }}
 	        </a>
 	      </a>
@@ -38,16 +38,11 @@
                         {{ object.status }}
                 </div>
         </div>
-        <div class="form-row field-volunteer">
-                <div>
-                        <label for="id_volunteer">Volunteer:</label>
-                        {{ object.volunteer }}
-                </div>
-        </div>
+
         <div class="form-row field-open_date">
                 <div>
-                        <label for="id_open_date">Open date:</label>
-                        {{ object.open_date }}
+                        <label for="id_open_date">Date Call Received:</label>
+                        {{ object.date_call_received }}
                 </div>
         </div>
         <div class="form-row field-date_of_service">

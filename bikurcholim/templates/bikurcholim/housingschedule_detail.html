@@ -17,7 +17,7 @@
 	<h1>Housing Schedule #: {{ object.id }}</h1>
 	<ul class="object-tools">
 	    <li>
-	    	<a href={% url change object.id %} class="addlink">			
+	    	<a href={% url change object.id %} class="changelink">			
 	        Change Housing Schedule #{{ object.id }}
 	        </a>
 	      </a>
@@ -28,20 +28,20 @@
   <fieldset class="module aligned ">
         <div class="form-row field-client">
 			<div>
-                        <label class="required" for="id_client">Tikvah House:</label>
-                        {{ object.tikvah_house }}
+                        <label class="required" for="id_client">House:</label>
+                        {{ object.house }}
                 </div>
         </div>
         <div class="form-row field-status">
                 <div>   
-                        <label class="required" for="id_status">Tikvah Room:</label>
-                        {{ object.tikvah_room }}
+                        <label class="required" for="id_status">Apt:</label>
+                        {{ object.apt }}
                 </div>
         </div>
         <div class="form-row field-volunteer">
                 <div>
-                        <label for="id_volunteer">Client:</label>
-                        {{ object.client }}
+                        <label for="id_volunteer">Case:</label>
+                        {{ object.case }}
                 </div>
         </div>
         <div class="form-row field-open_date">
@@ -58,8 +58,8 @@
         </div>
         <div class="form-row field-close_date">
                 <div> 
-                        <label for="id_close_date">Description:</label>
-                        {{ object.description }}
+                        <label for="id_close_date">Notes:</label>
+                        {{ object.notes }}
                 </div>
         </div>
  

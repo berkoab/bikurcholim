@@ -18,16 +18,16 @@ def getCols():
         'sortOrder': "asc", #Data will initially be sorted by this column. Possible are "asc" or "desc"
         'tooltip': "Unique ID number", #Show some additional info about column
     }
-    cols['tikvah_house'] = {
+    cols['house'] = {
         'index': 2,
         'type': "string",
-        'friendly': "Tivkah House",
+        'friendly': "House",
         'tooltip': "Click here to sort"
     }
-    cols['tikvah_room'] = {
+    cols['apt'] = {
         'index': 3,
         'type': "string",
-        'friendly': "Tikvah Room",
+        'friendly': "Apt",
         'tooltip': "Click here to sort"
     }
     cols['client'] = {
@@ -54,10 +54,10 @@ def getCols():
         'friendly': "Days",
         'tooltip': "Click here to sort"
     }
-    cols['description'] = {
+    cols['notes'] = {
         'index': 8,
         'type': "string",
-        'friendly': "Description",
+        'friendly': "Notes",
         'hidden':'true'
     }
 
@@ -78,16 +78,16 @@ def getRows():
 	for c in d:
 		columns = collections.OrderedDict()
 		columns['id']=c.id
-		if(c.tikvah_house):
-			columns['tikvah_house']=c.tikvah_house.name
-		columns['tikvah_room']=c.tikvah_room
-		if(c.client):
-			columns['client']=c.client.get_name()
+		if(c.house):
+			columns['house']=c.house.name
+		columns['apt']=c.apt
+		if(c.case):
+			columns['client']=c.case.get_name()
 		
 		columns['from_date']=datetime_to_ms_str(c.from_date)
 		columns['to_date']=datetime_to_ms_str(c.to_date)
 		columns['days']=c.get_days().days
-		columns['description']=c.description
+		columns['notes']=c.notes
 
 		rows.append(columns)
 	return rows

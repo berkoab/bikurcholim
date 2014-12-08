@@ -36,9 +36,10 @@ class Options(models.Model):
 class VolunteerClients(models.Model):
 	case = models.ForeignKey('Cases')
 	volunteer = models.ForeignKey('Volunteers')
-	note = models.TextField(max_length=200)
+	note = models.TextField(max_length=200, null=True, blank=True)
 	class Meta:
-		verbose_name_plural = "Volunteer Clients"
+		verbose_name = "volunteer cases"
+		verbose_name_plural = "Volunteer Cases"
 		ordering = ('case__last_name', 'case__first_name')
 	def __str__(self):
 		return str(self.case.last_name + ', ' + self.case.first_name)
@@ -202,7 +203,7 @@ class HousingSchedule(models.Model):
 	def get_days(self):
 		return self.to_date - self.from_date
 	class Meta:
-		verbose_name_plural = "HousingSchedule"
+		verbose_name_plural = "Housing Schedule"
 	def __str__(self):
 		return str(self.id)
 					
@@ -268,8 +269,8 @@ class IntakeCalls(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
 	status = models.ForeignKey(CaseStatus)
-	volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
-	date_call_received = models.DateField('date call received', null=True, blank=True)
+	#volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
+	date_call_received = models.DateField('date call received')
 	date_of_service = models.DateTimeField('date and time of service', null=True, blank=True)
 	close_date = models.DateField('close date', null=True, blank=True)
 	service = models.ForeignKey(Services, null=True, blank=True)

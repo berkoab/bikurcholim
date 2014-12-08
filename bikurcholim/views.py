@@ -144,7 +144,7 @@ def test(request):
 class VolunteersDetailView(generic.DetailView):
 
 	model = Volunteers
-
+	prefetch_related = ['other_options']
 	def get_context_data(self, **kwargs):
 		context = super(VolunteersDetailView, self).get_context_data(**kwargs)
 		context['now'] = timezone.now()

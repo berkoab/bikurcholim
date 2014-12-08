@@ -16,7 +16,7 @@
 	<h1>Volunteer - {{ object.get_name }}</h1>
     <ul class="object-tools">
 	    <li>
-	    	<a href={% url change object.id %} >			
+	    	<a href={% url change object.id %} class="changelink">			
 	        Change {{ object.get_name }}
 	        </a>
 	      </a>
@@ -427,6 +427,41 @@
 			            
 			        </div>			    
 			</fieldset>
+			
+
+<div class="inline-group" id="otheroptions_set-group">
+<fieldset class="module">
+   <h2>Other Options</h2>
+   <table>
+     <thead><tr>
+         <th colspan="2" class="required">Option
+         </th>
+         <th>Notes
+         </th>
+     </tr></thead>
+     <tbody>
+     {% for p in object.other_options.all %}
+        <tr class="form-row row1 has_original"
+             id="otheroptions_set-0">
+        <td class="original">
+          <p>
+           {{ p.name }}
+          </p>
+        </td>
+        <td class="field-notes">
+        	<p>
+       		{{ p.notes }}    
+       		</p> 
+        </td>
+
+        </tr>
+     {% endfor %}
+     </tbody>
+   </table>
+</fieldset>
+</div>
+	
+
 			  <fieldset class="module aligned ">
 			        <div class="form-row">
 			                <div>

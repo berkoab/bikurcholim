@@ -24,50 +24,39 @@ def getCols():
         'friendly': "Status",
         'tooltip': "Click here to sort"
     }
-    cols['client'] = {
+
+    cols['date_call_received'] = {
         'index': 3,
-        'type': "string",
-        'friendly': "Client",
-        'tooltip': "Click here to sort"
-    }
-    cols['volunteer'] = {
-        'index': 4,
-        'type': "string",
-        'friendly': "Volunteer",
-        'tooltip': "Click here to sort"
-    }
-    cols['open_date'] = {
-        'index': 5,
         'type': "date",
         'friendly': "Open Date",
         'tooltip': "Click here to sort"
     }
     cols['date_of_service'] = {
-        'index': 6,
+        'index': 4,
         'type': "date",
         'friendly': "Date and Time of Service",
         'tooltip': "Click here to sort"
     }
     cols['close_date'] = {
-        'index': 7,
+        'index': 5,
         'type': "date",
         'friendly': "Close Date",
         'tooltip': "Click here to sort"
     }
     cols['service'] = {
-        'index': 8,
+        'index': 6,
         'type': "string",
         'friendly': "Service",
         'tooltip': "Click here to sort"
     }
     cols['location'] = {
-        'index': 9,
+        'index': 7,
         'type': "string",
         'friendly': "Location",
         'tooltip': "Click here to sort"
     }
     cols['description'] = {
-        'index': 10,
+        'index': 8,
         'type': "string",
         'friendly': "Description",
         'hidden': 'true'
@@ -98,10 +87,9 @@ def getRows():
 			columns['statusFormat']="<div class='green'>{0}</div>"
 		else:
 			columns['statusFormat']="<div class='yellow'>{0}</div>"
-		columns['client']=cases.client.get_name()
-		if (cases.volunteer):
-			columns['volunteer']=cases.volunteer.get_name()
-		columns['open_date']=datetime_to_ms_str(cases.open_date)
+# 		if (cases.volunteer):
+# 			columns['volunteer']=cases.volunteer.get_name()
+		columns['date_call_received']=datetime_to_ms_str(cases.date_call_received)
 		columns['date_of_service']=datetime_to_ms_str(cases.date_of_service)
 		if(datetime_to_ms_str(cases.close_date)>0):
 			columns['close_date']=datetime_to_ms_str(cases.close_date)

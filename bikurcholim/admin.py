@@ -72,15 +72,15 @@ class ClientServiceAdmin(admin.ModelAdmin):
 	
 class IntakeCallsAdminForm(forms.ModelForm):
     def clean_close_date(self):
-    	open_date = self.cleaned_data["open_date"]
+    	date_call_received = self.cleaned_data["date_call_received"]
     	close_date = self.cleaned_data["close_date"]
     	if(close_date):
-        	if((not open_date) or (close_date < open_date)):
+        	if((not date_call_received) or (close_date < date_call_received)):
         		raise forms.ValidationError('"Close Date" needs to be greater than "Open Date')
         return close_date
        
 class IntakeCallsAdmin(admin.ModelAdmin):
-	list_display = ('id', 'last_name', 'first_name', 'volunteer')
+	list_display = ('id', 'last_name', 'first_name')
 	list_filter = ['status__status', 'location__name']
 	search_fields = ['first_name', 'last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
 	form = IntakeCallsAdminForm
