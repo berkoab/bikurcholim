@@ -282,6 +282,59 @@
 </fieldset>
 </div>
 
+<div class="inline-group" id="casehousing_set-group">
+<fieldset class="module">
+   <h2>Housing Schedule</h2>
+   <table>
+     <thead><tr>
+         <th class="required">House
+         </th>
+		 <th>Apt
+         </th>
+         <th>From Date
+         </th>
+		 <th>To Date
+         </th>
+		 <th>Notes
+         </th>
+     </tr></thead>
+     <tbody>
+     {% for p in object.casehousing_set.all %}
+        <tr class="form-row row1 has_original"
+             id="otheroptions_set-0">
+        <td class="original">
+          <p>
+           {{ p.housing.house.name }}
+          </p>
+        </td>
+        <td class="original">
+          <p>
+           {{ p.housing.apt }}
+          </p>
+        </td>
+		
+		<td class="field-notes">
+        	<p>
+       		{{ p.housing.from_date }}    
+       		</p> 
+        </td>
+		<td class="original">
+          <p>
+           {{ p.housing.to_date }}
+          </p>
+        </td>
+		<td class="original">
+          <p>
+           {{ p.housing.notes }}
+          </p>
+        </td>
+     </tr>
+     {% endfor %}
+     </tbody>
+   </table>
+</fieldset>
+</div>
+
 		        <div class="form-row field-meal_coordinator">
                 <div>
                         <label for="id_meal_coordinator">Created At:</label>

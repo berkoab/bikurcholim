@@ -206,7 +206,7 @@ class HousingSchedule(models.Model):
 		verbose_name_plural = "Housing Schedule"
 	def __str__(self):
 		return str(self.id)
-					
+
 class Cases(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
@@ -240,7 +240,7 @@ class Cases(models.Model):
 	meal_preparer = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_preparer_set')
 	services = models.ManyToManyField(Services, through='ClientService')
 	#note = models.ManyToManyField(Notes)
- 	housing = models.ManyToManyField(HousingSchedule)
+ 	housing = models.ManyToManyField(HousingSchedule, through='CaseHousing')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
     
@@ -252,6 +252,12 @@ class Cases(models.Model):
 	def __str__(self):
 		return self.last_name + ', ' + self.first_name
 
+class CaseHousing(models.Model):
+	housing = models.ForeignKey(HousingSchedule)
+	client = models.ForeignKey(Cases)
+	class Meta:
+		verbose_name_plural = "Case Housing"
+		
 class ClientService(models.Model):
 	service = models.ForeignKey(Services)
 	client = models.ForeignKey(Cases)
