@@ -25,11 +25,20 @@
 
 {% block content %}
 <div id="content-main">
-	
+
 {% block object-tools %}
 {% if change %}{% if not is_popup %}
   <ul class="object-tools">
     {% block object-tools-items %}
+    {% ifequal opts.verbose_name "intake calls" %}
+    <li>
+    	<form action="{% url 'addcase' %}" method="post" id="addcase">
+    		{% csrf_token %}
+    		<input type="hidden" name="id" value="{{ original }}" />
+    		<a href="#" class="historylink" onclick="document.getElementById('addcase').submit();">Make Case</a>
+    	</form> 
+    </li>
+    {% endifequal %}
     <li>
         {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
         <a href="{% add_preserved_filters history_url %}" class="historylink">{% trans "History" %}</a>

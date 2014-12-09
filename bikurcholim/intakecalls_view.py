@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse_lazy
 
 def getCols():
     cols = collections.OrderedDict()
-    href = "<a href=" + str(reverse_lazy('cases')) + "{0} class='userId' target='_blank'>{0}</a>"
+    href = "<a href=" + str(reverse_lazy('cases')) + "{0} class='userId'>{0}</a>"
     cols['id']={
         'index': 1, #The order this column should appear in the table
         'type': "number", #The type. Possible are string, number, bool, date(in milliseconds).

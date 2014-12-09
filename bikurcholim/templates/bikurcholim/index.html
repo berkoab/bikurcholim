@@ -94,7 +94,8 @@
 	</table>
 <div class="center">
 
-	<span style="font-weight:bold;font-size:large;">Open Tasks</span>
+	<span style="font-weight:bold;font-size:large;">Open Tasks</span><br>
+	<span style="font-weight:bold;font-size:smaller;">(status of open)</span>
 	{% if tasks %}
 	    {% for task in tasks %}
 	        <div><a href="{% url 'tasks' %}{{ task.id }}/" style="color: white; font-weight:bold">
@@ -106,10 +107,11 @@
 	<table>
 		<tr height="25"><td></td></tr>
 	</table>
-	<span style="font-weight:bold;font-size:large;">Active Clients</span>
+	<span style="font-weight:bold;font-size:large;">Active Clients</span><br>
+	<span style="font-weight:bold;font-size:smaller;">(status of active)</span>
 	{% if clients %}
 	    {% for client in clients %}
-	        <div><a href="{% url 'clients' %}{{ client.id }}/" style="color: white; font-weight:bold">
+	        <div><a href="{% url 'cases' %}{{ client.id }}/" style="color: white; font-weight:bold">
 	        	{{ client.get_name }}</a></div>
 	    {% endfor %}
 	{% else %}

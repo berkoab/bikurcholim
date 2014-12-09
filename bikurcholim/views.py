@@ -9,6 +9,7 @@ from django.template import RequestContext
 from django.utils import timezone
 from django.views import generic
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 import volunteer_view, case_view, intakecalls_view, housing_view, service_events_view, housing_events_view, tasks_view, services_view
 import collections
 import datetime
@@ -19,8 +20,8 @@ ezxf = xlwt.easyxf
 
 @login_required(login_url=reverse_lazy('login'))
 def index(request):
-	tasks = Tasks.objects.all().filter(status__status='Open')
-	clients = Cases.objects.all().filter(status__status='Active')
+	tasks = Tasks.objects.all().filter(status__status__iexact='open')
+	clients = Cases.objects.all().filter(status__status__iexact='active')
 	context = {'tasks': tasks,
 			'clients': clients}
 	return render(request, 'bikurcholim/index.html', context)
@@ -340,4 +341,12 @@ def gotoevent(request):
 	url = request.POST['url']
 	context = {}
 	return render(request, url, context)
+
+@login_required(login_url=reverse_lazy('login'))
+def addcase(request):
+	idFromPost = request.POST['id']
+	call = IntakeCalls.objects.get(pk=idFromPost)
+	context = {}
+	return redirect('/admin/bikurcholim/cases/add/?first_name='+call.first_name
+				+'&last_name='+call.last_name)
     

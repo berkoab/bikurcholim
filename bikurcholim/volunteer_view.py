@@ -3,7 +3,7 @@ from bikurcholim.models import Volunteers
 from django.core.urlresolvers import reverse_lazy
 
 def getCols():
-    href = "<a href=" + str(reverse_lazy('volunteers')) + "{0} class='userId' target='_blank'>{0}</a>"
+    href = "<a href=" + str(reverse_lazy('volunteers')) + "{0} class='userId'>{0}</a>"
     cols = collections.OrderedDict()
     cols['id']={
         'index': 1, #The order this column should appear in the table
@@ -349,6 +349,12 @@ def getCols():
 		'friendly': "Other Options", 
 		'hidden':'true'
 	}
+    cols['cases'] = {
+		'index': 58,
+		'type': "string",
+		'friendly': "Cases", 
+		'hidden':'true'
+	}
     return cols
 
 def datetime_to_ms_str(dt):
@@ -426,11 +432,16 @@ def getRows():
 		for option in volunteer.otheroptions_set.all():
 			options=options+option.option.name+'|'
 		columns['other_options'] = options[:-1]
+		vc=""
+		for v in volunteer.volunteerclients_set.all():
+			vc=vc+v.case.get_name()+'|'
+		columns['cases'] = vc[:-1]
 		columns['home_phone'] = volunteer.home_phone
 		columns['cell_phone'] = volunteer.cell_phone
 		columns['email_address'] = volunteer.email_address
 		columns['start_date']=datetime_to_ms_str(volunteer.start_date)
 		columns['end_date']=datetime_to_ms_str(volunteer.end_date)
+		columns['last_update_date']=datetime_to_ms_str(volunteer.last_update_date)
 		#voptions = o.filter(volunteers=volunteer.id)
 		
 		#meal_prep = voptions.filter(option__option='Meal Preparation')

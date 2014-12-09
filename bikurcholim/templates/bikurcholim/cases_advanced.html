@@ -31,14 +31,32 @@
 		google.load("visualization", "1", {packages:["corechart", "charteditor"]});
 		var json_data="{{ data }}";
 		json_data=getData(json_data);
-
+		function convert_date(mp, field) {
+			var d = new Date(mp[field]);
+    		return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+		}
+		
     	$(function(){
     		var derivers = $.pivotUtilities.derivers;
             var renderers = $.extend($.pivotUtilities.renderers, 
                 $.pivotUtilities.gchart_renderers);
 	        $("#output").pivotUI(
 
-	        json_data, {renderers: renderers}
+	        json_data, {
+	        			renderers: renderers,
+	        			derivedAttributes: {
+	        				"Start Date": function(mp) {
+	        					return convert_date(mp, "start_date")
+	        				},
+	        				"End Date": function(mp) {
+	        					return convert_date(mp, "end_date")
+	        				},
+	        				"Expected End Date": function(mp) {
+	        					return convert_date(mp, "expected_end_date")
+	        				}
+	        			},
+	        			
+	        		   }
 			);
     	});
     	function getData(data) {

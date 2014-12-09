@@ -299,33 +299,33 @@
          </th>
      </tr></thead>
      <tbody>
-     {% for p in object.casehousing_set.all %}
+     {% for p in object.housingschedule_set.all %}
         <tr class="form-row row1 has_original"
              id="otheroptions_set-0">
         <td class="original">
           <p>
-           {{ p.housing.house.name }}
+           {{ p.house.name }}
           </p>
         </td>
         <td class="original">
           <p>
-           {{ p.housing.apt }}
+           {{ p.apt }}
           </p>
         </td>
 		
 		<td class="field-notes">
         	<p>
-       		{{ p.housing.from_date }}    
+       		{{ p.from_date }}    
        		</p> 
         </td>
 		<td class="original">
           <p>
-           {{ p.housing.to_date }}
+           {{ p.to_date }}
           </p>
         </td>
 		<td class="original">
           <p>
-           {{ p.housing.notes }}
+           {{ p.notes }}
           </p>
         </td>
      </tr>

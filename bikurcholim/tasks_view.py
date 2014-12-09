@@ -7,7 +7,7 @@ from bikurcholim.models import Tasks
 from django.core.urlresolvers import reverse_lazy
 
 def getCols():
-    href = "<a href=" + str(reverse_lazy('tasks')) + "{0} class='userId' target='_blank'>{0}</a>"
+    href = "<a href=" + str(reverse_lazy('tasks')) + "{0} class='userId'>{0}</a>"
     cols = collections.OrderedDict()
     cols['id']={
         'index': 1, #The order this column should appear in the table
@@ -24,11 +24,18 @@ def getCols():
         'friendly': "Title",
         'tooltip': "Click here to sort"
     }
-    cols['description'] = {
+    cols['status'] = {
         'index': 3,
         'type': "string",
-        'friendly': "Description",
+        'friendly': "Status",
         'tooltip': "Click here to sort"
+    }
+    cols['description'] = {
+        'index': 4,
+        'type': "string",
+        'friendly': "Description",
+        'tooltip': "Click here to sort",
+	    'hidden':'true'
     }
     cols['due_by'] = {
         'index': 5,

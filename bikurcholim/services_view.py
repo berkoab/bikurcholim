@@ -7,7 +7,7 @@ from bikurcholim.models import ClientService
 from django.core.urlresolvers import reverse_lazy
 
 def getCols():
-    href = "<a href=" + str(reverse_lazy('clientservice')) + "{0} class='userId' target='_blank'>{0}</a>"
+    href = "<a href=" + str(reverse_lazy('clientservice')) + "{0} class='userId'>{0}</a>"
     cols = collections.OrderedDict()
     cols['id']={
         'index': 1, #The order this column should appear in the table

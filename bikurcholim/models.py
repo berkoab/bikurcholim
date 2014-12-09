@@ -193,8 +193,8 @@ class TaskStatus(models.Model):
 
 class HousingSchedule(models.Model):
 	house = models.ForeignKey(Houses)
-	apt = models.CharField(max_length=50, null=True, blank=True)
 	case = models.ForeignKey('Cases')
+	apt = models.CharField(max_length=50, null=True, blank=True)
 	from_date = models.DateField('from date')
 	to_date = models.DateField('to date')
 	notes = models.TextField(max_length=200, null=True, blank=True)
@@ -205,7 +205,7 @@ class HousingSchedule(models.Model):
 	class Meta:
 		verbose_name_plural = "Housing Schedule"
 	def __str__(self):
-		return str(self.id)
+		return str(self.house.name)
 
 class Cases(models.Model):
 	first_name = models.CharField(max_length=50)
@@ -240,7 +240,7 @@ class Cases(models.Model):
 	meal_preparer = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_preparer_set')
 	services = models.ManyToManyField(Services, through='ClientService')
 	#note = models.ManyToManyField(Notes)
- 	housing = models.ManyToManyField(HousingSchedule, through='CaseHousing')
+ 	housing = models.ManyToManyField(Houses, through='HousingSchedule')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
     
@@ -251,12 +251,6 @@ class Cases(models.Model):
 		return self.last_name + ', ' + self.first_name
 	def __str__(self):
 		return self.last_name + ', ' + self.first_name
-
-class CaseHousing(models.Model):
-	housing = models.ForeignKey(HousingSchedule)
-	client = models.ForeignKey(Cases)
-	class Meta:
-		verbose_name_plural = "Case Housing"
 		
 class ClientService(models.Model):
 	service = models.ForeignKey(Services)
