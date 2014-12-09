@@ -81,7 +81,9 @@
         var _uniqueCol; //reference to column with the unique property
         var _uniqueCols = {}; //array with checked rows
         var _checkToggleChecked = false; //check-all toggle state
-
+		var _checkedCols = [];
+		var _sortedCols = [];
+		
         var _vendors = ["webkit", "moz", "Moz", "ms", "o", "O"]; //vendors prefixes. used for not yet officially supported features.
         var _transition = {
             supported: undefined, //true if browser supports transitions
@@ -211,7 +213,7 @@
             var colsSorted = Object.keys(_data.cols).sort(function (a, b) {
                 return _data.cols[a].index - _data.cols[b].index;
             });
-
+			_sortedCols = colsSorted;
             //create the header sorting row
             if (!_headSort) {
                 _head.find('.sort i').tooltip('hide');
@@ -234,6 +236,9 @@
                     var props = _data.cols[column];
 
                     if (!props.hidden) {
+						if (column!="dummy") {
+							_checkedCols[_checkedCols.length]=column
+						}
                         var headCell = $('<th></th>').appendTo(_headSort);
                         var link;
                         if(priv.options.sorting && props.sorting !== false) {
@@ -455,8 +460,8 @@
                                     }
                                     break;
                                 case "date":
-									val = new priv.ext.XDate(val, priv.options.types.date.utc === true).toString(priv.options.types.date.format || 'yyyy-MM-dd HH:mm:ss');
-									cell.html(format.f(val));
+                                    val = new priv.ext.XDate(val, priv.options.types.date.utc === true).toString(priv.options.types.date.format || 'yyyy-MM-dd HH:mm:ss');
+                                    cell.html(format.f(val));
                                     break;
                                 case "bool":
                                     $('<input type="checkbox" {0} disabled />'.f(val ? "checked" : "")).appendTo(cell);
@@ -1365,7 +1370,14 @@
             }
             return data;
         };
-
+		
+		publ.getCheckedCols = function () {
+			return _checkedCols;
+		};
+		
+		publ.getAllCols = function () {
+			return _sortedCols;
+		};
         publ.setData = function (data, skipCols, resetChecked) {
             priv.log('publ.setData called');
             priv.setData(data, skipCols, resetChecked);
