@@ -24,161 +24,168 @@ def getCols():
         'friendly': "Name",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
+    cols['hospital'] = {
+		'index': 3,
+		'type': "string",
+		'friendly': "Hospital",
+		'hidden':'true'
+	}
+    cols['hospital_room'] = {
+		'index': 4,
+		'type': "string",
+		'friendly': "Hospital Room",
+		'hidden':'true'
+	}
+    cols['medical_condition'] = {
+		'index': 5,
+		'type': "string",
+		'friendly': "Medical Condition",
+		'hidden':'true'
+	}
     cols['address'] = {
-        'index': 3,
+        'index': 6,
         'type': "string",
         'friendly': "Address",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['city'] = {
-        'index': 4,
+        'index': 7,
         'type': "string",
         'friendly': "City",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['home_phone'] = {
-        'index': 5,
+        'index': 8,
         'type': "string",
         'friendly': "Home Phone",
         'tooltip': "Click here to sort", #Show some additional info about column
 		'hidden':'true'
     }
     cols['cell_phone'] = {
-        'index': 6,
+        'index': 9,
         'type': "string",
         'friendly': "Cell Phone",
         'tooltip': "Click here to sort", #Show some additional info about column
 		'hidden':'true'
     }
     cols['email_address'] = {
-        'index': 7,
+        'index': 10,
         'type': "string",
         'friendly': "Email",
         'tooltip': "Click here to sort", #Show some additional info about column
 		'hidden':'true'
     }
     cols['neighborhood'] = {
-        'index': 8,
+        'index': 11,
         'type': "string",
         'friendly': "Neighborhood",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['status'] = {
-        'index': 9,
+        'index': 12,
         'type': "string",
         'friendly': "Status",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['start_date'] = {
-        'index': 10,
+        'index': 13,
         'type': "date",
         'friendly': "Start Date",
         'hidden':'true'
     }
     cols['expected_end_date'] = {
-        'index': 11,
+        'index': 14,
         'type': "date",
         'friendly': "Exp. End Date",
         'hidden':'true'
     }
     cols['end_date'] = {
-        'index': 12,
+        'index': 15,
         'type': "date",
         'friendly': "End Date",
         'hidden':'true'
     }
-    cols['hospital'] = {
-        'index': 13,
-        'type': "string",
-        'friendly': "Hospital",
-        'hidden':'true'
-    }
-    cols['hospital_room'] = {
-        'index': 14,
-        'type': "string",
-        'friendly': "Hospital Room",
-        'hidden':'true'
-    }
+
     cols['hospital_notes'] = {
-        'index': 15,
+        'index': 16,
         'type': "string",
         'friendly': "Hospital Notes",
         'hidden':'true'
     }
     cols['food_notes'] = {
-        'index': 16,
+        'index': 17,
         'type': "string",
         'friendly': "Food Notes",
         'hidden':'true'
     }
     cols['allergies'] = {
-        'index': 17,
+        'index': 18,
         'type': "string",
         'friendly': "Allergies",
         'hidden':'true'
     }
     cols['transportation'] = {
-        'index': 18,
+        'index': 19,
         'type': "string",
         'friendly': "Transportation",
         'hidden':'true'
     }
     cols['visitor_comments'] = {
-        'index': 19,
+        'index': 20,
         'type': "string",
         'friendly': "Visitor Comments",
         'hidden':'true'
     }
     cols['medical_equipment'] = {
-        'index': 20,
+        'index': 21,
         'type': "string",
         'friendly': "Medical Equipment",
         'hidden':'true'
     }
     cols['donation_made'] = {
-        'index': 21,
+        'index': 22,
         'type': "string",
         'friendly': "Donation Made",
         'hidden':'true'
     }
     cols['text_ability'] = {
-        'index': 22,
+        'index': 23,
         'type': "bool",
         'friendly': "Text Ability",
         'hidden':'true'
     }
     cols['yoshon'] = {
-        'index': 23,
+        'index': 24,
         'type': "bool",
         'friendly': "Yoshon",
         'hidden':'true'
     }
     cols['cholov_yisroel'] = {
-        'index': 24,
+        'index': 25,
         'type': "bool",
         'friendly': "Cholov Yisroel",
         'hidden':'true'
     }
     cols['food_to_hospital'] = {
-        'index': 25,
+        'index': 26,
         'type': "bool",
         'friendly': "Food To Hospital",
         'hidden':'true'
     }
     cols['food_to_home'] = {
-        'index': 26,
+        'index': 27,
         'type': "bool",
         'friendly': "Food To Home",
         'hidden':'true'
     }
     cols['meal_coordinator'] = {
-        'index': 27,
+        'index': 28,
         'type': "string",
         'friendly': "Meal Coordinator",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['meal_preparer'] = {
-        'index': 28,
+        'index': 29,
         'type': "string",
         'friendly': "Meal Preparer",
         'tooltip': "Click here to sort", #Show some additional info about column
@@ -202,6 +209,7 @@ def getRows():
 		columns = collections.OrderedDict()
 		columns['id']=client.id
 		columns['name']=client.get_name()
+		columns['medical_condition']=client.medical_condition
 		columns['address']=client.address
 		if(client.city):
 			columns['city']=client.city.city

@@ -210,6 +210,9 @@ class HousingSchedule(models.Model):
 class Cases(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
+	hospital = models.ForeignKey(Hospitals, null=True, blank=True)
+	hospital_room = models.CharField(max_length=50, null=True, blank=True)
+	medical_condition = models.TextField(max_length=200, null=True, blank=True)
 	address = models.CharField(max_length=100, null=True, blank=True)
 	city = models.ForeignKey(Cities, null=True, blank=True)
 	home_phone = models.CharField(max_length=50, null=True, blank=True)
@@ -220,8 +223,6 @@ class Cases(models.Model):
 	start_date = models.DateField(null=True, blank=True)
 	expected_end_date = models.DateField(null=True, blank=True)
 	end_date = models.DateField(null=True, blank=True)	
-	hospital = models.ForeignKey(Hospitals, null=True, blank=True)
-	hospital_room = models.CharField(max_length=50, null=True, blank=True)
 	hospital_notes = models.TextField(max_length=200, null=True, blank=True)
 #	tikvah_house = models.ForeignKey(TikvahHouses, null=True, blank=True)
 #	tikvah_room = models.CharField(max_length=50, null=True, blank=True)

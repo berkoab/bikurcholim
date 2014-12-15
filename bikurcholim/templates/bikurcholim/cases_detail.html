@@ -38,6 +38,24 @@
 						{{ object.last_name }}
                 </div>
         </div>
+                <div class="form-row field-hospital">
+                <div>
+                        <label class="required" for="id_hospital">Hospital:</label>
+                        {{ object.hospital }}
+                </div>
+        </div>
+        <div class="form-row field-hospital_room">
+                <div>
+                        <label class="required" for="id_hospital_room">Hospital room:</label>
+                        {{ object.hospital_room }}
+                </div>
+        </div>
+        <div class="form-row field-medical_condition">
+                <div>
+                        <label class="required" for="id_hospital_room">Medical Condition:</label>
+                        {{ object.medical_condition }}
+                </div>
+        </div>
         <div class="form-row field-address">
                 <div>
                         <label class="required" for="id_address">Address:</label>
@@ -96,18 +114,6 @@
                 <div>
                         <label class="required" for="id_end_date">End date:</label>
                         {{ object.end_date }}
-                </div>
-        </div>
-        <div class="form-row field-hospital">
-                <div>
-                        <label class="required" for="id_hospital">Hospital:</label>
-                        {{ object.hospital }}
-                </div>
-        </div>
-        <div class="form-row field-hospital_room">
-                <div>
-                        <label class="required" for="id_hospital_room">Hospital room:</label>
-                        {{ object.hospital_room }}
                 </div>
         </div>
         <div class="form-row field-hospital_notes">
