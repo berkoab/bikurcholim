@@ -349,4 +349,4 @@ def addcase(request):
 	context = {}
 	return redirect('/admin/bikurcholim/cases/add/?first_name='+call.first_name
 				+'&last_name='+call.last_name)
-    
+	#return redirect(reverse('admin'))
