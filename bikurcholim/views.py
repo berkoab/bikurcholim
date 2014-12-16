@@ -345,8 +345,8 @@ def gotoevent(request):
 @login_required(login_url=reverse_lazy('login'))
 def addcase(request):
 	idFromPost = request.POST['id']
+	url = request.POST['url']
 	call = IntakeCalls.objects.get(pk=idFromPost)
 	context = {}
-	return redirect('/admin/bikurcholim/cases/add/?first_name='+call.first_name
+	return redirect(url+'?first_name='+call.first_name
 				+'&last_name='+call.last_name)
-	#return redirect(reverse('admin'))

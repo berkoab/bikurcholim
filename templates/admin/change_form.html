@@ -35,6 +35,7 @@
     	<form action="{% url 'addcase' %}" method="post" id="addcase">
     		{% csrf_token %}
     		<input type="hidden" name="id" value="{{ original }}" />
+    		<input type="hidden" name="url" value="{% url 'admin:bikurcholim_cases_add' %}" />
     		<a href="#" class="historylink" onclick="document.getElementById('addcase').submit();">Make Case</a>
     	</form> 
     </li>
