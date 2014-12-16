@@ -153,6 +153,7 @@ $(document).ready( function() {
 		json=json.replace(/&lt;/g, '<');
 		json=json.replace(/&gt;/g, '>');
 		json=json.replace(/&#39;/g, "'");
+		json=json.replace(/(\r\n|\n|\r)/gm," ");
 		obj = JSON.parse(json);
 		var data = {
             cols: obj.cols,
