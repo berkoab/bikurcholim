@@ -82,9 +82,13 @@ def getRows():
 		columns['number_of_times']=c.number_of_times
 		if(c.status):
 			columns['status']=c.status.status
+		else:
+			columns['status']=""
 		columns['client']=c.client.get_name()
 		if(c.volunteer):
 			columns['volunteer']=c.volunteer.get_name()
+		else:
+			columns['volunteer']=""
 		columns['begin_date']=datetime_to_ms_str(c.begin_date)
 		columns['end_date']=datetime_to_ms_str(c.end_date)	
 

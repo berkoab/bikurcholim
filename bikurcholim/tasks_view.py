@@ -64,6 +64,8 @@ def getRows():
 		columns['id']=tasks.id
 		if(tasks.status):
 			columns['status']=tasks.status.status
+		else:
+			columns['status']=""
 		if(tasks.status.status=='Closed'):
 			columns['statusFormat']="<div class='red'>{0}</div>"
 		elif(tasks.status.status=='Assigned'):

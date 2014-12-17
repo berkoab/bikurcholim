@@ -80,10 +80,13 @@ def getRows():
 		columns['id']=c.id
 		if(c.house):
 			columns['house']=c.house.name
+		else:
+			columns['house']=""
 		columns['apt']=c.apt
 		if(c.case):
 			columns['client']=c.case.get_name()
-		
+		else:
+			columns['client']=""
 		columns['from_date']=datetime_to_ms_str(c.from_date)
 		columns['to_date']=datetime_to_ms_str(c.to_date)
 		columns['days']=c.get_days().days

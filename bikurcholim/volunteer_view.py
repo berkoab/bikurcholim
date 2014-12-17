@@ -381,12 +381,18 @@ def getRows():
 		columns['address']=volunteer.address
 		if(volunteer.city):
 			columns['city']=volunteer.city.city
+		else:
+			columns['city']=""
 		if(volunteer.neighborhood):
 			columns['neighborhood']=volunteer.neighborhood.neighborhood
+		else:
+			columns['neighborhood']=""
 		columns['work_place']=volunteer.work_place
 		columns['medical_training']=volunteer.medical_training
 		if(volunteer.vehicle):
 			columns['vehicle']=volunteer.vehicle.vehicle
+		else:
+			columns['vehicle']=""
 		columns['other_languages']=volunteer.other_languages
 		columns['other_specialties']=volunteer.other_specialties
 		if(volunteer.start_time_available):

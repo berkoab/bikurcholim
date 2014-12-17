@@ -213,18 +213,26 @@ def getRows():
 		columns['address']=client.address
 		if(client.city):
 			columns['city']=client.city.city
+		else:
+			columns['city']=""
 		if(client.neighborhood):
 			columns['neighborhood']=client.neighborhood.neighborhood
+		else:
+			columns['neighborhood']=""
 		columns['home_phone']=client.home_phone
 		columns['cell_phone']=client.cell_phone
 		columns['email_address']=client.email_address
 		if(client.status):
 			columns['status']=client.status.status
+		else:
+			columns['status']=""
 		columns['start_date']=datetime_to_ms_str(client.start_date)
 		columns['expected_end_date']=datetime_to_ms_str(client.expected_end_date)
 		columns['end_date']=datetime_to_ms_str(client.end_date)
 		if(client.hospital):
 			columns['hospital']=client.hospital.name
+		else:
+			columns['hospital']=""
 		columns['hospital_room']=client.hospital_room
 		columns['hospital_notes']=client.hospital_notes
 		columns['food_notes']=client.food_notes
@@ -240,8 +248,12 @@ def getRows():
 		columns['food_to_home']=client.food_to_home
 		if(client.meal_coordinator):
 			columns['meal_coordinator']=client.meal_coordinator.get_name()
+		else:
+			columns['meal_coordinator']=""
 		if(client.meal_preparer):
-			columns['meal_preparer']=client.meal_preparer.get_name()		
+			columns['meal_preparer']=client.meal_preparer.get_name()
+		else:
+			columns['meal_preparer']=""
 
 		rows.append(columns)
 	return rows

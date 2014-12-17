@@ -81,6 +81,8 @@ def getRows():
 		columns['id']=cases.id
 		if(cases.status):
 			columns['status']=cases.status.status
+		else:
+			columns['status']=""
 		if(cases.status.status=='Closed'):
 			columns['statusFormat']="<div class='red'>{0}</div>"
 		elif(cases.status.status=='Assigned'):
@@ -95,8 +97,12 @@ def getRows():
 			columns['close_date']=datetime_to_ms_str(cases.close_date)
 		if(cases.service):
 			columns['service']=cases.service.service
+		else:
+			columns['service']=""
 		if (cases.location):
 			columns['location']=cases.location.name
+		else:
+			columns['location']=""
 		columns['description']=cases.description
 
 		rows.append(columns)
