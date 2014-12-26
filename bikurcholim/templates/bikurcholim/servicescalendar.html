@@ -1,0 +1,171 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+{% load static %}
+{% load i18n admin_urls admin_static admin_list %}
+{% load url from future %}
+{% block title %}Bikur Cholim Database{% endblock %}
+{% block extrahead %}
+{{ block.super }}
+
+<link rel="stylesheet" type="text/css" href="{% static "bikurcholim/bikurcholim.css" %}" />
+<link rel="stylesheet" href="{% static "bikurcholim/fullcalendar/fullcalendar.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "bikurcholim/menu/menu.css" %}" media="screen" />
+<link href="{% static "bikurcholim/fullcalendar/fullcalendar.print.css" %}" rel='stylesheet' media='print' />
+<script src="{% static "bikurcholim/fullcalendar/lib/moment.min.js" %}"></script>
+<script src="{% static "bikurcholim/fullcalendar/lib/jquery.min.js" %}"></script>
+<script src="{% static "bikurcholim/fullcalendar/fullcalendar.min.js" %}"></script>
+<script src="{% static "bikurcholim/utils.js" %}"></script>
+<!--
+<script src="{% static "bikurcholim/bc_calendars.js" %}"></script>
+-->
+<script>
+	var today = getDate();
+	var csrftoken = getCookie('csrftoken');
+	var events = "{% url 'events' %}";
+	var cbResults = [];
+		$(document).ready(function() {
+		var myForm = document.getElementById('servicesForm');
+		for (var i = 0; i < myForm.elements.length; i++ ) {
+				if (myForm.elements[i].checked == true) {
+	                cbResults[cbResults.length] = myForm.elements[i].value;
+	            }
+		}
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			defaultDate: today,
+			defaultView: 'month',
+			editable: false,
+			eventLimit: true, // allow "more" link when too many events
+			eventTextColor: 'white',
+			events: {
+		        url: events,
+		        type: 'POST',
+		        data: {
+		            csrfmiddlewaretoken: csrftoken,
+		            data_type: 'services',
+		            services: getJson(cbResults)
+		        },
+		        error: function() {
+					$('#script-warning').show();
+				},
+		   },
+		   eventMouseover: function(calEvent, jsEvent) {
+			    var tooltip = '<div class="tooltipevent" style="white-space: pre;width:150px;height:75px;background:#FFFFC8;position:absolute;z-index:10001;">' 
+			    	+ 'Client: ' + calEvent.title + '\nService: ' + calEvent.service + '\nStart: ' + new Date(calEvent.start).toLocaleDateString() + '\nEnd: ' 
+			    	+ new Date(calEvent.end).toLocaleDateString() + '</div>';
+			    $("body").append(tooltip);
+			    $(this).mouseover(function(e) {
+			        $(this).css('z-index', 10000);
+			        $('.tooltipevent').fadeIn('500');
+			        $('.tooltipevent').fadeTo('10', 1.9);
+			    }).mousemove(function(e) {
+			        $('.tooltipevent').css('top', e.pageY + 10);
+			        $('.tooltipevent').css('left', e.pageX + 20);
+			    });
+			},
+			
+			eventMouseout: function(calEvent, jsEvent) {
+			    $(this).css('z-index', 8);
+			    $('.tooltipevent').remove();
+			},
+		    dayClick: function(date, jsEvent, view) {
+	                $('#calendar') 
+	                   .fullCalendar('changeView', 'agendaDay'/* or 'basicDay' */);
+	                $('#calendar') 
+	                    .fullCalendar('gotoDate', date.format());
+
+		    } 
+		});
+	 });
+	
+	function toggle() { 
+		var myForm = document.getElementById('servicesForm');
+		cbResults = [];
+		for (var i = 0; i < myForm.elements.length; i++ ) {
+			if (myForm.elements[i].checked == true) {
+                cbResults[cbResults.length] = myForm.elements[i].value;
+            }
+		}
+		//cbResults = cbResults.substring(0, cbResults.length - 1);
+		var event = {
+		        url: events,
+		        type: 'POST',
+		        data: {
+		            csrfmiddlewaretoken: csrftoken,
+		            data_type: 'services',
+		            services: getJson(cbResults)
+		        }
+		};
+		this.$('#calendar').fullCalendar( 'removeEvents');
+		this.$('#calendar').fullCalendar('addEventSource', event);
+ 		//this.$('#calendar').fullCalendar( 'refetchEvents' );
+   	}
+	function getJson(results) {
+ 			return JSON.stringify(results);
+ 	}
+</script>
+<style>
+	
+	#loading {
+		display: none;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+	#menu {
+	    list-style:none;
+	    width:575px;
+	    margin:30px auto 0px auto;
+	    height:43px;
+	    padding:0px 20px 0px 20px;
+	 
+	    /* Rounded Corners */
+	     
+	    -moz-border-radius: 10px;
+	    -webkit-border-radius: 10px;
+	    border-radius: 10px;
+	 
+	    /* Background color and gradients */
+	     
+	    background: #014464;
+	    background: -moz-linear-gradient(top, #0272a7, #013953);
+	    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0272a7), to(#013953));
+	     
+	    /* Borders */
+	     
+	    border: 1px solid #002232;
+	 
+	    -moz-box-shadow:inset 0px 0px 1px #edf9ff;
+	    -webkit-box-shadow:inset 0px 0px 1px #edf9ff;
+	    box-shadow:inset 0px 0px 1px #edf9ff;
+	}
+	.dropdown_3columns {width: 475px;}
+</style>	
+<!-- END Header -->
+{% endblock %}
+{% block breadcrumbs %}
+	<div class="breadcrumbs">
+	<a href="{% url 'index' %}">Home</a>
+	&rsaquo; Services Calendar &rsaquo;
+	</div>
+{% endblock %}
+{% block content %}
+{{ block.super }}
+<table>
+	<tr height="100"><td></td></tr>
+</table>
+<div>
+	<h3>Choose services to display:</h2>
+	<form id="servicesForm">
+		{% for s in services %}
+			<input type="checkbox" value="{{s.service}}" onclick="toggle()"> {{s.service}} 
+		{% endfor %}
+	</form>
+</div><br/>
+	<div id='loading'>loading...</div>
+	<div id='calendar'></div>
+
+{% endblock %}

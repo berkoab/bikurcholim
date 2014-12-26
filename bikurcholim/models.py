@@ -1,5 +1,6 @@
 from django.db import models
 from paintstore.fields import ColorPickerField
+from django.forms import ModelForm
 
 class Neighborhoods(models.Model):
 	neighborhood = models.CharField(max_length=50)
@@ -177,6 +178,7 @@ class Houses(models.Model):
 
 class Services(models.Model):
 	service = models.CharField(max_length=50)
+	color = ColorPickerField(null=True, blank=True)
 	class Meta:
 		verbose_name_plural = "Services"
 		ordering = ('service',)
@@ -262,10 +264,16 @@ class ClientService(models.Model):
 	end_date = models.DateField('close date', null=True, blank=True)
 	status = models.ForeignKey(TaskStatus, null=True, blank=True)
 	number_of_times = models.IntegerField(null=True, blank=True)
+	def get_color(self):
+		return self.service.color
 	class Meta:
 		verbose_name_plural = "Client Services"
 		ordering = ('client', 'begin_date', 'status')
-		
+class ClientServiceForm(ModelForm):
+	class Meta:
+		model = ClientService
+		fields = '__all__'
+
 class IntakeCalls(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)

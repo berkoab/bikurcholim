@@ -1,4 +1,6 @@
-from bikurcholim.models import Cases, Volunteers, IntakeCalls, HousingSchedule, Tasks, ClientService, OtherOptions
+from bikurcholim.models import Cases, Volunteers, IntakeCalls, HousingSchedule, Tasks, ClientService, OtherOptions, Services
+from bikurcholim.models import ClientServiceForm
+from django.forms.formsets import formset_factory
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
@@ -317,10 +319,11 @@ def events(request):
 	start = request.POST['start']
 	end = request.POST['end']
 	data_type = request.POST['data_type']
+	services = request.POST['services']
 	#csrfmiddlewaretoken = request.POST['csrfmiddlewaretoken']
 	
 	if(data_type=='services'):
-		rows = service_events_view.getRows(start, end)
+		rows = service_events_view.getRows(start, end, services)
 	elif(data_type=='housing'):
 		rows = housing_events_view.getRows(start, end)
 	context = {}
@@ -328,9 +331,10 @@ def events(request):
 	return HttpResponse(json.dumps(rows))
 
 @login_required(login_url=reverse_lazy('login'))
-def casecalendar(request):
-	context = {}
-	return render(request, 'bikurcholim/casescalendar.html', context)
+def servicescalendar(request):
+	services = Services.objects.all()
+	context = {'services': services}
+	return render(request, 'bikurcholim/servicescalendar.html', context)
 
 @login_required(login_url=reverse_lazy('login'))
 def housingcalendar(request):
@@ -350,3 +354,22 @@ def addcase(request):
 	context = {}
 	return redirect(url+'?first_name='+call.first_name
 				+'&last_name='+call.last_name)
+	
+@login_required(login_url=reverse_lazy('login'))
+def update_services(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ClientServiceForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/thanks/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ClientServiceForm()
+
+    return render(request, 'update_services.html', {'form': form})
