@@ -52,14 +52,17 @@ def getCols():
         'index': 7,
         'type': "date",
         'friendly': "Begin Date",
-        'hidden':'true'
     }
     cols['end_date'] = {
         'index': 9,
         'type': "date",
         'friendly': "End Date",
-        'hidden':'true'
     }
+    cols['week_of'] = {
+		'index': 9,
+		'type': "string",
+		'friendly': "Week Of (Begin)",
+	}
 
     return cols
 
@@ -91,6 +94,6 @@ def getRows():
 			columns['volunteer']=""
 		columns['begin_date']=datetime_to_ms_str(c.begin_date)
 		columns['end_date']=datetime_to_ms_str(c.end_date)	
-
+		columns['week_of']=c.get_week()
 		rows.append(columns)
 	return rows

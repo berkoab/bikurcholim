@@ -33,5 +33,5 @@ urlpatterns = patterns('',
 	url(r'^gotoevent/$', views.gotoevent, name='gotoevent'),
 	url(r'^test/$', views.test, name='test'),
 	url(r'^addcase/$', views.addcase, name='addcase'),
-	#url(r'^adminaddcase/$', views.addcase, name='addcase'),
+	url(r'^update_services/$', views.update_services, name='update_services'),
 )

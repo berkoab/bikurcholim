@@ -1,6 +1,6 @@
 from bikurcholim.models import Cases, Volunteers, IntakeCalls, HousingSchedule, Tasks, ClientService, OtherOptions, Services
 from bikurcholim.models import ClientServiceForm
-from django.forms.formsets import formset_factory
+from django.forms.models import modelformset_factory
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
@@ -357,19 +357,29 @@ def addcase(request):
 	
 @login_required(login_url=reverse_lazy('login'))
 def update_services(request):
+    ClientFormSet = modelformset_factory(ClientService, form=ClientServiceForm, extra=0)
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
+    	formset = ClientFormSet(request.POST, request.FILES, 
+							queryset=ClientService.objects.filter(status__status__exact='Open'))
         # create a form instance and populate it with data from the request:
-        form = ClientServiceForm(request.POST)
+        #form = ClientServiceForm(request.POST)
         # check whether it's valid:
-        if form.is_valid():
+        if formset.is_valid():
+            success = 'Saved Successfully!!'
+            formset.save()
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return HttpResponseRedirect('/thanks/')
+            return render_to_response("bikurcholim/update_services.html", 
+										{'success': success,"formset": formset,}
+										, RequestContext(request))
+            #return HttpResponseRedirect("bikurcholim/update_services.html")
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = ClientServiceForm()
+        formset = ClientFormSet(queryset=ClientService.objects.filter(status__status__exact='Open'))
 
-    return render(request, 'update_services.html', {'form': form})
+    return render_to_response("bikurcholim/update_services.html", {
+        "formset": formset, }, RequestContext(request))
+    #return render(request, 'update_services.html', {'form': form})

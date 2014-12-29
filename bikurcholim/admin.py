@@ -60,7 +60,7 @@ class HousingScheduleInline(admin.TabularInline):
     extra = 2
     
 class CasesAdmin(admin.ModelAdmin):
-	list_display = ('last_name', 'first_name')
+	list_display = ('status', 'last_name', 'first_name', 'home_phone', 'hospital', 'hospital_room')
 	list_filter = ['status__status', 'neighborhood', 'hospital']
 	search_fields = ['last_name', 'first_name', 'street']
 	inlines = [ClientServiceInline, HousingScheduleInline]
@@ -80,8 +80,8 @@ class IntakeCallsAdminForm(forms.ModelForm):
         return close_date
        
 class IntakeCallsAdmin(admin.ModelAdmin):
-	list_display = ('date_call_received', 'last_name', 'first_name')
-	list_filter = ['status__status', 'location__name']
+	list_display = ('date_call_received', 'last_name', 'first_name', 'location')
+	list_filter = ['location__name']
 	search_fields = ['first_name', 'last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
 	form = IntakeCallsAdminForm
 	
@@ -95,7 +95,7 @@ class HousingAdminForm(forms.ModelForm):
         return to_date
        
 class HousingScheduleAdmin(admin.ModelAdmin):
-	list_display = ('from_date', 'to_date', 'house')
+	list_display = ('from_date', 'to_date', 'house', 'case')
 	list_filter = ['house']
 	form = HousingAdminForm
     

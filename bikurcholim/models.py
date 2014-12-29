@@ -1,6 +1,11 @@
 from django.db import models
 from paintstore.fields import ColorPickerField
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
+from datetime import date
+from time import mktime
+from datetime import timedelta
+from datetime import datetime
+import time
 
 class Neighborhoods(models.Model):
 	neighborhood = models.CharField(max_length=50)
@@ -249,7 +254,7 @@ class Cases(models.Model):
     
 	class Meta:
 		verbose_name_plural = "Cases"
-		ordering = ('last_name','first_name')
+		ordering = ('status', 'last_name','first_name')
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name
 	def __str__(self):
@@ -266,6 +271,12 @@ class ClientService(models.Model):
 	number_of_times = models.IntegerField(null=True, blank=True)
 	def get_color(self):
 		return self.service.color
+	def get_week(self):
+		d = self.begin_date
+		current_week = int(date(d.year, d.month, d.day).strftime("%W"))
+		first_day = datetime.fromtimestamp(mktime(time.strptime('%s %s %s' % (d.year, current_week, str(0)), '%Y %W %w')))
+		last_day = first_day + timedelta(days=6)
+		return '{0}-{1}'.format(first_day.strftime('%Y/%m/%d'), last_day.strftime('%Y/%m/%d'))
 	class Meta:
 		verbose_name_plural = "Client Services"
 		ordering = ('client', 'begin_date', 'status')
@@ -273,15 +284,17 @@ class ClientServiceForm(ModelForm):
 	class Meta:
 		model = ClientService
 		fields = '__all__'
+		widgets = {
+            'description': Textarea(attrs={'cols': 20, 'rows': 2}),
+        }
+		#exclude = ['description']
 
 class IntakeCalls(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
-	status = models.ForeignKey(CaseStatus)
-	#volunteer = models.ForeignKey(Volunteers, null=True, blank=True)
 	date_call_received = models.DateField('date call received')
-	date_of_service = models.DateTimeField('date and time of service', null=True, blank=True)
-	close_date = models.DateField('close date', null=True, blank=True)
+	initiating_phone_number = models.CharField(max_length=50, null=True, blank=True)
+	initiating_name = models.CharField(max_length=50, null=True, blank=True)
 	service = models.ForeignKey(Services, null=True, blank=True)
 	location = models.ForeignKey(Hospitals, null=True, blank=True)
 	description = models.TextField(max_length=200, null=True, blank=True)
