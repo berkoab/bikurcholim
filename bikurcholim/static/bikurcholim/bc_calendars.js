@@ -26,8 +26,8 @@
 		        //textColor: 'black' // a non-ajax option
 		    },
 			eventMouseover: function(calEvent, jsEvent) {
-			    var tooltip = '<div class="tooltipevent" style="white-space: pre;width:150px;height:75px;background:#FFFFC8;position:absolute;z-index:10001;">' 
-			    	+ 'Title: ' + calEvent.title + '\nStart: ' + new Date(calEvent.start).toLocaleDateString() + '\nEnd: ' 
+			    var tooltip = '<div class="tooltipevent" style="white-space: pre;width:200px;height:80px;background:#FFFFC8;position:absolute;z-index:10001;">' 
+			    	+ 'Title: ' + calEvent.title + '\nName: ' + calEvent.name + '\nStart: ' + new Date(calEvent.start).toLocaleDateString() + '\nEnd: ' 
 			    	+ new Date(calEvent.end).toLocaleDateString() + '</div>';
 			    $("body").append(tooltip);
 			    $(this).mouseover(function(e) {

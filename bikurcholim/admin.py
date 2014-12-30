@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django import forms
+from django.db import models
 from django.core.exceptions import ValidationError
 from bikurcholim.models import Neighborhoods
 from bikurcholim.models import Vehicles
@@ -13,22 +14,30 @@ from bikurcholim.models import CaseStatus
 from bikurcholim.models import IntakeCalls
 from bikurcholim.models import Services
 from bikurcholim.models import HousingSchedule
+from bikurcholim.models import Phones
+from bikurcholim.models import PhoneTypes
 from bikurcholim.models import Tasks
 from bikurcholim.models import TaskStatus
 from bikurcholim.models import ClientService
 from bikurcholim.models import OtherOptions, Options
 from bikurcholim.models import VolunteerClients
+from bikurcholim.models import CaseManagers
+from django.forms import TextInput, Textarea
 
 class VolunteerOptionsInline(admin.TabularInline):
     model = OtherOptions
     extra = 2
-
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
 class VolunteerClientsInline(admin.TabularInline):
     model = VolunteerClients
     extra = 2
-       		
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }   		
 class VolunteersAdmin(admin.ModelAdmin):
-	list_display = ('last_name', 'first_name')
+	list_display = ('last_name', 'first_name', 'cell_phone')
 	list_filter = ['neighborhood', 'vehicle', 'hospital_visitation', 
 					'transportation_to_appointments', 'overnight_hospital_stays', 'assist_homebound', 'assist_with_children', 
 					'assist_with_children_activities', 'able_to_entertain_children', 'visit_elderly', 
@@ -50,26 +59,47 @@ class VolunteersAdmin(admin.ModelAdmin):
 										('visit_elderly', 'visit_elderly_notes'), ('assist_with_housekeeping', 'assist_with_housekeeping_notes'),
 										('phone_calls', 'phone_calls_notes'), ('learn_with_elderly', 'learn_with_elderly_notes'), ('visit_homebound', 'visit_homebound_notes')]})]
 	inlines = [VolunteerOptionsInline, VolunteerClientsInline]
-		
+	formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
 class ClientServiceInline(admin.TabularInline):
     model = ClientService
-    extra = 2
-
+    extra = 1
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
+class PhonesInline(admin.TabularInline):
+    model = Phones
+    extra = 1
+    
 class HousingScheduleInline(admin.TabularInline):
     model = HousingSchedule
-    extra = 2
-    
+    extra = 1
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
 class CasesAdmin(admin.ModelAdmin):
-	list_display = ('status', 'last_name', 'first_name', 'home_phone', 'hospital', 'hospital_room')
+	list_display = ('last_name', 'first_name', 'status', 'home_phone', 'hospital', 'hospital_room')
 	list_filter = ['status__status', 'neighborhood', 'hospital']
 	search_fields = ['last_name', 'first_name', 'street']
-	inlines = [ClientServiceInline, HousingScheduleInline]
-
+	inlines = [PhonesInline, ClientServiceInline, HousingScheduleInline]
+	formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
 class ClientServiceAdmin(admin.ModelAdmin):
 	list_display = ('client', 'volunteer', 'status')
 	list_filter = ['status__status']
 	search_fields = ['description', 'client', 'volunteer']
-	
+	formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
+class PhonesAdmin(admin.ModelAdmin):
+	list_display = ('type', 'client', 'number')
+	list_filter = ['type']
+	search_fields = ['note']
+	formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
 class IntakeCallsAdminForm(forms.ModelForm):
     def clean_close_date(self):
     	date_call_received = self.cleaned_data["date_call_received"]
@@ -80,11 +110,13 @@ class IntakeCallsAdminForm(forms.ModelForm):
         return close_date
        
 class IntakeCallsAdmin(admin.ModelAdmin):
-	list_display = ('date_call_received', 'last_name', 'first_name', 'location')
-	list_filter = ['location__name']
+	list_display = ('last_name', 'first_name', 'hospital')
+	list_filter = ['hospital__name']
 	search_fields = ['first_name', 'last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
 	form = IntakeCallsAdminForm
-	
+	formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
 class HousingAdminForm(forms.ModelForm):
     def clean_to_date(self):
     	from_date = self.cleaned_data["from_date"]
@@ -95,16 +127,20 @@ class HousingAdminForm(forms.ModelForm):
         return to_date
        
 class HousingScheduleAdmin(admin.ModelAdmin):
-	list_display = ('from_date', 'to_date', 'house', 'case')
+	list_display = ('case', 'from_date', 'to_date', 'house')
 	list_filter = ['house']
 	form = HousingAdminForm
-    
+	formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
 class TasksAdmin(admin.ModelAdmin):
 	list_display = ('title', 'status')
 	list_filter = ['status__status']
 	search_fields = ['title', 'description']
 	#form = IntakeCallsAdminForm
-
+	formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
 admin.site.register(Neighborhoods)
 admin.site.register(Vehicles)
 admin.site.register(Volunteers, VolunteersAdmin)
@@ -123,6 +159,8 @@ admin.site.register(Tasks, TasksAdmin)
 admin.site.register(ClientService, ClientServiceAdmin)
 admin.site.register(OtherOptions)
 admin.site.register(VolunteerClients)
-
+admin.site.register(PhoneTypes)
+admin.site.register(Phones, PhonesAdmin)
+admin.site.register(CaseManagers)
 admin.AdminSite.site_header="Bikur Cholim Database Administration"
 admin.AdminSite.site_title="Bikur Cholim Database Administration"

@@ -214,40 +214,53 @@ class HousingSchedule(models.Model):
 	def __str__(self):
 		return str(self.house.name)
 
+class PhoneTypes(models.Model):
+	type = models.CharField(max_length=50, null=True, blank=True)
+	class Meta:
+		verbose_name_plural = "PhoneTypes"
+	def __str__(self):
+		return self.type
+
+class CaseManagers(models.Model):
+	first_name = models.CharField(max_length=50)
+	last_name = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "CaseManagers"
+		ordering = ('last_name','first_name')
+	def __str__(self):
+		return self.last_name + ', ' + self.first_name	
 class Cases(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
 	hospital = models.ForeignKey(Hospitals, null=True, blank=True)
 	hospital_room = models.CharField(max_length=50, null=True, blank=True)
-	medical_condition = models.TextField(max_length=200, null=True, blank=True)
+	other_location = models.CharField(max_length=50, null=True, blank=True)
+	medical_condition = models.CharField(max_length=50, null=True, blank=True)
 	address = models.CharField(max_length=100, null=True, blank=True)
 	city = models.ForeignKey(Cities, null=True, blank=True)
+	phone_numbers = models.ManyToManyField(PhoneTypes, through='Phones')
 	home_phone = models.CharField(max_length=50, null=True, blank=True)
 	cell_phone = models.CharField(max_length=50, null=True, blank=True)
 	email_address = models.EmailField(max_length=100, null=True, blank=True)
 	neighborhood = models.ForeignKey(Neighborhoods, null=True, blank=True)
 	status = models.ForeignKey(ClientStatus, null=True, blank=True)
-	start_date = models.DateField(null=True, blank=True)
+	case_manager = models.ForeignKey(CaseManagers, null=True, blank=True)
+	original_start_date = models.DateField(null=True, blank=True)
+	active_start_date = models.DateField(null=True, blank=True)
 	expected_end_date = models.DateField(null=True, blank=True)
 	end_date = models.DateField(null=True, blank=True)	
 	hospital_notes = models.TextField(max_length=200, null=True, blank=True)
-#	tikvah_house = models.ForeignKey(TikvahHouses, null=True, blank=True)
-#	tikvah_room = models.CharField(max_length=50, null=True, blank=True)
 	food_notes = models.TextField(max_length=300, null=True, blank=True)
-	allergies = models.TextField(max_length=200, null=True, blank=True)
 	transportation = models.TextField(max_length=200, null=True, blank=True)
 	visitor_comments = models.TextField(max_length=500, null=True, blank=True)
 	medical_equipment = models.TextField(max_length=200, null=True, blank=True)
 	donation_made = models.CharField(max_length=50, null=True, blank=True)
 	text_ability = models.BooleanField(default=None)
-	yoshon = models.BooleanField(default=None)
-	cholov_yisroel = models.BooleanField(default=None)
 	food_to_hospital = models.BooleanField(default=None)
 	food_to_home = models.BooleanField(default=None)
 	meal_coordinator = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_coordinator_set')
 	meal_preparer = models.ForeignKey(Volunteers, null=True, blank=True, related_name='meal_preparer_set')
 	services = models.ManyToManyField(Services, through='ClientService')
-	#note = models.ManyToManyField(Notes)
  	housing = models.ManyToManyField(Houses, through='HousingSchedule')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -255,11 +268,22 @@ class Cases(models.Model):
 	class Meta:
 		verbose_name_plural = "Cases"
 		ordering = ('status', 'last_name','first_name')
+		
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name
 	def __str__(self):
 		return self.last_name + ', ' + self.first_name
-		
+
+class Phones(models.Model):
+	type = models.ForeignKey(PhoneTypes)
+	client = models.ForeignKey(Cases)
+	number = models.CharField(max_length=50)
+	note = models.CharField(max_length=50, null=True, blank=True)
+	class Meta:
+		verbose_name_plural = "Phones"
+		ordering = ('number', 'type')
+	def __str__(self):
+		return self.number
 class ClientService(models.Model):
 	service = models.ForeignKey(Services)
 	client = models.ForeignKey(Cases)
@@ -280,6 +304,8 @@ class ClientService(models.Model):
 	class Meta:
 		verbose_name_plural = "Client Services"
 		ordering = ('client', 'begin_date', 'status')
+	def __str__(self):
+		return self.service
 class ClientServiceForm(ModelForm):
 	class Meta:
 		model = ClientService
@@ -296,7 +322,8 @@ class IntakeCalls(models.Model):
 	initiating_phone_number = models.CharField(max_length=50, null=True, blank=True)
 	initiating_name = models.CharField(max_length=50, null=True, blank=True)
 	service = models.ForeignKey(Services, null=True, blank=True)
-	location = models.ForeignKey(Hospitals, null=True, blank=True)
+	hospital = models.ForeignKey(Hospitals, null=True, blank=True)
+	city = models.ForeignKey(Cities, null = True, blank=True)
 	description = models.TextField(max_length=200, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)

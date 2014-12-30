@@ -22,10 +22,11 @@ def getRows(sd, ed):
 	for c in d:
 		event = collections.OrderedDict()
 		event['id'] = c.id
-		event['title'] = c.house.name
+		event['title'] = c.house.name + ' - ' + c.case.get_name()
 		event['start'] = format_datetime(c.from_date, True)
 		event['end'] = format_datetime(c.to_date, False)
 		event['color'] = c.get_color()
 		event['url'] = str(reverse_lazy('housingschedule')) + str(c.id)
+		event['name'] = c.case.get_name()
 		events.append(event)
 	return events

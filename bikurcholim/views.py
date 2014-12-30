@@ -352,8 +352,14 @@ def addcase(request):
 	url = request.POST['url']
 	call = IntakeCalls.objects.get(pk=idFromPost)
 	context = {}
+	city = ''
+	hospital = ''
+	if call.city:
+		city = '&city='+str(call.city.id)
+	if call.hospital:
+		hospital = '&hospital='+str(call.hospital.id)
 	return redirect(url+'?first_name='+call.first_name
-				+'&last_name='+call.last_name)
+				+'&last_name='+call.last_name+city+hospital)
 	
 @login_required(login_url=reverse_lazy('login'))
 def update_services(request):
