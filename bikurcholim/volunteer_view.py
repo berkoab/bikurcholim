@@ -100,265 +100,278 @@ def getCols():
         'friendly': "End Time Available",
 		'tooltip': "Click here to sort"
     }
+    cols['start_time_available2'] = {
+		'index': 16,
+		'type': "number",
+		'friendly': "Start Time Available 2",
+		'tooltip': "Click here to sort"
+	}
+    cols['end_time_availalable2'] = {
+		'index': 17,
+		'type': "number",
+		'friendly': "End Time Available 2",
+		'tooltip': "Click here to sort"
+	}
     cols['days_and_times_available_notes'] = {
-        'index': 16,
+        'index': 18,
         'type': "string",
         'friendly': "Times Notes", 
         'hidden':'true'
     }
     
     cols['sunday'] = {
-        'index': 17,
+        'index': 19,
         'type': "bool",
         'friendly': "Sunday Avail.",
         'hidden':'true'
     }
     cols['monday'] = {
-        'index': 18,
+        'index': 20,
         'type': "bool",
         'friendly': "Monday Avail.",
         'hidden':'true'
     }
     cols['tuesday'] = {
-        'index': 19,
+        'index': 21,
         'type': "bool",
         'friendly': "Tuesday Avail.",
         'hidden':'true'
     }
     cols['wednesday'] = {
-        'index': 20,
+        'index': 22,
         'type': "bool",
         'friendly': "Wednesday Avail.",
         'hidden':'true'
     }
     cols['thursday'] = {
-        'index': 21,
+        'index': 23,
         'type': "bool",
         'friendly': "Thursday Avail.",
         'hidden':'true'
     }
     cols['friday'] = {
-        'index': 22,
+        'index': 24,
         'type': "bool",
         'friendly': "Friday Avail.",
         'hidden':'true'
     }
     cols['shabbos'] = {
-        'index': 23,
+        'index': 25,
         'type': "bool",
         'friendly': "Shabbos Avail.",
         'hidden':'true'
     }
     cols['wants_alerts'] = {
-		'index': 24,
+		'index': 26,
 		'type': "bool",
 		'friendly': "Wants Alerts",
 		'hidden':'true'
 	}
     cols['wants_alerts_notes'] = {
-		'index': 25,
+		'index': 27,
 		'type': "string",
 		'friendly': "Wants Alerts Notes", 
 		'hidden':'true'
 	}
     cols['meal_preparation'] = {
-        'index': 26,
+        'index': 28,
         'type': "bool",
         'friendly': "Meal Preparation",
         'hidden':'true'
     }
     cols['meal_preparation_notes'] = {
-		'index': 27,
+		'index': 29,
 		'type': "string",
 		'friendly': "Meal Preparation Notes", 
 		'hidden':'true'
 	}
     cols['meal_delivery'] = {
-        'index': 28,
+        'index': 30,
         'type': "bool",
         'friendly': "Meal Delivery",
         'hidden':'true'
     }
     cols['meal_delivery_notes'] = {
-		'index': 29,
+		'index': 31,
 		'type': "string",
 		'friendly': "Meal Delivery Notes", 
 		'hidden':'true'
 	}
     cols['hospital_visitation'] = {
-		'index': 30,
+		'index': 32,
 		'type': "bool",
 		'friendly': "Hospital Visit.",
 		'hidden':'true'
 	}
     cols['hospital_visitation_notes'] = {
-		'index': 31,
+		'index': 33,
 		'type': "string",
 		'friendly': "Hospital Visit. Notes", 
 		'hidden':'true'
 	}
     cols['transportation_to_appointments'] = {
-		'index': 32,
+		'index': 34,
 		'type': "bool",
 		'friendly': "Transportation",
 		'hidden':'true'
 	}
     cols['transportation_to_appointments_notes'] = {
-		'index': 33,
+		'index': 35,
 		'type': "string",
 		'friendly': "Transportation Notes", 
 		'hidden':'true'
 	}
     cols['overnight_hospital_stays'] = {
-		'index': 34,
+		'index': 36,
 		'type': "bool",
 		'friendly': "Overnight Hosp. Stays",
 		'hidden':'true'
 	}
     cols['overnight_hospital_stays_notes'] = {
-		'index': 35,
+		'index': 37,
 		'type': "string",
 		'friendly': "Overnight Hosp. Stays Notes", 
 		'hidden':'true'
 	}
     cols['assist_homebound'] = {
-		'index': 36,
+		'index': 38,
 		'type': "bool",
 		'friendly': "Assist Homebound",
 		'hidden':'true'
 	}
     cols['assist_homebound_notes'] = {
-		'index': 37,
+		'index': 39,
 		'type': "string",
 		'friendly': "Assist Homebound Notes", 
 		'hidden':'true'
 	}
     cols['assist_with_children'] = {
-		'index': 38,
+		'index': 40,
 		'type': "bool",
 		'friendly': "Assist With Child.",
 		'hidden':'true'
 	}
     cols['assist_with_children_notes'] = {
-		'index': 39,
+		'index': 41,
 		'type': "string",
 		'friendly': "Assist With Child. Notes", 
 		'hidden':'true'
 	}
     cols['assist_with_children_activities'] = {
-		'index': 40,
+		'index': 42,
 		'type': "bool",
 		'friendly': "Assist With Child. Act.",
 		'hidden':'true'
 	}
     cols['assist_with_children_activities_notes'] = {
-		'index': 41,
+		'index': 43,
 		'type': "string",
 		'friendly': "Assist With Child. Act. Notes", 
 		'hidden':'true'
 	}
     cols['able_to_entertain_children'] = {
-		'index': 42,
+		'index': 44,
 		'type': "bool",
 		'friendly': "Entertain Child.",
 		'hidden':'true'
 	}
     cols['able_to_entertain_children_notes'] = {
-		'index': 43,
+		'index': 45,
 		'type': "string",
 		'friendly': "Entertain Child. Notes", 
 		'hidden':'true'
 	}
     cols['visit_elderly'] = {
-		'index': 44,
+		'index': 46,
 		'type': "bool",
 		'friendly': "Visit Elderly",
 		'hidden':'true'
 	}
     cols['visit_elderly_notes'] = {
-		'index': 45,
+		'index': 47,
 		'type': "string",
 		'friendly': "Visit Elderly Notes", 
 		'hidden':'true'
 	}
     cols['assist_with_housekeeping'] = {
-		'index': 46,
+		'index': 48,
 		'type': "bool",
 		'friendly': "Assist with Housekeeping",
 		'hidden':'true'
 	}
     cols['assist_with_housekeeping_notes'] = {
-		'index': 47,
+		'index': 49,
 		'type': "string",
 		'friendly': "Assist with Housekeeping Notes", 
 		'hidden':'true'
 	}
     cols['phone_calls'] = {
-		'index': 48,
+		'index': 50,
 		'type': "bool",
 		'friendly': "Phone Calls",
 		'hidden':'true'
 	}
     cols['phone_calls_notes'] = {
-		'index': 49,
+		'index': 51,
 		'type': "string",
 		'friendly': "Phone Calls Notes", 
 		'hidden':'true'
 	}
     cols['learn_with_elderly'] = {
-		'index': 50,
+		'index': 52,
 		'type': "bool",
 		'friendly': "Learn with Elderly",
 		'hidden':'true'
 	}
     cols['learn_with_elderly_notes'] = {
-		'index': 51,
+		'index': 53,
 		'type': "string",
 		'friendly': "Learn with Elderly Notes", 
 		'hidden':'true'
 	}
     cols['visit_homebound'] = {
-		'index': 52,
+		'index': 54,
 		'type': "string",
 		'friendly': "Visit Homebound", 
 		'hidden':'true'
 	}
     cols['visit_homebound_notes'] = {
-		'index': 53,
+		'index': 55,
 		'type': "string",
 		'friendly': "Visit Homebound Notes", 
 		'hidden':'true'
 	}
     cols['start_date'] = {
-		'index': 54,
+		'index': 56,
 		'type': "date",
 		'friendly': "Start Date", 
 		'hidden':'true'
 	}
     cols['end_date'] = {
-		'index': 55,
+		'index': 57,
 		'type': "date",
 		'friendly': "End Date", 
 		'hidden':'true'
 	}
     cols['last_update_date'] = {
-		'index': 56,
+		'index': 58,
 		'type': "date",
 		'friendly': "Last Update Date", 
 		'hidden':'true'
 	}
     cols['other_options'] = {
-		'index': 57,
+		'index': 59,
 		'type': "string",
 		'friendly': "Other Options", 
 		'hidden':'true'
 	}
     cols['cases'] = {
-		'index': 58,
+		'index': 60,
 		'type': "string",
 		'friendly': "Cases", 
 		'hidden':'true'
 	}
+
     return cols
 
 def datetime_to_ms_str(dt):
@@ -374,7 +387,9 @@ def getRows():
 	d = Volunteers.objects.all()
 	#o = VolunteerOptions.objects.all()
 	
+
 	for volunteer in d:
+		
 		columns = collections.OrderedDict()
 		columns['id']=volunteer.id
 		columns['name']=volunteer.get_name()
@@ -399,6 +414,10 @@ def getRows():
 			columns['start_time_available']=volunteer.start_time_available.hour
 		if(volunteer.end_time_availalable):
 			columns['end_time_availalable']=volunteer.end_time_availalable.hour
+		if(volunteer.start_time_available2):
+			columns['start_time_available2']=volunteer.start_time_available2.hour
+		if(volunteer.end_time_availalable2):
+			columns['end_time_availalable2']=volunteer.end_time_availalable2.hour
 		columns['days_and_times_available_notes']=volunteer.days_and_times_available_notes
 		columns['sunday']=volunteer.sunday
 		columns['monday']=volunteer.monday

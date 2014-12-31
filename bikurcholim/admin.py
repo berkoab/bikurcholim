@@ -26,13 +26,13 @@ from django.forms import TextInput, Textarea
 
 class VolunteerOptionsInline(admin.TabularInline):
     model = OtherOptions
-    extra = 2
+    extra = 1
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
 class VolunteerClientsInline(admin.TabularInline):
     model = VolunteerClients
-    extra = 2
+    extra = 1
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }   		
@@ -46,7 +46,7 @@ class VolunteersAdmin(admin.ModelAdmin):
 	fieldsets = [
 		(None, {'fields': ['first_name', 'last_name', 'home_phone', 
 		'cell_phone', 'email_address', 'address', 'city', 'neighborhood', 'work_place', 'medical_training', 'vehicle', 'other_languages', 'other_specialties']}),
-		('Times Available', {'fields': ['start_time_available', 'end_time_availalable']}),
+		('Times Available', {'fields': ['start_time_available', 'end_time_availalable', 'start_time_available2', 'end_time_availalable2']}),
 		('Days Available', {'fields': [('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'shabbos')]}),
 		(None, {'fields': ['days_and_times_available_notes']}), 
 		('Dates', {'fields': ['start_date', 'end_date', 'last_update_date']}),
@@ -82,6 +82,19 @@ class CasesAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name', 'status', 'home_phone', 'hospital', 'hospital_room')
 	list_filter = ['status__status', 'neighborhood', 'hospital']
 	search_fields = ['last_name', 'first_name', 'street']
+	fieldsets = [
+		(None, {'fields': ['first_name', 'last_name', 'hospital', 'hospital_room', 'other_location', 'medical_condition', 
+						'address', 'city', 'home_phone', 'cell_phone', 'email_address', 'neighborhood', 
+						'status', 'case_manager', 'hospital_notes', 'food_notes', 'transportation', 'visitor_comments', 
+						'medical_equipment', 'donation_made']}),
+		('Dates', {'fields': ['original_start_date', 'active_start_date', 'expected_end_date', 'end_date']}),
+		('Options', {'classes': ('wide', 'extrapretty'),
+		'fields': [('text_ability', 'text_ability_notes'), ('food_to_hospital', 'food_to_hospital_notes'), 
+				('food_to_home', 'food_to_home_notes'), ('housing_checkbox', 'housing_notes'), 
+				('transportation_checkbox', 'transportation_notes'), ('respite_in_home', 'respite_in_home_notes'), 
+				('cleaning_in_home', 'cleaning_in_home_notes'), ('other', 'other_notes'), 'general_notes']}),
+		('Meals', {'fields': ['meal_coordinator', 'meal_preparer']})
+	]
 	inlines = [PhonesInline, ClientServiceInline, HousingScheduleInline]
 	formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},

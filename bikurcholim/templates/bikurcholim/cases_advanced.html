@@ -45,8 +45,11 @@
 	        json_data, {
 	        			renderers: renderers,
 	        			derivedAttributes: {
-	        				"Start Date": function(mp) {
-	        					return convert_date(mp, "start_date")
+	        				"Original Start Date": function(mp) {
+	        					return convert_date(mp, "original_start_date")
+	        				},
+	        				"Active Start Date": function(mp) {
+	        					return convert_date(mp, "active_start_date")
 	        				},
 	        				"End Date": function(mp) {
 	        					return convert_date(mp, "end_date")

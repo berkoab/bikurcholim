@@ -50,6 +50,12 @@
                         {{ object.hospital_room }}
                 </div>
         </div>
+        <div class="form-row field-other_location">
+                <div>
+                        <label class="required" for="id_other_location">Other Location:</label>
+                        {{ object.other_location }}
+                </div>
+        </div>
         <div class="form-row field-medical_condition">
                 <div>
                         <label class="required" for="id_hospital_room">Medical Condition:</label>
@@ -98,10 +104,22 @@
                         {{ object.status }} 
                 </div>
         </div>
-        <div class="form-row field-start_date">
+        <div class="form-row field-case_manager">
                 <div>
-                        <label class="required" for="id_start_date">Start date:</label>
-                        {{ object.start_date }}
+                        <label class="required" for="id_status">Case Manager:</label>
+                        {{ object.case_manager }} 
+                </div>
+        </div>
+        <div class="form-row field-original_start_date">
+                <div>
+                        <label class="required" for="id_original_start_date">Original Start date:</label>
+                        {{ object.original_start_date }}
+                </div>
+        </div>
+        <div class="form-row field-active_start_date">
+                <div>
+                        <label class="required" for="id_active_start_date">Active Start date:</label>
+                        {{ object.active_start_date }}
                 </div>
         </div>
         <div class="form-row field-expected_end_date">
@@ -127,12 +145,6 @@
                 <div>
                         <label class="required" for="id_food_notes">Food notes:</label>
                         {{ object.food_notes }}
-                </div>
-        </div>
-        <div class="form-row field-allergies">
-                <div>
-                        <label class="required" for="id_allergies">Allergies:</label>
-                        {{ object.allergies }}
                 </div>
         </div>
         <div class="form-row field-transportation">
@@ -169,24 +181,10 @@
 					{% endif %}
                 </div>
         </div>
-        <div class="form-row field-yoshon">
-                <div class="checkbox-row">
-					<label class="vCheckboxLabel required" for="id_yoshon">Yoshon</label>
-                    {% if object.yoshon == 1 %}
-						<input type="checkbox" checked disabled>
-					{% else %}
-						<input type="checkbox" disabled>
-					{% endif %}
-                </div>
-        </div>
-        <div class="form-row field-cholov_yisroel">
-                <div class="checkbox-row">
-				<label class="vCheckboxLabel required" for="id_cholov_yisroel">Cholov yisroel</label>
-                {% if object.cholov_yisroel == 1 %}
-						<input type="checkbox" checked disabled>
-					{% else %}
-						<input type="checkbox" disabled>
-					{% endif %}    
+        <div class="form-row field-text_ability_notes">
+                <div>
+                        <label class="required" for="id_text_ability_notes">Text Ability Notes:</label>
+                        {{ object.text_ability_notes }}
                 </div>
         </div>
         <div class="form-row field-food_to_hospital">
@@ -199,6 +197,12 @@
 				{% endif %}    
                 </div>
         </div>
+        <div class="form-row field-food_to_hospital_notes">
+                <div>
+                        <label class="required" for="id_food_to_hospital_notes">Food to Hospital Notes:</label>
+                        {{ object.food_to_hospital_notes }}
+                </div>
+        </div>
         <div class="form-row field-food_to_home">
                 <div class="checkbox-row">
                 <label class="vCheckboxLabel required" for="id_food_to_home">Food to home</label>
@@ -209,6 +213,101 @@
 				{% endif %}        
                 </div>
         </div>
+        <div class="form-row field-food_to_home_notes">
+                <div>
+                        <label class="required" for="id_food_to_home_notes">Food to Home Notes:</label>
+                        {{ object.food_to_home_notes }}
+                </div>
+        </div>
+        
+        
+        <div class="form-row field-housing_checkbox">
+                <div class="checkbox-row">
+                <label class="vCheckboxLabel required" for="id_housing_checkbox">Housing?</label>
+                {% if object.housing_checkbox == 1 %}
+					<input type="checkbox" checked disabled>
+				{% else %}
+					<input type="checkbox" disabled>
+				{% endif %}        
+                </div>
+        </div>
+        <div class="form-row field-housing_notes">
+                <div>
+                        <label class="required" for="id_housing_notes">Housing? Notes:</label>
+                        {{ object.housing_notes }}
+                </div>
+        </div>
+        <div class="form-row field-transportation_checkbox">
+                <div class="checkbox-row">
+                <label class="vCheckboxLabel required" for="id_transportation_checkbox">Transportation?</label>
+                {% if object.transportation_checkbox == 1 %}
+					<input type="checkbox" checked disabled>
+				{% else %}
+					<input type="checkbox" disabled>
+				{% endif %}        
+                </div>
+        </div>
+        <div class="form-row field-transportation_notes">
+                <div>
+                        <label class="required" for="id_food_to_home_notes">Transportation? Notes:</label>
+                        {{ object.transportation_notes }}
+                </div>
+        </div>
+        <div class="form-row field-respite_in_home">
+                <div class="checkbox-row">
+                <label class="vCheckboxLabel required" for="id_respite_in_home">Respite in Home</label>
+                {% if object.respite_in_home == 1 %}
+					<input type="checkbox" checked disabled>
+				{% else %}
+					<input type="checkbox" disabled>
+				{% endif %}        
+                </div>
+        </div>
+        <div class="form-row field-respite_in_home_notes">
+                <div>
+                        <label class="required" for="id_respite_in_home_notes">Respite in Home Notes:</label>
+                        {{ object.respite_in_home_notes }}
+                </div>
+        </div>
+        <div class="form-row field-cleaning_in_home">
+                <div class="checkbox-row">
+                <label class="vCheckboxLabel required" for="id_cleaning_in_home">Cleaning in Home</label>
+                {% if object.cleaning_in_home == 1 %}
+					<input type="checkbox" checked disabled>
+				{% else %}
+					<input type="checkbox" disabled>
+				{% endif %}        
+                </div>
+        </div>
+        <div class="form-row field-cleaning_in_home_notes">
+                <div>
+                        <label class="required" for="id_cleaning_in_home_notes">Cleaning in Home Notes:</label>
+                        {{ object.cleaning_in_home_notes }}
+                </div>
+        </div>
+        <div class="form-row field-other">
+                <div class="checkbox-row">
+                <label class="vCheckboxLabel required" for="id_other">Other</label>
+                {% if object.other == 1 %}
+					<input type="checkbox" checked disabled>
+				{% else %}
+					<input type="checkbox" disabled>
+				{% endif %}        
+                </div>
+        </div>
+        <div class="form-row field-other_notes">
+                <div>
+                        <label class="required" for="id_food_to_home_notes">Other Options Notes:</label>
+                        {{ object.other_notes }}
+                </div>
+        </div>
+        <div class="form-row field-general_notes">
+                <div>
+                        <label class="required" for="id_food_to_home_notes">General Notes:</label>
+                        {{ object.general_notes }}
+                </div>
+        </div>
+        
         <div class="form-row field-meal_coordinator">
                 <div>
                         <label class="required" for="id_meal_coordinator">Meal coordinator:</label>
@@ -221,6 +320,48 @@
                         {{ object.meal_preparer }}
                 </div>
         </div>
+        
+
+<div class="inline-group" id="phones_set-group">
+<fieldset class="module">
+   <h2>Phones</h2>
+   <table>
+     <thead><tr>
+         <th class="required">Type
+         </th>
+		 <th>Number
+         </th>
+         <th>Note
+         </th>
+     </tr></thead>
+     <tbody>
+     {% for p in object.phones_set.all %}
+        <tr class="form-row {% cycle 'row1' 'row2' %}"
+             id="phones_set-0">
+        <td class="original">
+          <p>
+           {{ p.type }}
+          </p>
+        </td>
+        <td class="original">
+          <p>
+           {{ p.number }}
+          </p>
+        </td>
+		
+		<td class="field-notes">
+        	<p>
+       		{{ p.note }}    
+       		</p> 
+        </td>
+        </tr>
+     {% endfor %}
+     </tbody>
+   </table>
+</fieldset>
+</div>
+
+
 <div class="inline-group" id="otheroptions_set-group">
 <fieldset class="module">
    <h2>Client Services</h2>
@@ -243,7 +384,7 @@
      </tr></thead>
      <tbody>
      {% for p in object.clientservice_set.all %}
-        <tr class="form-row row1 has_original"
+        <tr class="form-row {% cycle 'row1' 'row2' %}"
              id="otheroptions_set-0">
         <td class="original">
           <p>
@@ -306,8 +447,8 @@
      </tr></thead>
      <tbody>
      {% for p in object.housingschedule_set.all %}
-        <tr class="form-row row1 has_original"
-             id="otheroptions_set-0">
+        <tr class="form-row {% cycle 'row1' 'row2' %}"
+             id="housing_set-0">
         <td class="original">
           <p>
            {{ p.house.name }}
