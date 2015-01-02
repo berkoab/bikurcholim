@@ -250,6 +250,7 @@ class Cases(models.Model):
 	original_start_date = models.DateField(null=True, blank=True)
 	active_start_date = models.DateField(null=True, blank=True)
 	expected_end_date = models.DateField(null=True, blank=True)
+	inactive_date = models.DateField(null=True, blank=True)
 	end_date = models.DateField(null=True, blank=True)	
 	hospital_notes = models.TextField(max_length=200, null=True, blank=True)
 	food_notes = models.TextField(max_length=300, null=True, blank=True)
@@ -341,6 +342,7 @@ class IntakeCalls(models.Model):
 	hospital = models.ForeignKey(Hospitals, null=True, blank=True)
 	city = models.ForeignKey(Cities, null = True, blank=True)
 	description = models.TextField(max_length=200, null=True, blank=True)
+	made_into_case = models.ForeignKey(ClientStatus, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	class Meta:

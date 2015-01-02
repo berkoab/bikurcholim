@@ -87,7 +87,7 @@ class CasesAdmin(admin.ModelAdmin):
 						'address', 'city', 'home_phone', 'cell_phone', 'email_address', 'neighborhood', 
 						'status', 'case_manager', 'hospital_notes', 'food_notes', 'transportation', 'visitor_comments', 
 						'medical_equipment', 'donation_made']}),
-		('Dates', {'fields': ['original_start_date', 'active_start_date', 'expected_end_date', 'end_date']}),
+		('Dates', {'fields': ['original_start_date', 'active_start_date', 'expected_end_date', 'end_date', 'inactive_date']}),
 		('Options', {'classes': ('wide', 'extrapretty'),
 		'fields': [('text_ability', 'text_ability_notes'), ('food_to_hospital', 'food_to_hospital_notes'), 
 				('food_to_home', 'food_to_home_notes'), ('housing_checkbox', 'housing_notes'), 
