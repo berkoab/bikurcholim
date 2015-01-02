@@ -322,7 +322,7 @@ class ClientService(models.Model):
 		verbose_name_plural = "Client Services"
 		ordering = ('client', 'begin_date', 'status')
 	def __str__(self):
-		return self.service
+		return self.service.service
 class ClientServiceForm(ModelForm):
 	class Meta:
 		model = ClientService
