@@ -313,11 +313,14 @@ class ClientService(models.Model):
 	def get_color(self):
 		return self.service.color
 	def get_week(self):
-		d = self.begin_date
-		current_week = int(date(d.year, d.month, d.day).strftime("%W"))
-		first_day = datetime.fromtimestamp(mktime(time.strptime('%s %s %s' % (d.year, current_week, str(0)), '%Y %W %w')))
-		last_day = first_day + timedelta(days=6)
-		return '{0}-{1}'.format(first_day.strftime('%Y/%m/%d'), last_day.strftime('%Y/%m/%d'))
+		if self.begin_date:
+			d = self.begin_date
+			current_week = int(date(d.year, d.month, d.day).strftime("%W"))
+			first_day = datetime.fromtimestamp(mktime(time.strptime('%s %s %s' % (d.year, current_week, str(0)), '%Y %W %w')))
+			last_day = first_day + timedelta(days=6)
+			return '{0}-{1}'.format(first_day.strftime('%Y/%m/%d'), last_day.strftime('%Y/%m/%d'))
+		else:
+			return 0
 	class Meta:
 		verbose_name_plural = "Client Services"
 		ordering = ('client', 'begin_date', 'status')
