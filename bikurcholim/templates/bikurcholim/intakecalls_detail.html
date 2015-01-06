@@ -1,10 +1,10 @@
 {% extends "bikurcholim/bc_base_site.html" %}
 
-{% block title %}Case: #{{ object.id }}{% endblock %}
+{% block title %}Intake Call: #{{ object.id }}{% endblock %}
 {% block breadcrumbs %}
 	<div class="breadcrumbs">
 	<a href="{% url 'index' %}">Home</a>
-	&rsaquo; <a href="{% url 'clients' %}">Clients</a>
+	&rsaquo; <a href="{% url 'intakecalls' %}">Intake Calls</a>
 	&rsaquo; {{ object.id }}
 	</div>
 {% endblock %}
@@ -14,11 +14,11 @@
 <table>
 	<tr height="75"><td></td></tr>
 </table>
-	<h1>Case #: {{ object.id }}</h1>
+	<h1>Intake Call #: {{ object.id }}</h1>
 	<ul class="object-tools">
 	    <li>
 	    	<a href={% url change object.id %} class="changelink">			
-	        Change Case #{{ object.id }}
+	        Change Intake Call #{{ object.id }}
 	        </a>
 	      </a>
 	    </li>
@@ -28,17 +28,16 @@
   <fieldset class="module aligned ">
         <div class="form-row field-client">
 			<div>
-                        <label class="required" for="id_client">Client:</label>
-                        {{ object.client }}
+                        <label class="required" for="id_client">First Name:</label>
+                        {{ object.first_name }}
                 </div>
         </div>
-        <div class="form-row field-status">
-                <div>   
-                        <label class="required" for="id_status">Status:</label>
-                        {{ object.status }}
+		<div class="form-row field-lastname">
+			<div>
+                        <label class="required" for="id_client">Last Name:</label>
+                        {{ object.last_name }}
                 </div>
         </div>
-
         <div class="form-row field-open_date">
                 <div>
                         <label for="id_open_date">Date Call Received:</label>
@@ -47,14 +46,14 @@
         </div>
         <div class="form-row field-date_of_service">
                 <div> 
-                        <label for="id_date_of_service_0">Date and time of service:</label>
-                        {{ object.date_of_service }}
+                        <label for="id_date_of_service_0">Initiating Phone Number:</label>
+                        {{ object.initiating_phone_number }}
                 </div>
         </div>
         <div class="form-row field-close_date">
                 <div> 
-                        <label for="id_close_date">Close date:</label>
-                        {{ object.close_date }}
+                        <label for="id_close_date">Initiating Name:</label>
+                        {{ object.initiating_name }}
                 </div>
         </div>
         <div class="form-row field-service">
@@ -65,8 +64,8 @@
         </div>
         <div class="form-row field-service">
                 <div>
-                        <label for="id_service">Location:</label>
-                        {{ object.location }}
+                        <label for="id_service">Hospital:</label>
+                        {{ object.hospital }}
                 </div>
         </div>
         <div class="form-row field-description">
@@ -76,7 +75,13 @@
                 </div>
             
         </div>
-    
+    	<div class="form-row field-description">
+                <div>
+                        <label for="id_description">Made Into Case:</label>
+                        {{ object.made_into_case }}
+                </div>
+            
+        </div>
 </fieldset>
 
 		</div>

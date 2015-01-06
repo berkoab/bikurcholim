@@ -348,6 +348,8 @@ class IntakeCalls(models.Model):
 	class Meta:
 		verbose_name_plural = "Intake Calls"
 		ordering = ('id',)
+	def get_name(self):
+		return self.last_name + ', ' + self.first_name 
 	def __str__(self):
 		return str(self.id)
 

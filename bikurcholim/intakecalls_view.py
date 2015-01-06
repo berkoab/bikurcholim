@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse_lazy
 
 def getCols():
     cols = collections.OrderedDict()
-    href = "<a href=" + str(reverse_lazy('cases')) + "{0} class='userId'>{0}</a>"
+    href = "<a href=" + str(reverse_lazy('intakecalls')) + "{0} class='userId'>{0}</a>"
     cols['id']={
         'index': 1, #The order this column should appear in the table
         'type': "number", #The type. Possible are string, number, bool, date(in milliseconds).
@@ -18,7 +18,7 @@ def getCols():
         'sortOrder': "asc", #Data will initially be sorted by this column. Possible are "asc" or "desc"
         'tooltip': "Unique ID number", #Show some additional info about column
     }
-    cols['status'] = {
+    cols['name'] = {
         'index': 2,
         'type': "string",
         'friendly': "Status",
@@ -31,16 +31,16 @@ def getCols():
         'friendly': "Open Date",
         'tooltip': "Click here to sort"
     }
-    cols['date_of_service'] = {
+    cols['initiating_phone_number'] = {
         'index': 4,
-        'type': "date",
-        'friendly': "Date and Time of Service",
+        'type': "string",
+        'friendly': "Initiating Phone Number",
         'tooltip': "Click here to sort"
     }
-    cols['close_date'] = {
+    cols['initiating_name'] = {
         'index': 5,
-        'type': "date",
-        'friendly': "Close Date",
+        'type': "string",
+        'friendly': "Initiating Name",
         'tooltip': "Click here to sort"
     }
     cols['service'] = {
@@ -49,19 +49,30 @@ def getCols():
         'friendly': "Service",
         'tooltip': "Click here to sort"
     }
-    cols['location'] = {
+    cols['hospital'] = {
         'index': 7,
         'type': "string",
         'friendly': "Location",
         'tooltip': "Click here to sort"
     }
-    cols['description'] = {
+    cols['city'] = {
         'index': 8,
+        'type': "string",
+        'friendly': "City",
+        'tooltip': "Click here to sort"
+    }
+    cols['description'] = {
+        'index': 9,
         'type': "string",
         'friendly': "Description",
         'hidden': 'true'
     }
-
+    cols['made_into_case'] = {
+        'index': 10,
+        'type': "string",
+        'friendly': "Made Into Case",
+        'hidden': 'true'
+    }
     return cols
 
 def datetime_to_ms_str(dt):
@@ -79,30 +90,26 @@ def getRows():
 	for cases in d:
 		columns = collections.OrderedDict()
 		columns['id']=cases.id
-		if(cases.status):
-			columns['status']=cases.status.status
-		else:
-			columns['status']=""
-		if(cases.status.status=='Closed'):
-			columns['statusFormat']="<div class='red'>{0}</div>"
-		elif(cases.status.status=='Assigned'):
-			columns['statusFormat']="<div class='green'>{0}</div>"
-		else:
-			columns['statusFormat']="<div class='yellow'>{0}</div>"
-# 		if (cases.volunteer):
-# 			columns['volunteer']=cases.volunteer.get_name()
+		columns['name'] = cases.get_name()
 		columns['date_call_received']=datetime_to_ms_str(cases.date_call_received)
-		columns['date_of_service']=datetime_to_ms_str(cases.date_of_service)
-		if(datetime_to_ms_str(cases.close_date)>0):
-			columns['close_date']=datetime_to_ms_str(cases.close_date)
+		columns['initiating_phone_number']=cases.initiating_phone_number
+		columns['initiating_name']=cases.initiating_name
 		if(cases.service):
 			columns['service']=cases.service.service
 		else:
 			columns['service']=""
-		if (cases.location):
-			columns['location']=cases.location.name
+		if (cases.hospital):
+			columns['hospital']=cases.hospital.name
 		else:
-			columns['location']=""
+			columns['hospital']=""
+		if(cases.city):
+			columns['city']=cases.city.city
+		else:
+			columns['city']=""
+		if(cases.made_into_case):
+			columns['made_into_case']=cases.made_into_case.status
+		else:
+			columns['made_into_case']=""
 		columns['description']=cases.description
 
 		rows.append(columns)

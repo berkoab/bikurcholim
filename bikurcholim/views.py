@@ -170,7 +170,7 @@ class CasesDetailView(generic.DetailView):
 	
 class IntakeCallsDetailView(generic.DetailView):
 
-	model = Cases
+	model = IntakeCalls
 
 	def get_context_data(self, **kwargs):
 		context = super(IntakeCallsDetailView, self).get_context_data(**kwargs)

@@ -123,7 +123,7 @@ class IntakeCallsAdminForm(forms.ModelForm):
         return close_date
        
 class IntakeCallsAdmin(admin.ModelAdmin):
-	list_display = ('last_name', 'first_name', 'hospital')
+	list_display = ('last_name', 'first_name', 'hospital', 'date_call_received')
 	list_filter = ['hospital__name']
 	search_fields = ['first_name', 'last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
 	form = IntakeCallsAdminForm
