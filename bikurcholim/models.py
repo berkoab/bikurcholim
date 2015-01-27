@@ -310,6 +310,7 @@ class ClientService(models.Model):
 	end_date = models.DateField('close date', null=True, blank=True)
 	status = models.ForeignKey(TaskStatus, null=True, blank=True)
 	number_of_times = models.IntegerField(null=True, blank=True)
+
 	def get_color(self):
 		return self.service.color
 	def get_week(self):

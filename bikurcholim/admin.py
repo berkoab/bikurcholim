@@ -79,7 +79,7 @@ class HousingScheduleInline(admin.TabularInline):
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
 class CasesAdmin(admin.ModelAdmin):
-	list_display = ('last_name', 'first_name', 'status', 'home_phone', 'hospital', 'hospital_room')
+	list_display = ('last_name', 'first_name', 'status', 'cell_phone', 'hospital', 'hospital_room')
 	list_filter = ['status__status', 'neighborhood', 'hospital']
 	search_fields = ['last_name', 'first_name', 'street']
 	fieldsets = [
@@ -106,6 +106,12 @@ class ClientServiceAdmin(admin.ModelAdmin):
 	formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
+class ClientServiceAdminForm(forms.ModelForm):
+	def clean_end_date(self):
+		end_date = self.cleaned_data['end_date']
+		if not end_date:
+			raise forms.ValidationError("Please enter an end date.")
+		return end_date
 class PhonesAdmin(admin.ModelAdmin):
 	list_display = ('type', 'client', 'number')
 	list_filter = ['type']

@@ -21,7 +21,11 @@ def getRows(sd, ed, services):
 		event['id'] = c.id
 		event['title'] = c.client.get_name()
 		event['start'] = format_datetime(c.begin_date)
-		event['end'] = format_datetime(c.end_date+timedelta(hours=1))
+		if not c.end_date:
+			e = c.begin_date
+		else:
+			e = c.end_date
+		event['end'] = format_datetime(e+timedelta(hours=1))
 		event['service'] = c.service.service
 		event['color'] = c.get_color()
 		event['url'] = str(reverse_lazy('clientservice')) + str(c.id)
