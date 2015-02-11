@@ -38,11 +38,11 @@ class VolunteerClientsInline(admin.TabularInline):
     }   		
 class VolunteersAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name', 'cell_phone')
-	list_filter = ['neighborhood', 'vehicle', 'hospital_visitation', 
+	list_filter = ['neighborhood', 'vehicle', 'meal_delivery', 'hospital_visitation', 
 					'transportation_to_appointments', 'overnight_hospital_stays', 'assist_homebound', 'assist_with_children', 
 					'assist_with_children_activities', 'able_to_entertain_children', 'visit_elderly', 
 					'assist_with_housekeeping', 'phone_calls', 'learn_with_elderly', 'visit_homebound']
-	search_fields = ['last_name', 'first_name', 'street', 'work_place', 'email_address']
+	search_fields = ['last_name', 'first_name', 'address', 'work_place', 'email_address', 'cell_phone', 'home_phone']
 	fieldsets = [
 		(None, {'fields': ['first_name', 'last_name', 'home_phone', 
 		'cell_phone', 'email_address', 'address', 'city', 'neighborhood', 'work_place', 'medical_training', 'vehicle', 'other_languages', 'other_specialties']}),
@@ -81,7 +81,7 @@ class HousingScheduleInline(admin.TabularInline):
 class CasesAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name', 'status', 'cell_phone', 'hospital', 'hospital_room')
 	list_filter = ['status__status', 'neighborhood', 'hospital']
-	search_fields = ['last_name', 'first_name', 'street']
+	search_fields = ['last_name', 'first_name', 'address']
 	fieldsets = [
 		(None, {'fields': ['first_name', 'last_name', 'hospital', 'hospital_room', 'other_location', 'medical_condition', 
 						'address', 'city', 'home_phone', 'cell_phone', 'email_address', 'neighborhood', 
@@ -129,9 +129,9 @@ class IntakeCallsAdminForm(forms.ModelForm):
         return close_date
        
 class IntakeCallsAdmin(admin.ModelAdmin):
-	list_display = ('last_name', 'first_name', 'hospital', 'date_call_received')
+	list_display = ('last_name', 'first_name', 'hospital', 'date_call_received', 'initiating_phone_number', 'initiating_name')
 	list_filter = ['hospital__name']
-	search_fields = ['first_name', 'last_name', 'volunteer__first_name', 'volunteer__last_name', 'description']
+	search_fields = ['first_name', 'last_name', 'description']
 	form = IntakeCallsAdminForm
 	formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
