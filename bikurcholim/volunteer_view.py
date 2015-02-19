@@ -393,6 +393,9 @@ def getRows():
 		columns = collections.OrderedDict()
 		columns['id']=volunteer.id
 		columns['name']=volunteer.get_name()
+		columns['home_phone'] = volunteer.home_phone
+		columns['cell_phone'] = volunteer.cell_phone
+		columns['email_address'] = volunteer.email_address
 		columns['address']=volunteer.address
 		if(volunteer.city):
 			columns['city']=volunteer.city.city
@@ -457,6 +460,9 @@ def getRows():
 		columns['learn_with_elderly_notes'] = volunteer.learn_with_elderly_notes
 		columns['visit_homebound'] = volunteer.visit_homebound
 		columns['visit_homebound_notes'] = volunteer.visit_homebound_notes
+		columns['start_date']=datetime_to_ms_str(volunteer.start_date)
+		columns['end_date']=datetime_to_ms_str(volunteer.end_date)
+		columns['last_update_date']=datetime_to_ms_str(volunteer.last_update_date)
 		options = ""
 		for option in volunteer.otheroptions_set.all():
 			options=options+option.option.name+'|'
@@ -465,12 +471,6 @@ def getRows():
 		for v in volunteer.volunteerclients_set.all():
 			vc=vc+v.case.get_name()+'|'
 		columns['cases'] = vc[:-1]
-		columns['home_phone'] = volunteer.home_phone
-		columns['cell_phone'] = volunteer.cell_phone
-		columns['email_address'] = volunteer.email_address
-		columns['start_date']=datetime_to_ms_str(volunteer.start_date)
-		columns['end_date']=datetime_to_ms_str(volunteer.end_date)
-		columns['last_update_date']=datetime_to_ms_str(volunteer.last_update_date)
 		#voptions = o.filter(volunteers=volunteer.id)
 		
 		#meal_prep = voptions.filter(option__option='Meal Preparation')
