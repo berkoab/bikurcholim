@@ -103,13 +103,13 @@ def getCols():
     cols['original_start_date'] = {
         'index': 15,
         'type': "date",
-        'friendly': "Start Date",
+        'friendly': "Orig. Start Date",
         'hidden':'true'
     }
     cols['active_start_date'] = {
         'index': 16,
         'type': "date",
-        'friendly': "Start Date",
+        'friendly': "Act. Start Date",
         'hidden':'true'
     }
     cols['expected_end_date'] = {
@@ -118,164 +118,170 @@ def getCols():
         'friendly': "Exp. End Date",
         'hidden':'true'
     }
-    cols['end_date'] = {
+    cols['inactive_date'] = {
         'index': 18,
+        'type': "date",
+        'friendly': "Inactive Date",
+        'hidden':'true'
+    }
+    cols['end_date'] = {
+        'index': 19,
         'type': "date",
         'friendly': "End Date",
         'hidden':'true'
     }
     cols['hospital_notes'] = {
-        'index': 19,
+        'index': 20,
         'type': "string",
         'friendly': "Hospital Notes",
         'hidden':'true'
     }
     cols['food_notes'] = {
-        'index': 20,
+        'index': 21,
         'type': "string",
         'friendly': "Food Notes",
         'hidden':'true'
     }
     cols['transportation'] = {
-        'index': 21,
+        'index': 22,
         'type': "string",
         'friendly': "Transportation",
         'hidden':'true'
     }
     cols['visitor_comments'] = {
-        'index': 22,
+        'index': 23,
         'type': "string",
         'friendly': "Visitor Comments",
         'hidden':'true'
     }
     cols['medical_equipment'] = {
-        'index': 23,
+        'index': 24,
         'type': "string",
         'friendly': "Medical Equipment",
         'hidden':'true'
     }
     cols['donation_made'] = {
-        'index': 24,
+        'index': 25,
         'type': "string",
         'friendly': "Donation Made",
         'hidden':'true'
     }
     cols['text_ability'] = {
-        'index': 25,
+        'index': 26,
         'type': "bool",
         'friendly': "Text Ability",
         'hidden':'true'
     }
     cols['text_ability_notes'] = {
-        'index': 26,
+        'index': 27,
         'type': "bool",
         'friendly': "Text Ability Notes",
         'hidden':'true'
     }
     cols['food_to_hospital'] = {
-        'index': 27,
+        'index': 28,
         'type': "bool",
         'friendly': "Food To Hospital",
         'hidden':'true'
     }
     cols['food_to_hospital_notes'] = {
-		'index': 28,
+		'index': 29,
 		'type': "string",
 		'friendly': "Food to Hospital Notes",
 		'hidden':'true'
 	}
     cols['food_to_home'] = {
-        'index': 29,
+        'index': 30,
         'type': "bool",
         'friendly': "Food To Home",
         'hidden':'true'
     }
     cols['food_to_home_notes'] = {
-		'index': 30,
+		'index': 31,
 		'type': "string",
 		'friendly': "Food to Home Notes",
 		'hidden':'true'
 	}
     cols['housing_checkbox'] = {
-        'index': 31,
+        'index': 32,
         'type': "bool",
         'friendly': "Housing?",
         'hidden':'true'
     }
     cols['housing_notes'] = {
-		'index': 32,
+		'index': 33,
 		'type': "string",
 		'friendly': "Housing? Notes",
 		'hidden':'true'
 	}
     cols['transportation_checkbox'] = {
-        'index': 33,
+        'index': 34,
         'type': "bool",
         'friendly': "Transportation?",
         'hidden':'true'
     }
     cols['transportation_notes'] = {
-		'index': 34,
+		'index': 35,
 		'type': "string",
 		'friendly': "Transportation Notes",
 		'hidden':'true'
 	}
     cols['respite_in_home'] = {
-        'index': 35,
+        'index': 36,
         'type': "bool",
         'friendly': "Respite in Home",
         'hidden':'true'
     }
     cols['respite_in_home_notes'] = {
-        'index': 36,
+        'index': 37,
         'type': "string",
         'friendly': "Respite in Home Notes",
         'hidden':'true'
     }
     cols['cleaning_in_home'] = {
-        'index': 37,
+        'index': 38,
         'type': "bool",
         'friendly': "Cleaning in Home",
         'hidden':'true'
     }
     cols['cleaning_in_home_notes'] = {
-        'index': 38,
+        'index': 39,
         'type': "string",
         'friendly': "Cleaning in Home Notes",
         'hidden':'true'
     }
     cols['other'] = {
-        'index': 39,
+        'index': 40,
         'type': "bool",
         'friendly': "Other Options",
         'hidden':'true'
     }
     cols['other_notes'] = {
-		'index': 40,
+		'index': 41,
 		'type': "string",
 		'friendly': "Other Options Notes",
 		'hidden':'true'
 	}
     cols['general_notes'] = {
-        'index': 41,
+        'index': 42,
         'type': "string",
         'friendly': "General Notes",
         'hidden':'true'
     }
     cols['meal_coordinator'] = {
-        'index': 42,
+        'index': 43,
         'type': "string",
         'friendly': "Meal Coordinator",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['meal_preparer'] = {
-        'index': 43,
+        'index': 44,
         'type': "string",
         'friendly': "Meal Preparer",
         'tooltip': "Click here to sort", #Show some additional info about column
     }
     cols['phones'] = {
-        'index': 44,
+        'index': 45,
         'type': "string",
         'friendly': "Phones",
         'tooltip': "Click here to sort", #Show some additional info about column
@@ -289,7 +295,7 @@ def datetime_to_ms_str(dt):
 		return int(t*1000)
 	else:
 		return 0
-	
+
 def getRows():
 	rows=[]
 	
@@ -299,33 +305,38 @@ def getRows():
 		columns = collections.OrderedDict()
 		columns['id']=client.id
 		columns['name']=client.get_name()
-		columns['medical_condition']=client.medical_condition
-		columns['address']=client.address
-		if(client.city):
-			columns['city']=client.city.city
-		else:
-			columns['city']=""
-		if(client.neighborhood):
-			columns['neighborhood']=client.neighborhood.neighborhood
-		else:
-			columns['neighborhood']=""
-		columns['home_phone']=client.home_phone
-		columns['cell_phone']=client.cell_phone
-		columns['email_address']=client.email_address
-		if(client.status):
-			columns['status']=client.status.status
-		else:
-			columns['status']=""
-		columns['original_start_date']=datetime_to_ms_str(client.original_start_date)
-		columns['active_start_date']=datetime_to_ms_str(client.active_start_date)
-		columns['expected_end_date']=datetime_to_ms_str(client.expected_end_date)
-		columns['end_date']=datetime_to_ms_str(client.end_date)
 		if(client.hospital):
 			columns['hospital']=client.hospital.name
 		else:
 			columns['hospital']=""
 		columns['hospital_room']=client.hospital_room
 		columns['other_location']=client.other_location
+		columns['medical_condition']=client.medical_condition
+		columns['address']=client.address
+		if(client.city):
+			columns['city']=client.city.city
+		else:
+			columns['city']=""
+		columns['home_phone']=client.home_phone
+		columns['cell_phone']=client.cell_phone
+		columns['email_address']=client.email_address
+		if(client.neighborhood):
+			columns['neighborhood']=client.neighborhood.neighborhood
+		else:
+			columns['neighborhood']=""
+		if(client.status):
+			columns['status']=client.status.status
+		else:
+			columns['status']=""
+		if(client.case_manager):
+			columns['case_manager']=client.case_manager.get_name()
+		else:
+			columns['case_manager']=""
+		columns['original_start_date']=datetime_to_ms_str(client.original_start_date)
+		columns['active_start_date']=datetime_to_ms_str(client.active_start_date)
+		columns['expected_end_date']=datetime_to_ms_str(client.expected_end_date)
+		columns['inactive_date']=datetime_to_ms_str(client.inactive_date)
+		columns['end_date']=datetime_to_ms_str(client.end_date)
 		columns['hospital_notes']=client.hospital_notes
 		columns['food_notes']=client.food_notes
 		columns['transportation']=client.transportation
@@ -333,21 +344,22 @@ def getRows():
 		columns['medical_equipment']=client.medical_equipment
 		columns['donation_made']=client.donation_made
 		columns['text_ability']=client.text_ability
-		columns['food_to_hospital']=client.food_to_hospital
-		columns['food_to_home']=client.food_to_home
 		columns['text_ability_notes']=client.text_ability_notes
+		columns['food_to_hospital']=client.food_to_hospital
 		columns['food_to_hospital_notes']=client.food_to_hospital_notes
+		columns['food_to_home']=client.food_to_home
 		columns['food_to_home_notes']=client.food_to_home_notes
+		columns['housing_checkbox']=client.housing_checkbox
 		columns['housing_notes']=client.housing_notes
+		columns['transportation_checkbox']=client.transportation
 		columns['transportation_notes']=client.transportation_notes
+		columns['respite_in_home']=client.respite_in_home
 		columns['respite_in_home_notes']=client.respite_in_home_notes
+		columns['cleaning_in_home']=client.cleaning_in_home
 		columns['cleaning_in_home_notes']=client.cleaning_in_home_notes
+		columns['other']=client.other
 		columns['other_notes']=client.other_notes
 		columns['general_notes']=client.general_notes
-		phones = ""
-		for n in client.phones_set.all():
-			phones=phones+n.number+'|'
-		columns['phones'] = phones[:-1]
 		if(client.meal_coordinator):
 			columns['meal_coordinator']=client.meal_coordinator.get_name()
 		else:
@@ -356,6 +368,9 @@ def getRows():
 			columns['meal_preparer']=client.meal_preparer.get_name()
 		else:
 			columns['meal_preparer']=""
-
-		rows.append(columns)
+        phones = ""
+        for n in client.phones_set.all():
+			phones=phones+n.number+'|'
+        columns['phones'] = phones[:-1]
+        rows.append(columns)
 	return rows

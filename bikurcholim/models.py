@@ -229,6 +229,8 @@ class CaseManagers(models.Model):
 	class Meta:
 		verbose_name_plural = "CaseManagers"
 		ordering = ('last_name','first_name')
+	def get_name(self):
+		return self.last_name + ', ' + self.first_name
 	def __str__(self):
 		return self.last_name + ', ' + self.first_name	
 class Cases(models.Model):

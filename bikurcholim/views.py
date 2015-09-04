@@ -311,7 +311,7 @@ def export_xls(request):
 			ccx+=1
 		rowx+=1	
 	response = HttpResponse(content_type='application/vnd.ms-excel')
-	response['Content-Disposition'] = 'attachment; filename=example.xls'
+	response['Content-Disposition'] = 'attachment; filename=bikurcholim.xls'
 	book.save(response)
 	return response
 
