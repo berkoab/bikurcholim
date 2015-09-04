@@ -286,7 +286,7 @@ class Cases(models.Model):
     
 	class Meta:
 		verbose_name_plural = "Cases"
-		ordering = ('status', 'last_name','first_name')
+		ordering = ('-created_at', 'status', 'last_name','first_name')
 		
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name
@@ -353,7 +353,7 @@ class IntakeCalls(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 	class Meta:
 		verbose_name_plural = "Intake Calls"
-		ordering = ('id',)
+		ordering = ('-created_at',)
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name 
 	def __str__(self):

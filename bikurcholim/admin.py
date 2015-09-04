@@ -79,7 +79,7 @@ class HousingScheduleInline(admin.TabularInline):
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
 class CasesAdmin(admin.ModelAdmin):
-	list_display = ('last_name', 'first_name', 'status', 'cell_phone', 'hospital', 'hospital_room')
+	list_display = ('last_name', 'first_name', 'status', 'cell_phone', 'hospital', 'hospital_room', 'created_at')
 	list_filter = ['status__status', 'neighborhood', 'hospital']
 	search_fields = ['last_name', 'first_name', 'address']
 	fieldsets = [
@@ -129,7 +129,7 @@ class IntakeCallsAdminForm(forms.ModelForm):
         return close_date
        
 class IntakeCallsAdmin(admin.ModelAdmin):
-	list_display = ('last_name', 'first_name', 'hospital', 'date_call_received', 'initiating_phone_number', 'initiating_name')
+	list_display = ('last_name', 'first_name', 'hospital', 'date_call_received', 'initiating_phone_number', 'initiating_name', 'created_at')
 	list_filter = ['hospital__name']
 	search_fields = ['first_name', 'last_name', 'description']
 	form = IntakeCallsAdminForm
