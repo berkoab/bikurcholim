@@ -368,9 +368,10 @@ def getRows():
 			columns['meal_preparer']=client.meal_preparer.get_name()
 		else:
 			columns['meal_preparer']=""
-        phones = ""
-        for n in client.phones_set.all():
-			phones=phones+n.number+'|'
-        columns['phones'] = phones[:-1]
-        rows.append(columns)
+		phones = ""
+		for n in client.phones_set.all():
+		    phones=phones+n.number+'|'
+		columns['phones'] = phones[:-1]
+		
+		rows.append(columns)
 	return rows
