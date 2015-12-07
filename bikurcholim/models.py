@@ -286,7 +286,7 @@ class Cases(models.Model):
     
 	class Meta:
 		verbose_name_plural = "Cases"
-		ordering = ('-created_at', 'status', 'hospital', 'last_name','first_name')
+		ordering = ('status', 'hospital', 'last_name','first_name')
 		
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name
