@@ -415,13 +415,24 @@ def getRows():
 		columns['other_specialties']=volunteer.other_specialties
 		if(volunteer.start_time_available):
 			columns['start_time_available']=volunteer.start_time_available.hour
+		else:
+			columns['start_time_available']=""
 		if(volunteer.end_time_availalable):
 			columns['end_time_availalable']=volunteer.end_time_availalable.hour
+		else:
+			columns['end_time_availalable']=""
 		if(volunteer.start_time_available2):
 			columns['start_time_available2']=volunteer.start_time_available2.hour
+		else:
+			columns['start_time_available2']=""
 		if(volunteer.end_time_availalable2):
 			columns['end_time_availalable2']=volunteer.end_time_availalable2.hour
-		columns['days_and_times_available_notes']=volunteer.days_and_times_available_notes
+		else:
+			columns['end_time_availalable2']=""
+		if(volunteer.days_and_times_available_notes):
+			columns['days_and_times_available_notes']=volunteer.days_and_times_available_notes
+		else:
+			columns['days_and_times_available_notes']=""
 		columns['sunday']=volunteer.sunday
 		columns['monday']=volunteer.monday
 		columns['tuesday']=volunteer.tuesday
