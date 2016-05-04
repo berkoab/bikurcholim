@@ -460,7 +460,11 @@
                                     }
                                     break;
                                 case "date":
-                                    val = new priv.ext.XDate(val, priv.options.types.date.utc === true).toString(priv.options.types.date.format || 'yyyy-MM-dd HH:mm:ss');
+                                    if(val==0) {
+                                        val='-';
+                                    } else {
+                                        val = new priv.ext.XDate(val, priv.options.types.date.utc === true).toString(priv.options.types.date.format || 'yyyy-MM-dd HH:mm:ss');
+                                    }
                                     cell.html(format.f(val));
                                     break;
                                 case "bool":

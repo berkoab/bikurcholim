@@ -278,7 +278,12 @@ def export_xls(request):
 	cols=json_object['cols']
 	colx=0
 	cc = []
+	dateColumn = []
 	for col in cols:
+		if(cols[col]['type']=='date'):
+			dateColumn.append(True)
+		else:
+			dateColumn.append(False)
 		if(col in checkedCols):
 			cc.append(True)
 			if(colx==0):
@@ -303,6 +308,14 @@ def export_xls(request):
 					style = date_style
 				else:
 					style = default_style
+				if(dateColumn[ccx]):
+					if(value!=0):
+						s = value / 1000.0
+						value = datetime.datetime.fromtimestamp(s).strftime('%Y-%m-%d')
+						style = default_style
+					else:
+						s = '0'
+						style = default_style
 #				if(value==True):
 #					sheet.write(rowx, colx, 'True', style=style)
 #				else:
