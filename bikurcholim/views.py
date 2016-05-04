@@ -312,13 +312,9 @@ def export_xls(request):
 					if(value!=0):
 						s = value / 1000.0
 						value = datetime.datetime.fromtimestamp(s).strftime('%Y-%m-%d')
-						style = default_style
 					else:
-						s = '0'
-						style = default_style
-#				if(value==True):
-#					sheet.write(rowx, colx, 'True', style=style)
-#				else:
+						value = '-'
+				style = default_style
 				sheet.write(rowx, colx, value, style=style)
 				colx+=1
 			ccx+=1
