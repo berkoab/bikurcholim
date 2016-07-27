@@ -1,7 +1,5 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from model_report import report
-report.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
