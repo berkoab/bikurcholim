@@ -249,7 +249,11 @@ class RidesAdmin(admin.ModelAdmin):
 	formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
-	
+class TimeRangesAdmin(admin.ModelAdmin):
+	list_display = ('volunteer', 'start_time', 'end_time')
+	formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }	
 admin.site.register(Neighborhoods)
 admin.site.register(Vehicles)
 admin.site.register(Volunteers, VolunteersAdmin)
@@ -273,5 +277,6 @@ admin.site.register(Phones, PhonesAdmin)
 admin.site.register(CaseManagers)
 admin.site.register(Rides, RidesAdmin)
 admin.site.register(RideStatus)
+admin.site.register(TimeRanges, TimeRangesAdmin)
 admin.AdminSite.site_header="Bikur Cholim Database Administration"
 admin.AdminSite.site_title="Bikur Cholim Database Administration"
