@@ -11,7 +11,11 @@ from django.template import RequestContext
 from django.utils import timezone
 from django.views import generic
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
+from django.shortcuts import redirect\
+
+from django.shortcuts import render
+from bikurcholim.reports import CaseLengthReport
+
 import volunteer_view, case_view, intakecalls_view, housing_view, service_events_view, housing_events_view, tasks_view, services_view
 import collections
 import datetime

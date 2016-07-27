@@ -98,19 +98,19 @@ $(document).ready( function() {
             var data;
             if (elem.hasClass('export_all')) {
 				data = waTable.getData(false, true);
-				download(JSON.stringify(data), waTable.getAllCols(), '/bikurcholim/export_xls/')
+				download(JSON.stringify(data), waTable.getAllCols(), url+'export_xls/')
 			}
             else if (elem.hasClass('export_checked')) {
             	data = waTable.getData(true);
-            	download(JSON.stringify(data), waTable.getCheckedCols(), '/bikurcholim/export_xls/')
+            	download(JSON.stringify(data), waTable.getCheckedCols(), url+'export_xls/')
             }
             else if (elem.hasClass('export_filtered')) {
             	data = waTable.getData(false, true);
-				download(JSON.stringify(data), waTable.getCheckedCols(), '/bikurcholim/export_xls/')
+				download(JSON.stringify(data), waTable.getCheckedCols(), url+'export_xls/')
             }
             else if (elem.hasClass('advanced')) {
             	data = waTable.getData(false, true);
-				download(JSON.stringify(data), waTable.getCheckedCols(), '/bikurcholim/'+smallName+'_advanced/')
+				download(JSON.stringify(data), waTable.getCheckedCols(), url+smallName+'_advanced/')
             }
             console.log(data.rows.length + ' rows returned');
             console.log(data);

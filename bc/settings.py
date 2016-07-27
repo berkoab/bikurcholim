@@ -20,23 +20,48 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'hej0f^au&^&0c^+%qh0kgdwf_@+vc=*xl^91f0w)3xz52we@@z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-TEMPLATE_DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*',]
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
-TEMPLATE_LOADERS = (
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+        ],
+        #'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                # list if you haven't customized them:
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+ #               'django.core.context_processors.request',
+            ],
+            'debug': DEBUG,
+            'loaders': [
+#                'admin_tools.template_loaders.Loader',
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ]
+        },
+    },
+]
 
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-
-)
 # Application definition
 
 INSTALLED_APPS = (
+    'grappelli',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

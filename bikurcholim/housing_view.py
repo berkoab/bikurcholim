@@ -89,7 +89,7 @@ def getRows():
 			columns['client']=""
 		columns['from_date']=datetime_to_ms_str(c.from_date)
 		columns['to_date']=datetime_to_ms_str(c.to_date)
-		columns['days']=c.get_days().days
+		columns['days']=c.get_days()
 		columns['notes']=c.notes
 
 		rows.append(columns)

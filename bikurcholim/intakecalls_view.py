@@ -21,7 +21,7 @@ def getCols():
     cols['name'] = {
         'index': 2,
         'type': "string",
-        'friendly': "Status",
+        'friendly': "Name",
         'tooltip': "Click here to sort"
     }
 

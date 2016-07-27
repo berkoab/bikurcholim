@@ -1,0 +1,12 @@
+{% extends "bikurcholim/bc_base_site.html" %}
+{% block title %}{{ report.bar_chart.title }}{% endblock %}
+
+{% block user-tools %}{% endblock %}
+{% block content %}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<h1 class="chart-header">{{ report.bar_chart.title }}</h1>
+
+<div class="chart-container">
+	{{ report.bar_chart }}
+</div>
+{% endblock %}

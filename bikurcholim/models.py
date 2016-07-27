@@ -6,6 +6,7 @@ from time import mktime
 from datetime import timedelta
 from datetime import datetime
 import time
+from django.utils.timesince import timesince
 
 class Neighborhoods(models.Model):
 	neighborhood = models.CharField(max_length=50)
@@ -49,7 +50,14 @@ class VolunteerClients(models.Model):
 		ordering = ('case__last_name', 'case__first_name')
 	def __str__(self):
 		return str(self.case.last_name + ', ' + self.case.first_name)
-				
+
+class TimeRanges(models.Model):
+	volunteer = models.ForeignKey('Volunteers')
+	start_time = models.TimeField("Available From", null=True, blank=True)
+	end_time = models.TimeField("Available To", null=True, blank=True)
+	class Meta:
+		verbose_name_plural = "Times Available Ranges"
+	
 class Volunteers(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
@@ -71,6 +79,7 @@ class Volunteers(models.Model):
 	end_time_availalable = models.TimeField("Available To", null=True, blank=True)
 	start_time_available2 = models.TimeField("Available From 2", null=True, blank=True)
 	end_time_availalable2 = models.TimeField("Available To 2", null=True, blank=True)
+	time_ranges = models.ManyToManyField(TimeRanges)
 	sunday = models.BooleanField(default=None)
 	monday = models.BooleanField(default=None)
 	tuesday = models.BooleanField(default=None)
@@ -140,10 +149,11 @@ class OtherOptions(models.Model):
 	option = models.ForeignKey(Options)
 	volunteer = models.ForeignKey(Volunteers)
 	notes = models.TextField(max_length=200, null=True, blank=True)
-
+	#position = models.PositiveSmallIntegerField("position", null=True)
 	class Meta:
 		verbose_name_plural = "Other Options"
 		ordering = ('option', 'volunteer')
+		#ordering = ['position']
 	def __str__(self):
 		return self.option.name
 	
@@ -201,8 +211,8 @@ class TaskStatus(models.Model):
 		return self.status
 
 class HousingSchedule(models.Model):
-	house = models.ForeignKey(Houses)
-	case = models.ForeignKey('Cases')
+	house = models.ForeignKey(Houses, related_name='housing_items')
+	case = models.ForeignKey('Cases', related_name='case_items')
 	apt = models.CharField(max_length=50, null=True, blank=True)
 	from_date = models.DateField('from date')
 	to_date = models.DateField('to date')
@@ -210,7 +220,7 @@ class HousingSchedule(models.Model):
 	def get_color(self):
 		return self.house.color
 	def get_days(self):
-		return self.to_date - self.from_date
+		return (self.to_date-self.from_date).days
 	class Meta:
 		verbose_name_plural = "Housing Schedule"
 	def __str__(self):
@@ -283,6 +293,7 @@ class Cases(models.Model):
  	housing = models.ManyToManyField(Houses, through='HousingSchedule')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+	name = models.TextField(max_length=100, null=True, blank=True)
     
 	class Meta:
 		verbose_name_plural = "Cases"
@@ -290,6 +301,8 @@ class Cases(models.Model):
 		
 	def get_name(self):
 		return self.last_name + ', ' + self.first_name
+	def get_active_end_time_diff(self):
+		return (self.end_date-self.active_start_date).days
 	def __str__(self):
 		return self.last_name + ', ' + self.first_name
 
@@ -373,3 +386,28 @@ class Tasks(models.Model):
 		ordering = ('status', 'created_at',)
 	def __str__(self):
 		return str(self.title)
+
+class RideStatus(models.Model):
+	status = models.CharField(max_length=50)
+	class Meta:
+		verbose_name_plural = "Ride Statuses"
+		ordering = ('status',)
+	def __str__(self):
+		return self.status
+
+class Rides(models.Model):
+	name = models.CharField(max_length=100)
+	from_address = models.CharField(max_length=100)
+	to_address = models.CharField(max_length=100)
+	date = models.DateField('date', null=True, blank=True)
+	time = models.TimeField("time", null=True, blank=True)
+	notes = models.TextField(max_length=200, null=True, blank =True)
+	status = models.ForeignKey(RideStatus, null = True, blank=True)
+	assigned_to = models.ForeignKey(Volunteers, null = True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+	class Meta:
+		verbose_name_plural = "Rides"
+		ordering = ('status', 'created_at',)
+	def __str__(self):
+		return str(self.name)

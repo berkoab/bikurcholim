@@ -22,57 +22,107 @@ from bikurcholim.models import ClientService
 from bikurcholim.models import OtherOptions, Options
 from bikurcholim.models import VolunteerClients
 from bikurcholim.models import CaseManagers
+from bikurcholim.models import Rides
+from bikurcholim.models import RideStatus
+from bikurcholim.models import TimeRanges
+from django.contrib.admin import DateFieldListFilter
+
 from django.forms import TextInput, Textarea
 
 class VolunteerOptionsInline(admin.TabularInline):
+    classes = ('grp-collapse grp-closed',)
     model = OtherOptions
     extra = 1
+    #fields = ('option', 'notes' , 'position',)
+    #sortable_field_name = 'position'
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
 class VolunteerClientsInline(admin.TabularInline):
+    classes = ('grp-collapse grp-closed',)	
     model = VolunteerClients
     extra = 1
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
-    }   		
+    }  
+class TimeRangesInline(admin.TabularInline):
+    classes = ('grp-collapse grp-closed',)	
+    model = TimeRanges
+    extra = 1
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    } 
 class VolunteersAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name', 'cell_phone')
 	list_filter = ['neighborhood', 'vehicle', 'meal_delivery', 'hospital_visitation', 
 					'transportation_to_appointments', 'overnight_hospital_stays', 'assist_homebound', 'assist_with_children', 
 					'assist_with_children_activities', 'able_to_entertain_children', 'visit_elderly', 
 					'assist_with_housekeeping', 'phone_calls', 'learn_with_elderly', 'visit_homebound']
-	search_fields = ['last_name', 'first_name', 'address', 'work_place', 'email_address', 'cell_phone', 'home_phone']
+	search_fields = ['last_name', 'first_name', 'address', 'work_place', 'email_address', 'cell_phone', 'home_phone', 
+					'work_place', 'medical_training', 'other_languages', 'other_specialties', 'wants_alerts_notes', 'meal_preparation_notes', 
+					'meal_delivery_notes', 'hospital_visitation_notes', 'transportation_to_appointments_notes', 'overnight_hospital_stays_notes', 'assist_homebound_notes',
+					'assist_with_children_notes', 'assist_with_children_activities_notes', 'able_to_entertain_children_notes', 'visit_elderly_notes',
+					'assist_with_housekeeping_notes', 'phone_calls_notes', 'learn_with_elderly_notes', 'visit_homebound_notes']
 	fieldsets = [
-		(None, {'fields': ['first_name', 'last_name', 'home_phone', 
-		'cell_phone', 'email_address', 'address', 'city', 'neighborhood', 'work_place', 'medical_training', 'vehicle', 'other_languages', 'other_specialties']}),
-		('Times Available', {'fields': ['start_time_available', 'end_time_availalable', 'start_time_available2', 'end_time_availalable2']}),
-		('Days Available', {'fields': [('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'shabbos')]}),
-		(None, {'fields': ['days_and_times_available_notes']}), 
-		('Dates', {'fields': ['start_date', 'end_date', 'last_update_date']}),
-		('Volunteer Options', {'classes': ('wide', 'extrapretty'),
-		'fields': [('wants_alerts', 'wants_alerts_notes'), ('meal_preparation', 'meal_preparation_notes'),
+		(None, 
+			{
+				'fields': ['first_name', 'last_name', 'home_phone', 
+				'cell_phone', 'email_address', 'address', 'city', 'neighborhood', 'work_place', 'medical_training', 'vehicle', 'other_languages', 'other_specialties']
+			}
+		),
+		('Times Available', 
+			{	
+				'classes': ('grp-collapse grp-closed',),
+				'fields': ['start_time_available', 'end_time_availalable', 'start_time_available2', 'end_time_availalable2']
+			}
+		),
+		(None, 
+		{
+			"classes": ("placeholder timeranges_set-group",), "fields" : ()
+		}),
+		('Days Available', 
+			{
+				'classes': ('grp-collapse grp-closed',),
+				'fields': [('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'shabbos'), 'days_and_times_available_notes']
+			}
+		),
+		 
+		('Dates', 
+			{
+				'classes': ('grp-collapse grp-closed',),
+				'fields': ['start_date', 'end_date', 'last_update_date']
+			}),
+		('Volunteer Options', 
+			{
+				'classes': ('grp-collapse grp-closed', 'wide', 'extrapretty'),
+				'fields': [('wants_alerts', 'wants_alerts_notes'), ('meal_preparation', 'meal_preparation_notes'),
 										('meal_delivery', 'meal_delivery_notes'), ('hospital_visitation', 'hospital_visitation_notes'),
 										('transportation_to_appointments', 'transportation_to_appointments_notes'), ('overnight_hospital_stays', 'overnight_hospital_stays_notes'),
 										('assist_homebound', 'assist_homebound_notes'), ('assist_with_children', 'assist_with_children_notes'), 
 										('assist_with_children_activities', 'assist_with_children_activities_notes'), ('able_to_entertain_children', 'able_to_entertain_children_notes'), 
 										('visit_elderly', 'visit_elderly_notes'), ('assist_with_housekeeping', 'assist_with_housekeeping_notes'),
-										('phone_calls', 'phone_calls_notes'), ('learn_with_elderly', 'learn_with_elderly_notes'), ('visit_homebound', 'visit_homebound_notes')]})]
-	inlines = [VolunteerOptionsInline, VolunteerClientsInline]
+										('phone_calls', 'phone_calls_notes'), ('learn_with_elderly', 'learn_with_elderly_notes'), ('visit_homebound', 'visit_homebound_notes')]
+			}
+		)
+	]
+	inlines = [VolunteerOptionsInline, VolunteerClientsInline, TimeRangesInline]
 	formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
 class ClientServiceInline(admin.TabularInline):
+    classes = ('grp-collapse grp-closed',)	
     model = ClientService
     extra = 1
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
 class PhonesInline(admin.TabularInline):
+    classes = ('grp-collapse grp-closed',)	
     model = Phones
     extra = 1
     
 class HousingScheduleInline(admin.TabularInline):
+    classes = ('grp-collapse grp-closed',)	
     model = HousingSchedule
     extra = 1
     formfield_overrides = {
@@ -80,20 +130,51 @@ class HousingScheduleInline(admin.TabularInline):
     }
 class CasesAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name', 'status', 'cell_phone', 'hospital', 'hospital_room', 'created_at')
-	list_filter = ['status__status', 'neighborhood', 'hospital']
-	search_fields = ['last_name', 'first_name', 'address']
+	list_filter = ['status__status', 'neighborhood', 'hospital', 'text_ability', 'food_to_hospital', 'food_to_home', 
+					'housing_checkbox', 'transportation_checkbox', 'respite_in_home', 'cleaning_in_home']
+	search_fields = ['last_name', 'first_name', 'address', 'other_location', 'medical_condition', 
+						'address', 'home_phone', 'cell_phone', 'email_address', 'hospital_notes', 'food_notes', 'transportation', 'visitor_comments', 
+						'medical_equipment','text_ability_notes',  'food_to_hospital_notes', 'food_to_home_notes', 'housing_notes', 'transportation_notes',
+						'respite_in_home_notes', 'cleaning_in_home_notes', 'other_notes', 'general_notes']
 	fieldsets = [
-		(None, {'fields': ['first_name', 'last_name', 'hospital', 'hospital_room', 'other_location', 'medical_condition', 
-						'address', 'city', 'home_phone', 'cell_phone', 'email_address', 'neighborhood', 
-						'status', 'case_manager', 'hospital_notes', 'food_notes', 'transportation', 'visitor_comments', 
-						'medical_equipment', 'donation_made']}),
-		('Dates', {'fields': ['original_start_date', 'active_start_date', 'expected_end_date', 'end_date', 'inactive_date']}),
-		('Options', {'classes': ('wide', 'extrapretty'),
-		'fields': [('text_ability', 'text_ability_notes'), ('food_to_hospital', 'food_to_hospital_notes'), 
+		(None, 
+		{
+			'fields': ['first_name', 'last_name', 'hospital', 'hospital_room', 'other_location', 'medical_condition', 
+						'address', 'city', 'home_phone', 'cell_phone']
+		}),
+		(None, 
+		{
+			"classes": ("placeholder phones_set-group",), "fields" : ()
+		}),
+		(None,
+		{
+			'fields': ['email_address', 'neighborhood', 
+						'status', 'case_manager'] 
+		}),
+		('Notes',
+		{
+			'classes': ('grp-collapse grp-closed',),
+			'fields': ['hospital_notes', 'food_notes', 'transportation', 'visitor_comments', 
+						'medical_equipment', 'donation_made']
+		}),
+		('Dates', 
+		{
+			'classes': ('grp-collapse grp-closed',),
+			'fields': ['original_start_date', 'active_start_date', 'expected_end_date', 'end_date', 'inactive_date']
+		}),
+		('Options', 
+		{
+			'classes': ('grp-collapse grp-closed', 'wide', 'extrapretty'),
+			'fields': [('text_ability', 'text_ability_notes'), ('food_to_hospital', 'food_to_hospital_notes'), 
 				('food_to_home', 'food_to_home_notes'), ('housing_checkbox', 'housing_notes'), 
 				('transportation_checkbox', 'transportation_notes'), ('respite_in_home', 'respite_in_home_notes'), 
-				('cleaning_in_home', 'cleaning_in_home_notes'), ('other', 'other_notes'), 'general_notes']}),
-		('Meals', {'fields': ['meal_coordinator', 'meal_preparer']})
+				('cleaning_in_home', 'cleaning_in_home_notes'), ('other', 'other_notes'), 'general_notes']
+		}),
+		('Meals', 
+		{
+			'classes': ('grp-collapse grp-closed',),
+			'fields': ['meal_coordinator', 'meal_preparer']
+		})
 	]
 	inlines = [PhonesInline, ClientServiceInline, HousingScheduleInline]
 	formfield_overrides = {
@@ -160,6 +241,15 @@ class TasksAdmin(admin.ModelAdmin):
 	formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }
+    
+class RidesAdmin(admin.ModelAdmin):
+	list_display = ('name', 'from_address', 'to_address', 'status', 'date', 'time', 'assigned_to')
+	list_filter = ['status']
+	search_fields = ['notes']
+	formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
+    }
+	
 admin.site.register(Neighborhoods)
 admin.site.register(Vehicles)
 admin.site.register(Volunteers, VolunteersAdmin)
@@ -181,5 +271,7 @@ admin.site.register(VolunteerClients)
 admin.site.register(PhoneTypes)
 admin.site.register(Phones, PhonesAdmin)
 admin.site.register(CaseManagers)
+admin.site.register(Rides, RidesAdmin)
+admin.site.register(RideStatus)
 admin.AdminSite.site_header="Bikur Cholim Database Administration"
 admin.AdminSite.site_title="Bikur Cholim Database Administration"

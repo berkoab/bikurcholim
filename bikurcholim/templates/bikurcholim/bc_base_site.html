@@ -7,15 +7,15 @@
 <link rel="stylesheet" type="text/css" href="{% static "admin/css/base.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js" type="text/javascript"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js" type="text/javascript"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="{% static "bikurcholim/jquery.watable.js" %}"></script>
 <script type="text/javascript" src="{% static "bikurcholim/bootstrap-datepicker.js" %}"></script>
 
 <link rel="stylesheet" type="text/css" href="{% static "bikurcholim/menu/menu.css" %}" media="screen" />
 
 <link rel="stylesheet" href="{% static "bikurcholim/watable.css" %}"></script>
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
 <style>
 	#loading {
 		display: none;
@@ -100,11 +100,11 @@
 	        <div class="col_1">
 	            <h3>Data Entry</h3>
 	            <ul>
-	                <li><a href="{% url 'admin:bikurcholim_volunteers_changelist' %}" target="_blank">Volunteers</a></li>
-	                <li><a href="{% url 'admin:bikurcholim_intakecalls_changelist' %}" target="_blank">Intake Calls</a></li>
-	                <li><a href="{% url 'admin:bikurcholim_cases_changelist' %}" target="_blank">Cases</a></li>
-	                <li><a href="{% url 'admin:bikurcholim_housingschedule_changelist' %}" target="_blank">Housing</a></li>
-	                <li><a href="{% url 'admin:bikurcholim_tasks_changelist' %}" target="_blank">Tasks</a></li>
+	                <li><a href="{% url 'admin:bikurcholim_volunteers_changelist' %}" >Volunteers</a></li>
+	                <li><a href="{% url 'admin:bikurcholim_intakecalls_changelist' %}" >Intake Calls</a></li>
+	                <li><a href="{% url 'admin:bikurcholim_cases_changelist' %}" >Cases</a></li>
+	                <li><a href="{% url 'admin:bikurcholim_housingschedule_changelist' %}" >Housing</a></li>
+	                <li><a href="{% url 'admin:bikurcholim_tasks_changelist' %}" >Tasks</a></li>
 	                <li><a href="{% url 'update_services' %}">Services Multi Update</a></li>
 	            </ul>  
 	        </div>
