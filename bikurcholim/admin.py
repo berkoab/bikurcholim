@@ -15,6 +15,7 @@ from bikurcholim.models import IntakeCalls
 from bikurcholim.models import Services
 from bikurcholim.models import HousingSchedule
 from bikurcholim.models import Phones
+from bikurcholim.models import VolunteerPhones
 from bikurcholim.models import PhoneTypes
 from bikurcholim.models import Tasks
 from bikurcholim.models import TaskStatus
@@ -52,6 +53,12 @@ class TimeRangesInline(admin.TabularInline):
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     } 
+
+class VolunteerPhonesInline(admin.TabularInline):
+    classes = ('grp-collapse grp-closed',)	
+    model = VolunteerPhones
+    extra = 1
+    
 class VolunteersAdmin(admin.ModelAdmin):
 	list_display = ('last_name', 'first_name', 'cell_phone')
 	list_filter = ['neighborhood', 'vehicle', 'meal_delivery', 'hospital_visitation', 
@@ -67,7 +74,16 @@ class VolunteersAdmin(admin.ModelAdmin):
 		(None, 
 			{
 				'fields': ['first_name', 'last_name', 'home_phone', 
-				'cell_phone', 'email_address', 'address', 'city', 'neighborhood', 'work_place', 'medical_training', 'vehicle', 'other_languages', 'other_specialties']
+				'cell_phone']
+			}
+		),
+		(None, 
+		{
+			"classes": ("placeholder volunteerphones_set-group",), "fields" : ()
+		}),
+		(None, 
+			{
+				'fields': ['email_address', 'address', 'city', 'neighborhood', 'work_place', 'medical_training', 'vehicle', 'other_languages', 'other_specialties']
 			}
 		),
 		('Times Available', 
@@ -105,7 +121,7 @@ class VolunteersAdmin(admin.ModelAdmin):
 			}
 		)
 	]
-	inlines = [VolunteerOptionsInline, VolunteerClientsInline, TimeRangesInline]
+	inlines = [VolunteerPhonesInline, VolunteerOptionsInline, VolunteerClientsInline, TimeRangesInline]
 	formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows':2, 'cols':20})},
     }

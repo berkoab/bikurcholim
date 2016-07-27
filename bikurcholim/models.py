@@ -57,7 +57,14 @@ class TimeRanges(models.Model):
 	end_time = models.TimeField("Available To", null=True, blank=True)
 	class Meta:
 		verbose_name_plural = "Times Available Ranges"
-	
+
+class PhoneTypes(models.Model):
+	type = models.CharField(max_length=50, null=True, blank=True)
+	class Meta:
+		verbose_name_plural = "PhoneTypes"
+	def __str__(self):
+		return self.type
+		
 class Volunteers(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
@@ -70,6 +77,7 @@ class Volunteers(models.Model):
 	medical_training = models.TextField(max_length=100, null=True, blank=True)
 	home_phone = models.CharField(max_length=50, null=True, blank=True)
 	cell_phone = models.CharField(max_length=50, null=True, blank=True)
+	phone_numbers = models.ManyToManyField(PhoneTypes, through='VolunteerPhones')
 	email_address = models.EmailField(null=True, blank=True)
 	vehicle = models.ForeignKey(Vehicles, null=True, blank=True)
 	other_languages = models.TextField(max_length=200, null=True, blank=True)
@@ -226,13 +234,6 @@ class HousingSchedule(models.Model):
 	def __str__(self):
 		return str(self.house.name)
 
-class PhoneTypes(models.Model):
-	type = models.CharField(max_length=50, null=True, blank=True)
-	class Meta:
-		verbose_name_plural = "PhoneTypes"
-	def __str__(self):
-		return self.type
-
 class CaseManagers(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
@@ -305,6 +306,17 @@ class Cases(models.Model):
 		return (self.end_date-self.active_start_date).days
 	def __str__(self):
 		return self.last_name + ', ' + self.first_name
+
+class VolunteerPhones(models.Model):
+	type = models.ForeignKey(PhoneTypes)
+	volunteer = models.ForeignKey(Volunteers)
+	number = models.CharField(max_length=50)
+	note = models.CharField(max_length=50, null=True, blank=True)
+	class Meta:
+		verbose_name_plural = "Volunteer Phones"
+		ordering = ('number', 'type')
+	def __str__(self):
+		return self.number
 
 class Phones(models.Model):
 	type = models.ForeignKey(PhoneTypes)
